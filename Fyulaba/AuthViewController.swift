@@ -13,7 +13,17 @@ import Cartography
 
 class AuthViewController: UIViewController {
 
-    private var user: User?
+    @IBOutlet weak var continueButton: TWTRLogInButton!
+    @IBOutlet weak var logoutButton: UIButton!
+
+    @IBAction func handleLogout(_ sender: UIButton) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +31,11 @@ class AuthViewController: UIViewController {
         Twitter.sharedInstance().start(withConsumerKey: "XKl6zTVHVIDJqU05FzfGRDbGy",
                                        consumerSecret: "jcgiFoRqCfrLp15VeprNUg3faHLKUtBKuTECVQinEQGpXzkmkZ")
 
-
-        self.view.addSubview(self.twitterLogInButton)
-        constrain(self.twitterLogInButton) {
-            $0.center == $0.superview!.center
+        if Auth.auth().currentUser != nil {
+            self.performSegue(withIdentifier: "ToSleepDiaries", sender: self)
         }
-    }
-    
-    private lazy var twitterLogInButton: UIButton = {
-        let button = TWTRLogInButton(logInCompletion: { session, error in
+
+        continueButton.logInCompletion = { session, error in
 
             if error != nil {
                 print(error!.localizedDescription)
@@ -48,10 +54,12 @@ class AuthViewController: UIViewController {
                         print(error.localizedDescription)
                         return
                     }
-                    self.user = user
+
+                    // complete
+                    self.performSegue(withIdentifier: "ToSleepDiaries", sender: self)
                 }
             }
-        })
-        return button
-    }()
+        }
+    }
+
 }
