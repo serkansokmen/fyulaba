@@ -22,7 +22,12 @@ class SpeechRecorderViewController: UIViewController {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private let audioEngine = AVAudioEngine()
 
+    var delegate: SpeechRecordingDelegate?
+
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
+        if self.resultTextView.text.characters.count > 0 {
+            self.delegate?.didRecordSpeech(transcription: self.resultTextView.text)
+        }
         dismiss(animated: true, completion: nil)
     }
 
