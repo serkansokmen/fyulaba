@@ -8,16 +8,8 @@
 
 import UIKit
 import Firebase
+import SwiftDate
 
-struct Recording: Codable {
-    let text: String
-    let createdAt: Date
-
-    private enum CodingKeys: String, CodingKey {
-        case text = "text"
-        case createdAt = "created_at"
-    }
-}
 
 class SleepDiariesTableViewController: UITableViewController {
 
@@ -40,18 +32,21 @@ class SleepDiariesTableViewController: UITableViewController {
         guard let user = Auth.auth().currentUser else { return }
         self.recordingsRef = self.ref.child("users").child(user.uid).child("recordings")
         self.recordingsHandle = recordingsRef?.observe(.value) { (snapshot) in
-            self.recordings.removeAll()
-            let enumerator = snapshot.children
-            while let rest = enumerator.nextObject() as? DataSnapshot {
-                guard let value = rest.value as? [String: AnyObject],
-                    let text: String = value["text"] as? String,
-                    let timeInterval: TimeInterval = value["created_at"] as? TimeInterval
-                else { return }
 
-                let recording = Recording(text: text,
-                                          createdAt: Date(timeIntervalSince1970: timeInterval))
-                self.recordings.append(recording)
-            }
+            self.recordings.removeAll()
+            snapshot.children
+                .flatMap { $0 as? DataSnapshot }
+                .flatMap { snapshot in
+
+                    let key = snapshot.key
+                    guard let value = snapshot.value as? [String: AnyObject] else { return nil }
+                    let text = value["text"] as! String
+                    let timeInterval = value["created_at"] as! Double
+                    let date = Date(timeIntervalSince1970: TimeInterval(timeInterval))
+                    return Recording(key: key, text: text, createdAt: date)
+                }
+                .forEach { self.recordings.append($0) }
+
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -81,8 +76,9 @@ class SleepDiariesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath)
         let recording = self.recordings[indexPath.row]
-        cell.textLabel?.text = recording.text
-        cell.detailTextLabel?.text = recording.createdAt.description
+        cell.textLabel?.text = recording.title
+//        cell.detailTextLabel?.text = recording.subtitle
+        cell.detailTextLabel?.text = recording.sentiment
         return cell
     }
 
@@ -90,16 +86,18 @@ class SleepDiariesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let recording = self.recordings[indexPath.row]
+            self.recordingsRef?.child(recording.key).removeValue()
+//            tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
 
     // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
+//    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+//
+//    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,7 +114,6 @@ class SleepDiariesTableViewController: UITableViewController {
 
 extension SleepDiariesTableViewController: SpeechRecordingDelegate {
     func didRecordSpeech(transcription result: String) {
-        guard let user = Auth.auth().currentUser else { return }
         self.recordingsRef?.childByAutoId().setValue([
             "text": result,
             "created_at": Date().timeIntervalSince1970

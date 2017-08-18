@@ -20,7 +20,7 @@ target 'Fyulaba' do
   pod 'Cartography'
   pod 'RxSwift', '~> 3.0'
   pod 'RxCocoa', '~> 3.0'
-  pod 'ModelMapper'
+  pod 'SwiftDate', '~> 4.0'
 
     post_install do |installer|
         installer.pods_project.targets.each do |target|

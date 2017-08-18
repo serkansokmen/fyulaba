@@ -17,6 +17,7 @@
 		E6B998711F46309B00B3AAD0 /* SleepDiariesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */; };
 		E6B998731F463FA100B3AAD0 /* SpeechRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */; };
 		E6B998771F46596E00B3AAD0 /* SpeechRecordingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */; };
+		E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9987A1F46916D00B3AAD0 /* Recording.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDiariesTableViewController.swift; sourceTree = "<group>"; };
 		E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecorderViewController.swift; sourceTree = "<group>"; };
 		E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecordingDelegate.swift; sourceTree = "<group>"; };
+		E6B9987A1F46916D00B3AAD0 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */,
 				E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */,
 				E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */,
+				E6B9987A1F46916D00B3AAD0 /* Recording.swift */,
 				E6B9985E1F46241C00B3AAD0 /* Main.storyboard */,
 				E6B998611F46241C00B3AAD0 /* Assets.xcassets */,
 				E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */,
@@ -207,9 +210,9 @@
 				"${BUILT_PRODUCTS_DIR}/GooglePlacesRow/GooglePlacesRow.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
-				"${BUILT_PRODUCTS_DIR}/ModelMapper/Mapper.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/Swifter/Swifter.framework",
 				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -227,9 +230,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GooglePlacesRow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swifter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -269,6 +272,7 @@
 				E6B9985B1F46241C00B3AAD0 /* AuthViewController.swift in Sources */,
 				E6B998711F46309B00B3AAD0 /* SleepDiariesTableViewController.swift in Sources */,
 				E6B998731F463FA100B3AAD0 /* SpeechRecorderViewController.swift in Sources */,
+				E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */,
 				E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
