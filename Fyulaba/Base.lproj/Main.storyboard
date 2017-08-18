@@ -12,7 +12,6 @@
         <!--Auth View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="AuthViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -49,13 +48,13 @@
                         <segue destination="p3b-9f-gu7" kind="show" identifier="ToSleepDiaries" id="VPK-K8-dLs"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="364" y="653.52323838080963"/>
         </scene>
         <!--Sleep Diaries Table View Controller-->
         <scene sceneID="eq3-K2-8Wj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qfV-5n-k1z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="p3b-9f-gu7" customClass="SleepDiariesTableViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yg9-tY-wiJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -96,6 +95,7 @@
                         <segue destination="4mZ-Pv-SKB" kind="presentation" identifier="ToAddSegue" id="FYf-sV-WDt"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qfV-5n-k1z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1095" y="654"/>
         </scene>
@@ -166,7 +166,6 @@
         <!--Navigation Controller-->
         <scene sceneID="gfO-PE-5DR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XgZ-30-TxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fy6-2q-VHH" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SCO-vv-iuj">
@@ -178,6 +177,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ePR-ZM-A6H"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XgZ-30-TxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-305" y="654"/>
         </scene>

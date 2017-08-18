@@ -14,7 +14,7 @@ struct Recording: Codable {
     let createdAt: Date
 
     private enum CodingKeys: String, CodingKey {
-        case text
+        case text = "text"
         case createdAt = "created_at"
     }
 }
@@ -36,20 +36,20 @@ class SleepDiariesTableViewController: UITableViewController {
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.handleAdd))
 
         self.navigationItem.rightBarButtonItems = [addItem, self.editButtonItem]
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
 
         guard let user = Auth.auth().currentUser else { return }
         self.recordingsRef = self.ref.child("users").child(user.uid).child("recordings")
         self.recordingsHandle = recordingsRef?.observe(.value) { (snapshot) in
             self.recordings.removeAll()
-            for child in snapshot.children {
-                let value = child as? NSDictionary
-                let text = value?["text"] as? String ?? ""
-                let timeInterval: TimeInterval = value?["created_at"] as? TimeInterval ?? 0
-                let recording = Recording(text: text, createdAt: Date(timeIntervalSince1970: timeInterval))
+            let enumerator = snapshot.children
+            while let rest = enumerator.nextObject() as? DataSnapshot {
+                guard let value = rest.value as? [String: AnyObject],
+                    let text: String = value["text"] as? String,
+                    let timeInterval: TimeInterval = value["created_at"] as? TimeInterval
+                else { return }
+
+                let recording = Recording(text: text,
+                                          createdAt: Date(timeIntervalSince1970: timeInterval))
                 self.recordings.append(recording)
             }
             DispatchQueue.main.async {
@@ -58,7 +58,7 @@ class SleepDiariesTableViewController: UITableViewController {
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    deinit {
         self.recordingsRef?.removeObserver(withHandle: self.recordingsHandle!)
     }
 
@@ -117,7 +117,7 @@ class SleepDiariesTableViewController: UITableViewController {
 extension SleepDiariesTableViewController: SpeechRecordingDelegate {
     func didRecordSpeech(transcription result: String) {
         guard let user = Auth.auth().currentUser else { return }
-        self.ref.child("users").child(user.uid).child("recordings").childByAutoId().setValue([
+        self.recordingsRef?.childByAutoId().setValue([
             "text": result,
             "created_at": Date().timeIntervalSince1970
         ])

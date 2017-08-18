@@ -34,7 +34,7 @@ class AuthViewController: UIViewController {
         if Auth.auth().currentUser != nil {
             self.performSegue(withIdentifier: "ToSleepDiaries", sender: self)
         }
-
+        
         continueButton.logInCompletion = { session, error in
 
             if error != nil {
