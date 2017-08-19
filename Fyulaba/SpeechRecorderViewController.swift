@@ -136,6 +136,8 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
 
                 if isFinal {
                     self.resultTextView.text = "\(result.bestTranscription.formattedString)\n\(self.resultTextView.text)"
+                } else {
+                    self.resultTextView.text = result.bestTranscription.formattedString
                 }
             }
 
