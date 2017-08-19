@@ -6,6 +6,9 @@
 build/
 DerivedData/
 
+# Frameworks
+AudioKit.framework
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
