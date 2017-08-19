@@ -8,15 +8,39 @@
 
 import UIKit
 import AudioKit
+import ChameleonFramework
 
 
 final class RecordingDetailViewController: UIViewController {
 
+    public var recording: Recording?
+
     @IBOutlet weak var plot: AKNodeOutputPlot!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var playButton: UIButton!
 
-    public var recording: Recording?
-    var player: AKAudioPlayer!
+    @IBAction func playButtonTouched(_ sender: UIButton) {
+        if (self.player.isPlaying) {
+            self.player.pause()
+        } else {
+            self.player.play()
+        }
+
+        DispatchQueue.main.async {
+            if (self.player.isPlaying) {
+                self.playButton.setTitle("Pause", for: .normal)
+            } else {
+                self.playButton.setTitle("Play", for: .normal)
+            }
+        }
+    }
+
+    @IBAction func sliderChanged(_ sender: UISlider) {
+    }
+
+    internal var player: AKAudioPlayer!
+    private var tracker: AKFrequencyTracker!
+    private var silence: AKBooster!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,6 +48,9 @@ final class RecordingDetailViewController: UIViewController {
         guard let fileURL = recording.fileURL else { return }
         self.textView.text = recording.text
         self.setupPlayer(fileURL: fileURL)
+
+//        self.tracker = AKFrequencyTracker.init(self.player, hopSize: 200, peakCount: 20)
+//        self.silence = AKBooster(self.tracker, gain: 0)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,11 +70,13 @@ extension RecordingDetailViewController: AudioPlaying {
         self.player = try? AKAudioPlayer(file: file)
         self.player.looping = true
         self.plot.node = self.player
+        self.plot.plotType = .rolling
+        self.plot.shouldFill = true
+        self.plot.shouldMirror = true
+        self.plot.color = .flatBlue
 
         AudioKit.output = player
         AudioKit.start()
-
-        self.player.play()
     }
     func destroyPlayer() {
         self.player.stop()

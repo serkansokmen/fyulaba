@@ -13,6 +13,7 @@ import AudioKit
 import Whisper
 import ChameleonFramework
 import Disk
+import ReplayKit
 
 final class SpeechRecorderViewController: UIViewController {
 
@@ -48,7 +49,7 @@ final class SpeechRecorderViewController: UIViewController {
 
     private var state = State.readyToRecord
 
-    private var speechRecognizer = SFSpeechRecognizer(locale: Locale.current)
+    private var speechRecognizer: SFSpeechRecognizer!
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private let classificationService = ClassificationService()
@@ -58,6 +59,10 @@ final class SpeechRecorderViewController: UIViewController {
         guard let recording = self.newRecording else { return }
         self.delegate?.didComplete(recording)
         dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func handleSaveVideoTapped(_ sender: UIButton) {
+        self.startVideoRecording()
     }
 
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
@@ -203,6 +208,7 @@ final class SpeechRecorderViewController: UIViewController {
         resultTextView.text = ""
         speechRecognizer?.delegate = self
         self.requestSpeechAuthorization()
+        self.speechRecognizer = SFSpeechRecognizer(locale: Locale.autoupdatingCurrent)
         self.setupAudio()
 
         resetButton.setTitle(Constants.empty, for: UIControlState.disabled)
@@ -358,6 +364,34 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
                 }
             }
         }
+    }
+}
+
+extension UIViewController: RPPreviewViewControllerDelegate {
+
+    func startVideoRecording() {
+        let recorder = RPScreenRecorder.shared()
+
+        recorder.startRecording{ (error) in
+            if let unwrappedError = error {
+                print(unwrappedError.localizedDescription)
+            }
+        }
+    }
+
+    func stopVideoRecording() {
+        let recorder = RPScreenRecorder.shared()
+
+        recorder.stopRecording { [unowned self] (preview, error) in
+            if let unwrappedPreview = preview {
+                unwrappedPreview.previewControllerDelegate = self
+                self.navigationController?.present(unwrappedPreview, animated: true)
+            }
+        }
+    }
+
+    public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
+        self.navigationController?.dismiss(animated: true)
     }
 }
 
