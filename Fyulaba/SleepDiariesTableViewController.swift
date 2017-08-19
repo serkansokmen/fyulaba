@@ -13,7 +13,7 @@ import Disk
 import AudioKit
 
 
-class SleepDiariesTableViewController: UITableViewController {
+final class SleepDiariesTableViewController: UITableViewController {
 
     var recordings = [Recording]()
     let classificationService = ClassificationService()
@@ -90,13 +90,23 @@ class SleepDiariesTableViewController: UITableViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let identifier = segue.identifier,
-            identifier == "ToAddSegue",
-        let nav = segue.destination as? UINavigationController,
-        let vc = nav.topViewController as? SpeechRecorderViewController
+        guard let identifier = segue.identifier else { return }
+        switch identifier {
+        case "ToAddSegue":
+            guard let nav = segue.destination as? UINavigationController,
+            let vc = nav.topViewController as? SpeechRecorderViewController
             else { return }
+            vc.delegate = self
 
-        vc.delegate = self
+        case "ToDetailSegue":
+            guard let vc = segue.destination as? RecordingDetailViewController else { return }
+            guard let selectedPath = self.tableView.indexPathForSelectedRow else { return }
+            vc.recording = self.recordings[selectedPath.row]
+
+        default:
+            break
+        }
+
     }
 
 }

@@ -14,7 +14,6 @@ import Whisper
 import ChameleonFramework
 import Disk
 
-
 final class SpeechRecorderViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
@@ -30,6 +29,8 @@ final class SpeechRecorderViewController: UIViewController {
         case readyToPlay
         case playing
     }
+
+    var delegate: SpeechRecordingDelegate?
 
     struct Constants {
         static let empty = ""
@@ -51,10 +52,7 @@ final class SpeechRecorderViewController: UIViewController {
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private let classificationService = ClassificationService()
-
     private var newRecording: Recording?
-
-    var delegate: SpeechRecordingDelegate?
 
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
         guard let recording = self.newRecording else { return }
@@ -310,7 +308,7 @@ extension SpeechRecorderViewController {
         DispatchQueue.main.async {
             let recordedDuration = self.player != nil ? self.player.audioFile.duration  : 0
             self.infoLabel.text = "Recorded: \(String(format: "%0.1f", recordedDuration)) seconds"
-            self.recordButton.setTitle("Play", for: .normal)
+            self.recordButton.setTitle("Transcribe", for: .normal)
             self.resetButton.isEnabled = true
             self.resetButton.isHidden = false
         }
