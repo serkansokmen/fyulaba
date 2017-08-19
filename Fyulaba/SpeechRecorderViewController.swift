@@ -19,6 +19,7 @@ final class SpeechRecorderViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var saveVideoButton: UIBarButtonItem!
     @IBOutlet weak var resultTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private var inputPlot: AKNodeOutputPlot!
@@ -62,7 +63,12 @@ final class SpeechRecorderViewController: UIViewController {
     }
 
     @IBAction func handleSaveVideoTapped(_ sender: UIButton) {
-        self.startVideoRecording()
+        let recorder = RPScreenRecorder.shared()
+        if recorder.isRecording {
+            self.stopVideoRecording()
+        } else {
+            self.startVideoRecording()
+        }
     }
 
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
@@ -119,7 +125,7 @@ final class SpeechRecorderViewController: UIViewController {
                                                                                               text: "",
                                                                                               createdAt: Date(),
                                                                                               fileURL: file.url)
-                                                                
+
                                                                 self.showAlert("Export succeeded", type: .success)
                                                             } else {
                                                                 self.showAlert("Export Failed", type: .error)
@@ -127,58 +133,13 @@ final class SpeechRecorderViewController: UIViewController {
                                                         }
                 }
                 setupUIForPlaying ()
+                self.transcribeAudio()
+
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                 }
-                self.recognitionRequest?.endAudio()
-
-                // 1
-                if let recognitionTask = self.recognitionTask {
-                    recognitionTask.cancel()
-                    self.recognitionTask = nil
-                }
-
-                // 2
-                let inputNode = player.avAudioNode
-
-                // 3
-                self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-                guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
-                self.recognitionRequest?.shouldReportPartialResults = true
-
-                // 4
-                self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
-
-                    var isFinal = false
-
-                    // 5
-                    if let result = result {
-                        isFinal = result.isFinal
-                        guard let recording = self.newRecording else { return }
-                        let resultString = result.bestTranscription.formattedString
-                        self.newRecording = Recording(uuid: recording.uuid,
-                                                      text: resultString,
-                                                      createdAt: recording.createdAt,
-                                                      fileURL: recording.fileURL)
-                        let sentiment = self.classificationService.predictSentiment(from: recording.text)
-                        self.resultTextView.text = "\(sentiment.emoji) \(self.newRecording!.text)"
-                    }
-
-                    // 6
-                    if error != nil || isFinal {
-                        inputNode.removeTap(onBus: 0)
-
-                        self.recognitionRequest = nil
-                        self.recognitionTask = nil
-                    }
-                }
-
-                // 7
-                let recordingFormat = inputNode.outputFormat(forBus: 0)
-                inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
-                    self.recognitionRequest?.append(buffer)
-                }
             }
+
         case .readyToPlay :
             player.play()
             infoLabel.text = "Playing..."
@@ -293,6 +254,57 @@ extension SpeechRecorderViewController {
         AudioKit.output = mainMixer
     }
 
+    func transcribeAudio() {
+        self.recognitionRequest?.endAudio()
+
+        // 1
+        if let recognitionTask = self.recognitionTask {
+            recognitionTask.cancel()
+            self.recognitionTask = nil
+        }
+
+        // 2
+        let inputNode = player.avAudioNode
+
+        // 3
+        self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
+        self.recognitionRequest?.shouldReportPartialResults = true
+
+        // 4
+        self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+
+            var isFinal = false
+
+            // 5
+            if let result = result {
+                isFinal = result.isFinal
+                guard let recording = self.newRecording else { return }
+                let resultString = result.bestTranscription.formattedString
+                self.newRecording = Recording(uuid: recording.uuid,
+                                              text: resultString,
+                                              createdAt: recording.createdAt,
+                                              fileURL: recording.fileURL)
+                let sentiment = self.classificationService.predictSentiment(from: recording.text)
+                self.resultTextView.text = "\(sentiment.emoji) \(self.newRecording!.text)"
+            }
+
+            // 6
+            if error != nil || isFinal {
+                inputNode.removeTap(onBus: 0)
+
+                self.recognitionRequest = nil
+                self.recognitionTask = nil
+            }
+        }
+
+        // 7
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+            self.recognitionRequest?.append(buffer)
+        }
+    }
+
     func playingEnded() {
         DispatchQueue.main.async {
             self.setupUIForPlaying ()
@@ -367,7 +379,7 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
     }
 }
 
-extension UIViewController: RPPreviewViewControllerDelegate {
+extension SpeechRecorderViewController: RPPreviewViewControllerDelegate {
 
     func startVideoRecording() {
         let recorder = RPScreenRecorder.shared()
@@ -376,6 +388,9 @@ extension UIViewController: RPPreviewViewControllerDelegate {
             if let unwrappedError = error {
                 print(unwrappedError.localizedDescription)
             }
+        }
+        DispatchQueue.main.async {
+            self.saveVideoButton.title = "Stop"
         }
     }
 
@@ -388,12 +403,12 @@ extension UIViewController: RPPreviewViewControllerDelegate {
                 self.navigationController?.present(unwrappedPreview, animated: true)
             }
         }
+        DispatchQueue.main.async {
+            self.saveVideoButton.title = "Record Screen"
+        }
     }
 
     public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
         self.navigationController?.dismiss(animated: true)
     }
 }
-
-
-

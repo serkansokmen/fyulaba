@@ -36,17 +36,15 @@ final class RecordingDetailViewController: UIViewController {
     }
 
     @IBAction func sliderChanged(_ sender: UISlider) {
+        self.variSpeed.rate = Double(sender.value)
     }
 
     internal var player: AKAudioPlayer!
-    private var tracker: AKFrequencyTracker!
-    private var silence: AKBooster!
+    private var variSpeed: AKVariSpeed!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let recording = self.recording else { return }
-        guard let fileURL = recording.fileURL else { return }
-        self.textView.text = recording.text
+        guard let fileURL = self.recording?.fileURL else { return }
         self.setupPlayer(fileURL: fileURL)
 
 //        self.tracker = AKFrequencyTracker.init(self.player, hopSize: 200, peakCount: 20)
@@ -57,25 +55,27 @@ final class RecordingDetailViewController: UIViewController {
         self.destroyPlayer()
         super.viewWillDisappear(animated)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
 
 extension RecordingDetailViewController: AudioPlaying {
     func setupPlayer(fileURL: URL) {
+
         guard let file = try? AKAudioFile(readFileName: fileURL.lastPathComponent, baseDir: .documents) else { return }
+
         self.player = try? AKAudioPlayer(file: file)
         self.player.looping = true
+
+        self.textView.text = ""
+        self.variSpeed = AKVariSpeed(self.player)
+        self.variSpeed.rate = 1.0
+
         self.plot.node = self.player
         self.plot.plotType = .rolling
         self.plot.shouldFill = true
         self.plot.shouldMirror = true
         self.plot.color = .flatBlue
 
-        AudioKit.output = player
+        AudioKit.output = self.variSpeed
         AudioKit.start()
     }
     func destroyPlayer() {

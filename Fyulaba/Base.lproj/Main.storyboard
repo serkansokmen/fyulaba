@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -156,11 +157,14 @@
                                 <action selector="handleCancel:" destination="kBq-MS-joG" id="l5M-6a-GiD"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="exC-TT-rVf">
-                            <connections>
-                                <action selector="handleSave:" destination="kBq-MS-joG" id="k4F-S6-YgU"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="done" id="exC-TT-rVf">
+                                <connections>
+                                    <action selector="handleSave:" destination="kBq-MS-joG" id="k4F-S6-YgU"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Record Screen" id="fxg-WK-FOr"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="Qyj-WN-8B8" id="956-IP-kzP"/>
