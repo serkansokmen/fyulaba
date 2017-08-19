@@ -10,6 +10,7 @@ import UIKit
 import SwiftDate
 import DZNEmptyDataSet
 import Disk
+import AudioKit
 
 
 class SleepDiariesTableViewController: UITableViewController {
@@ -91,11 +92,7 @@ class SleepDiariesTableViewController: UITableViewController {
 }
 
 extension SleepDiariesTableViewController: SpeechRecordingDelegate {
-    func didRecordSpeech(transcription result: String) {
-        let uuid = UUID().uuidString
-        let recording = Recording(uuid: uuid,
-                                  text: result,
-                                  createdAt: Date())
+    func didComplete(_ recording: Recording) {
         self.recordings.append(recording)
         try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
         self.tableView.reloadData()

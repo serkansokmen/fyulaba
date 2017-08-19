@@ -9,25 +9,54 @@
 import UIKit
 import Speech
 import AVFoundation
+import AudioKit
+import Whisper
 
 
-class SpeechRecorderViewController: UIViewController {
+final class SpeechRecorderViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var resultTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var inputPlot: AKNodeOutputPlot!
+    @IBOutlet weak var infoLabel: UILabel!
 
-    private var speechRecognizer = SFSpeechRecognizer(locale: Locale.autoupdatingCurrent)
+    private enum State {
+        case readyToRecord
+        case recording
+        case readyToPlay
+        case playing
+    }
+
+    struct Constants {
+        static let empty = ""
+    }
+
+    private var micMixer: AKMixer!
+    private var recorder: AKNodeRecorder!
+    private var player: AKAudioPlayer!
+    private var tape: AKAudioFile!
+    private var micBooster: AKBooster!
+    private var moogLadder: AKMoogLadder!
+    private var delay: AKDelay!
+    private var mainMixer: AKMixer!
+    private let mic = AKMicrophone()
+
+    private var state = State.readyToRecord
+
+    private var speechRecognizer = SFSpeechRecognizer(locale: Locale.current)
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    private let audioEngine = AVAudioEngine()
+    private let classificationService = ClassificationService()
+
+    private var newRecording: Recording?
 
     var delegate: SpeechRecordingDelegate?
 
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
-        if self.resultTextView.text.characters.count > 0 {
-            self.delegate?.didRecordSpeech(transcription: self.resultTextView.text)
-        }
+        guard let recording = self.newRecording else { return }
+        self.delegate?.didComplete(recording)
         dismiss(animated: true, completion: nil)
     }
 
@@ -36,21 +65,125 @@ class SpeechRecorderViewController: UIViewController {
     }
 
     @IBAction func recordTapped(_ sender: UIButton) {
-        if audioEngine.isRunning {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-            self.activityIndicator.stopAnimating()
-        } else {
-            try? startRecording()
-        }
-
-        DispatchQueue.main.async {
-            if self.audioEngine.isRunning {
+        switch state {
+        case .readyToRecord :
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
+                self.infoLabel.text = "Recording"
                 self.recordButton.setTitle("Stop", for: .normal)
-            } else {
-                self.recordButton.setTitle("Record", for: .normal)
             }
+
+            state = .recording
+            // microphone will be monitored while recording
+            // only if headphones are plugged
+            if AKSettings.headPhonesPlugged {
+                micBooster.gain = 1
+            }
+            do {
+                try recorder.record()
+            } catch { self.showAlert("Errored recording.") }
+
+        case .recording :
+            // Microphone monitoring is muted
+            micBooster.gain = 0
+            do {
+                try player.reloadFile()
+            } catch { self.showAlert("Errored reloading.") }
+
+            let recordedDuration = player != nil ? player.audioFile.duration  : 0
+            if recordedDuration > 0.0 {
+                recorder.stop()
+                let uuid = UUID().uuidString
+                player.audioFile.exportAsynchronously(name: "\(uuid).m4a",
+                                                      baseDir: .documents,
+                                                      exportFormat: .m4a) { file, exportError in
+                                                        if let error = exportError {
+                                                            self.showAlert("Export Failed \(error)")
+                                                        } else {
+                                                            if let file = file {
+                                                                self.newRecording = Recording(uuid: file.fileName,
+                                                                                              text: "",
+                                                                                              createdAt: Date(),
+                                                                                              fileURL: file.url)
+                                                                
+                                                                self.showAlert("Export succeeded")
+                                                            } else {
+                                                                self.showAlert("Export Failed")
+                                                            }
+                                                        }
+                }
+                setupUIForPlaying ()
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                }
+                self.recognitionRequest?.endAudio()
+
+                // 1
+                if let recognitionTask = self.recognitionTask {
+                    recognitionTask.cancel()
+                    self.recognitionTask = nil
+                }
+
+                // 2
+                let inputNode = player.avAudioNode
+
+                // 3
+                self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+                guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
+                self.recognitionRequest?.shouldReportPartialResults = true
+
+                // 4
+                self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
+
+                    var isFinal = false
+
+                    // 5
+                    if let result = result {
+                        isFinal = result.isFinal
+                        guard let recording = self.newRecording else { return }
+                        let resultString = result.bestTranscription.formattedString
+                        self.newRecording = Recording(uuid: recording.uuid,
+                                                      text: resultString,
+                                                      createdAt: recording.createdAt,
+                                                      fileURL: recording.fileURL)
+                        let sentiment = self.classificationService.predictSentiment(from: recording.text)
+                        self.resultTextView.text = "\(sentiment.emoji) \(self.newRecording!.text)"
+                    }
+
+                    // 6
+                    if error != nil || isFinal {
+                        inputNode.removeTap(onBus: 0)
+
+                        self.recognitionRequest = nil
+                        self.recognitionTask = nil
+                    }
+                }
+
+                // 7
+                let recordingFormat = inputNode.outputFormat(forBus: 0)
+                inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
+                    self.recognitionRequest?.append(buffer)
+                }
+            }
+        case .readyToPlay :
+            player.play()
+            infoLabel.text = "Playing..."
+            recordButton.setTitle("Stop", for: .normal)
+            state = .playing
+        case .playing :
+            player.stop()
+            setupUIForPlaying()
         }
+    }
+
+    @IBAction func resetButtonTouched(sender: UIButton) {
+        player.stop()
+        do {
+            try recorder.reset()
+        } catch { self.showAlert("Error resetting") }
+
+        //try? player.replaceFile((recorder.audioFile)!)
+        setupUIForRecording()
     }
 
     override func viewDidLoad() {
@@ -59,6 +192,94 @@ class SpeechRecorderViewController: UIViewController {
         resultTextView.text = ""
         speechRecognizer?.delegate = self
         self.requestSpeechAuthorization()
+        self.setupAudio()
+
+        resetButton.setTitle(Constants.empty, for: UIControlState.disabled)
+        recordButton.setTitle(Constants.empty, for: UIControlState.disabled)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AudioKit.start()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioKit.stop()
+    }
+}
+
+extension SpeechRecorderViewController {
+    func showAlert(_ message: String) {
+        let murmur = Murmur(title: message)
+        Whisper.show(whistle: murmur, action: .show(0.5))
+    }
+}
+
+// MARK: - AudioKit
+extension SpeechRecorderViewController {
+    func setupAudio() {
+        // Clean tempFiles !
+        AKAudioFile.cleanTempDirectory()
+
+        // Session settings
+        AKSettings.bufferLength = .medium
+
+        do {
+            try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
+        } catch {
+            AKLog("Could not set session category.")
+        }
+
+        AKSettings.defaultToSpeaker = true
+
+        // Patching
+        inputPlot.node = mic
+        micMixer = AKMixer(mic)
+        micBooster = AKBooster(micMixer)
+
+        // Will set the level of microphone monitoring
+        micBooster.gain = 0
+        recorder = try? AKNodeRecorder(node: micMixer)
+        if let file = recorder.audioFile {
+            player = try? AKAudioPlayer(file: file)
+        }
+        player.looping = true
+        player.completionHandler = playingEnded
+
+        moogLadder = AKMoogLadder(player)
+
+        mainMixer = AKMixer(moogLadder, micBooster)
+
+        AudioKit.output = mainMixer
+    }
+
+    func playingEnded() {
+        DispatchQueue.main.async {
+            self.setupUIForPlaying ()
+        }
+    }
+
+    func setupUIForRecording () {
+        state = .readyToRecord
+        micBooster.gain = 0
+        DispatchQueue.main.async {
+            self.infoLabel.text = "Ready to record"
+            self.recordButton.setTitle("Record", for: .normal)
+            self.resetButton.isEnabled = false
+            self.resetButton.isHidden = true
+        }
+    }
+
+    func setupUIForPlaying () {
+        DispatchQueue.main.async {
+            let recordedDuration = self.player != nil ? self.player.audioFile.duration  : 0
+            self.infoLabel.text = "Recorded: \(String(format: "%0.1f", recordedDuration)) seconds"
+            self.recordButton.setTitle("Play", for: .normal)
+            self.resetButton.isEnabled = true
+            self.resetButton.isHidden = false
+        }
+        state = .readyToPlay
     }
 }
 
@@ -100,68 +321,10 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
                     self.resultTextView.text = message
                 } else {
                     self.resultTextView.text = ""
+                    self.setupUIForRecording()
                 }
             }
         }
-    }
-
-    func startRecording() throws {
-
-        // 1
-        if let recognitionTask = self.recognitionTask {
-            recognitionTask.cancel()
-            self.recognitionTask = nil
-        }
-
-        // 2
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(AVAudioSessionCategoryRecord)
-        try audioSession.setMode(AVAudioSessionModeMeasurement)
-        try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
-        let inputNode = audioEngine.inputNode
-
-        // 3
-        self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object") }
-        self.recognitionRequest?.shouldReportPartialResults = true
-
-        // 4
-        self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { result, error in
-
-            var isFinal = false
-
-            // 5
-            if let result = result {
-                isFinal = result.isFinal
-
-                if isFinal {
-                    self.resultTextView.text = "\(result.bestTranscription.formattedString)\n\(self.resultTextView.text)"
-                } else {
-                    self.resultTextView.text = result.bestTranscription.formattedString
-                }
-            }
-
-            // 6
-            if error != nil || isFinal {
-                self.audioEngine.stop()
-                inputNode.removeTap(onBus: 0)
-
-
-                self.recognitionRequest = nil
-                self.recognitionTask = nil
-            }
-        }
-
-        // 7
-        let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
-            self.recognitionRequest?.append(buffer)
-        }
-
-        audioEngine.prepare()
-
-        try audioEngine.start()
-        self.activityIndicator.startAnimating()
     }
 }
 

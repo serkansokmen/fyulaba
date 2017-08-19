@@ -9,6 +9,7 @@
 import Foundation
 import SwiftDate
 import CoreML
+import AudioKit
 
 
 extension NSRange {
@@ -30,11 +31,13 @@ struct Recording: Codable {
     let uuid: String
     let text: String
     let createdAt: Date
+    var fileURL: URL?
 
     private enum CodingKeys: String, CodingKey {
         case uuid = "uuid"
         case text = "text"
         case createdAt = "created_at"
+        case fileURL = "file_url"
     }
 
     var title: String {
