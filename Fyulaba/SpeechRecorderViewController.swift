@@ -11,6 +11,8 @@ import Speech
 import AVFoundation
 import AudioKit
 import Whisper
+import ChameleonFramework
+import Disk
 
 
 final class SpeechRecorderViewController: UIViewController {
@@ -61,6 +63,15 @@ final class SpeechRecorderViewController: UIViewController {
     }
 
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
+        if let recording = self.newRecording,
+            let fileURL = recording.fileURL {
+            do {
+                try Disk.remove(fileURL.lastPathComponent, from: .documents)
+                print("Removed \(fileURL.lastPathComponent)")
+            } catch let err {
+                print(err.localizedDescription)
+            }
+        }
         dismiss(animated: true, completion: nil)
     }
 
@@ -81,14 +92,14 @@ final class SpeechRecorderViewController: UIViewController {
             }
             do {
                 try recorder.record()
-            } catch { self.showAlert("Errored recording.") }
+            } catch { self.showAlert("Errored recording.", type: .success) }
 
         case .recording :
             // Microphone monitoring is muted
             micBooster.gain = 0
             do {
                 try player.reloadFile()
-            } catch { self.showAlert("Errored reloading.") }
+            } catch { self.showAlert("Errored reloading.", type: .error) }
 
             let recordedDuration = player != nil ? player.audioFile.duration  : 0
             if recordedDuration > 0.0 {
@@ -98,7 +109,7 @@ final class SpeechRecorderViewController: UIViewController {
                                                       baseDir: .documents,
                                                       exportFormat: .m4a) { file, exportError in
                                                         if let error = exportError {
-                                                            self.showAlert("Export Failed \(error)")
+                                                            self.showAlert("Export Failed \(error)", type: .error)
                                                         } else {
                                                             if let file = file {
                                                                 self.newRecording = Recording(uuid: file.fileName,
@@ -106,9 +117,9 @@ final class SpeechRecorderViewController: UIViewController {
                                                                                               createdAt: Date(),
                                                                                               fileURL: file.url)
                                                                 
-                                                                self.showAlert("Export succeeded")
+                                                                self.showAlert("Export succeeded", type: .success)
                                                             } else {
-                                                                self.showAlert("Export Failed")
+                                                                self.showAlert("Export Failed", type: .error)
                                                             }
                                                         }
                 }
@@ -180,7 +191,9 @@ final class SpeechRecorderViewController: UIViewController {
         player.stop()
         do {
             try recorder.reset()
-        } catch { self.showAlert("Error resetting") }
+            guard let fileURL = self.newRecording?.fileURL else { return }
+            try Disk.remove(fileURL.lastPathComponent, from: .documents)
+        } catch { self.showAlert("Error resetting", type: .error) }
 
         //try? player.replaceFile((recorder.audioFile)!)
         setupUIForRecording()
@@ -209,10 +222,32 @@ final class SpeechRecorderViewController: UIViewController {
     }
 }
 
-extension SpeechRecorderViewController {
-    func showAlert(_ message: String) {
-        let murmur = Murmur(title: message)
-        Whisper.show(whistle: murmur, action: .show(0.5))
+extension UIViewController {
+
+    enum AlertType {
+        case error
+        case warning
+        case success
+
+        var color: UIColor {
+            switch self {
+            case .error:
+                return .flatRed
+            case .warning:
+                return .flatOrange
+            case .success:
+                return .flatGreen
+            }
+        }
+    }
+
+    func showAlert(_ message: String, type: AlertType) {
+        let whisper = Message(title: message, backgroundColor: .flatRed)
+        guard let nav = self.navigationController else {
+            print(message)
+            return
+        }
+        Whisper.show(whisper: whisper, to: nav, action: .show)
     }
 }
 
