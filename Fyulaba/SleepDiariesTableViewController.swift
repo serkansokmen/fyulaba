@@ -7,21 +7,18 @@
 //
 
 import UIKit
-import Firebase
 import SwiftDate
+import DZNEmptyDataSet
+import Disk
 
 
 class SleepDiariesTableViewController: UITableViewController {
 
-    var ref: DatabaseReference!
     var recordings = [Recording]()
-    var recordingsRef: DatabaseReference?
-    var recordingsHandle: DatabaseHandle?
+    let classificationService = ClassificationService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.ref = Database.database().reference()
 
         self.clearsSelectionOnViewWillAppear = true
 
@@ -29,32 +26,8 @@ class SleepDiariesTableViewController: UITableViewController {
 
         self.navigationItem.rightBarButtonItems = [addItem, self.editButtonItem]
 
-        guard let user = Auth.auth().currentUser else { return }
-        self.recordingsRef = self.ref.child("users").child(user.uid).child("recordings")
-        self.recordingsHandle = recordingsRef?.observe(.value) { (snapshot) in
-
-            self.recordings.removeAll()
-            snapshot.children
-                .flatMap { $0 as? DataSnapshot }
-                .flatMap { snapshot in
-
-                    let key = snapshot.key
-                    guard let value = snapshot.value as? [String: AnyObject] else { return nil }
-                    let text = value["text"] as! String
-                    let timeInterval = value["created_at"] as! Double
-                    let date = Date(timeIntervalSince1970: TimeInterval(timeInterval))
-                    return Recording(key: key, text: text, createdAt: date)
-                }
-                .forEach { self.recordings.append($0) }
-
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-
-    deinit {
-        self.recordingsRef?.removeObserver(withHandle: self.recordingsHandle!)
+        guard let retrievedRecordings = try? Disk.retrieve("recordings.json", from: .documents, as: [Recording].self) else { return }
+        self.recordings = retrievedRecordings
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
@@ -74,11 +47,16 @@ class SleepDiariesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath)
         let recording = self.recordings[indexPath.row]
-        cell.textLabel?.text = recording.title
-//        cell.detailTextLabel?.text = recording.subtitle
-        cell.detailTextLabel?.text = recording.sentiment
+
+        let sentiment = classificationService.predictSentiment(from: recording.text)
+        cell.textLabel?.text = "\(sentiment.emoji) \(recording.title)"
+        cell.detailTextLabel?.text = "\(recording.subtitle)\n\n" + classificationService
+            .features(from: recording.text)
+            .map { "\($0.key)" }
+            .joined(separator: ", ")
         return cell
     }
 
@@ -86,9 +64,9 @@ class SleepDiariesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let recording = self.recordings[indexPath.row]
-            self.recordingsRef?.child(recording.key).removeValue()
-//            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.recordings.remove(at: indexPath.row)
+            try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
+            tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -114,9 +92,12 @@ class SleepDiariesTableViewController: UITableViewController {
 
 extension SleepDiariesTableViewController: SpeechRecordingDelegate {
     func didRecordSpeech(transcription result: String) {
-        self.recordingsRef?.childByAutoId().setValue([
-            "text": result,
-            "created_at": Date().timeIntervalSince1970
-        ])
+        let uuid = UUID().uuidString
+        let recording = Recording(uuid: uuid,
+                                  text: result,
+                                  createdAt: Date())
+        self.recordings.append(recording)
+        try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
+        self.tableView.reloadData()
     }
 }

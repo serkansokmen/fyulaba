@@ -9,15 +9,16 @@
 /* Begin PBXBuildFile section */
 		2217918A2C906AEA39EAE298 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */; };
 		E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998561F46241C00B3AAD0 /* AppDelegate.swift */; };
-		E6B9985B1F46241C00B3AAD0 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9985A1F46241C00B3AAD0 /* AuthViewController.swift */; };
 		E6B998601F46241C00B3AAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B9985E1F46241C00B3AAD0 /* Main.storyboard */; };
 		E6B998621F46241C00B3AAD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B998611F46241C00B3AAD0 /* Assets.xcassets */; };
 		E6B998651F46241C00B3AAD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */; };
-		E6B9986D1F462CD400B3AAD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6B9986C1F46278200B3AAD0 /* GoogleService-Info.plist */; };
 		E6B998711F46309B00B3AAD0 /* SleepDiariesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */; };
 		E6B998731F463FA100B3AAD0 /* SpeechRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */; };
 		E6B998771F46596E00B3AAD0 /* SpeechRecordingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */; };
 		E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9987A1F46916D00B3AAD0 /* Recording.swift */; };
+		E6B9987F1F46A23400B3AAD0 /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E6B9987E1F46A23100B3AAD0 /* SentimentPolarity.mlmodel */; };
+		E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998801F46A27500B3AAD0 /* ClassificationService.swift */; };
+		E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,16 +27,17 @@
 		8DDD5FD4B8188F7029207A6F /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
 		E6B998531F46241C00B3AAD0 /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B998561F46241C00B3AAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E6B9985A1F46241C00B3AAD0 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		E6B9985F1F46241C00B3AAD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E6B998611F46241C00B3AAD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E6B998641F46241C00B3AAD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6B998661F46241C00B3AAD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E6B9986C1F46278200B3AAD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDiariesTableViewController.swift; sourceTree = "<group>"; };
 		E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecorderViewController.swift; sourceTree = "<group>"; };
 		E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecordingDelegate.swift; sourceTree = "<group>"; };
 		E6B9987A1F46916D00B3AAD0 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		E6B9987E1F46A23100B3AAD0 /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
+		E6B998801F46A27500B3AAD0 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
+		E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentiment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,16 +91,17 @@
 			isa = PBXGroup;
 			children = (
 				E6B998561F46241C00B3AAD0 /* AppDelegate.swift */,
-				E6B9985A1F46241C00B3AAD0 /* AuthViewController.swift */,
 				E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */,
 				E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */,
 				E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */,
+				E6B998801F46A27500B3AAD0 /* ClassificationService.swift */,
 				E6B9987A1F46916D00B3AAD0 /* Recording.swift */,
+				E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */,
+				E6B9987E1F46A23100B3AAD0 /* SentimentPolarity.mlmodel */,
 				E6B9985E1F46241C00B3AAD0 /* Main.storyboard */,
 				E6B998611F46241C00B3AAD0 /* Assets.xcassets */,
 				E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */,
 				E6B998661F46241C00B3AAD0 /* Info.plist */,
-				E6B9986C1F46278200B3AAD0 /* GoogleService-Info.plist */,
 			);
 			path = Fyulaba;
 			sourceTree = "<group>";
@@ -165,7 +168,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B998651F46241C00B3AAD0 /* LaunchScreen.storyboard in Resources */,
-				E6B9986D1F462CD400B3AAD0 /* GoogleService-Info.plist in Resources */,
 				E6B998621F46241C00B3AAD0 /* Assets.xcassets in Resources */,
 				E6B998601F46241C00B3AAD0 /* Main.storyboard in Resources */,
 			);
@@ -200,43 +202,31 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GooglePlacesRow/GooglePlacesRow.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
-				"${BUILT_PRODUCTS_DIR}/Swifter/Swifter.framework",
 				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GooglePlacesRow.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swifter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -269,10 +259,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6B998771F46596E00B3AAD0 /* SpeechRecordingDelegate.swift in Sources */,
-				E6B9985B1F46241C00B3AAD0 /* AuthViewController.swift in Sources */,
 				E6B998711F46309B00B3AAD0 /* SleepDiariesTableViewController.swift in Sources */,
+				E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */,
 				E6B998731F463FA100B3AAD0 /* SpeechRecorderViewController.swift in Sources */,
+				E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */,
 				E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */,
+				E6B9987F1F46A23400B3AAD0 /* SentimentPolarity.mlmodel in Sources */,
 				E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

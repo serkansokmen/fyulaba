@@ -17,7 +17,7 @@ class SpeechRecorderViewController: UIViewController {
     @IBOutlet weak var resultTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    private var speechRecognizer = SFSpeechRecognizer()
+    private var speechRecognizer = SFSpeechRecognizer(locale: Locale.autoupdatingCurrent)
     private var recognitionTask: SFSpeechRecognitionTask?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private let audioEngine = AVAudioEngine()
@@ -57,9 +57,7 @@ class SpeechRecorderViewController: UIViewController {
         super.viewDidLoad()
 
         resultTextView.text = ""
-
         speechRecognizer?.delegate = self
-
         self.requestSpeechAuthorization()
     }
 }
@@ -108,6 +106,7 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
     }
 
     func startRecording() throws {
+
         // 1
         if let recognitionTask = self.recognitionTask {
             recognitionTask.cancel()
@@ -133,14 +132,18 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
 
             // 5
             if let result = result {
-                self.resultTextView.text = result.bestTranscription.formattedString
                 isFinal = result.isFinal
+
+                if isFinal {
+                    self.resultTextView.text = "\(result.bestTranscription.formattedString)\n\(self.resultTextView.text)"
+                }
             }
 
             // 6
             if error != nil || isFinal {
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
+
 
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
