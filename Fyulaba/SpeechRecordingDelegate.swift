@@ -7,8 +7,8 @@
 //
 
 import Foundation
-
+import AudioKit
 
 protocol SpeechRecordingDelegate {
-    func didRecordSpeech(transcription result: String)
+    func didComplete(_ recording: Recording)
 }

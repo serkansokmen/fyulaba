@@ -10,9 +10,10 @@ import UIKit
 import SwiftDate
 import DZNEmptyDataSet
 import Disk
+import AudioKit
 
 
-class SleepDiariesTableViewController: UITableViewController {
+final class SleepDiariesTableViewController: UITableViewController {
 
     var recordings = [Recording]()
     let classificationService = ClassificationService()
@@ -63,10 +64,20 @@ class SleepDiariesTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            let recording = self.recordings[indexPath.row]
             self.recordings.remove(at: indexPath.row)
-            try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            do {
+                try Disk.save(self.recordings, to: .documents, as: "recordings.json")
+                // Delete the row from the data source
+                if let fileURL = recording.fileURL {
+                    try Disk.remove(fileURL.lastPathComponent, from: .documents)
+                }
+            } catch {}
+
+            DispatchQueue.main.async {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -79,23 +90,29 @@ class SleepDiariesTableViewController: UITableViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let identifier = segue.identifier,
-            identifier == "ToAddSegue",
-        let nav = segue.destination as? UINavigationController,
-        let vc = nav.topViewController as? SpeechRecorderViewController
+        guard let identifier = segue.identifier else { return }
+        switch identifier {
+        case "ToAddSegue":
+            guard let nav = segue.destination as? UINavigationController,
+            let vc = nav.topViewController as? SpeechRecorderViewController
             else { return }
+            vc.delegate = self
 
-        vc.delegate = self
+        case "ToDetailSegue":
+            guard let vc = segue.destination as? RecordingDetailViewController else { return }
+            guard let selectedPath = self.tableView.indexPathForSelectedRow else { return }
+            vc.recording = self.recordings[selectedPath.row]
+
+        default:
+            break
+        }
+
     }
 
 }
 
 extension SleepDiariesTableViewController: SpeechRecordingDelegate {
-    func didRecordSpeech(transcription result: String) {
-        let uuid = UUID().uuidString
-        let recording = Recording(uuid: uuid,
-                                  text: result,
-                                  createdAt: Date())
+    func didComplete(_ recording: Recording) {
         self.recordings.append(recording)
         try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
         self.tableView.reloadData()

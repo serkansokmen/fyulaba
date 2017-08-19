@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2217918A2C906AEA39EAE298 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */; };
+		E62DD4DE1F487FDA00C5D8FD /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; };
+		E62DD4DF1F487FDA00C5D8FD /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E62DD4E21F48BDCB00C5D8FD /* RecordingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62DD4E11F48BDCB00C5D8FD /* RecordingDetailViewController.swift */; };
+		E62DD4E41F48C60A00C5D8FD /* AudioPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62DD4E31F48C60A00C5D8FD /* AudioPlaying.swift */; };
 		E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998561F46241C00B3AAD0 /* AppDelegate.swift */; };
 		E6B998601F46241C00B3AAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B9985E1F46241C00B3AAD0 /* Main.storyboard */; };
 		E6B998621F46241C00B3AAD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B998611F46241C00B3AAD0 /* Assets.xcassets */; };
@@ -21,10 +25,27 @@
 		E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E62DD4E01F487FDA00C5D8FD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E62DD4DF1F487FDA00C5D8FD /* AudioKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fyulaba.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		425B125F435AC808F98A76F3 /* Pods-Fyulaba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.release.xcconfig"; sourceTree = "<group>"; };
 		8DDD5FD4B8188F7029207A6F /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
+		E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		E62DD4E11F48BDCB00C5D8FD /* RecordingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailViewController.swift; sourceTree = "<group>"; };
+		E62DD4E31F48C60A00C5D8FD /* AudioPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaying.swift; sourceTree = "<group>"; };
 		E6B998531F46241C00B3AAD0 /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B998561F46241C00B3AAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6B9985F1F46241C00B3AAD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -45,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E62DD4DE1F487FDA00C5D8FD /* AudioKit.framework in Frameworks */,
 				2217918A2C906AEA39EAE298 /* Pods_Fyulaba.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64,6 +86,7 @@
 		391E9E89881B77877D1118B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */,
 				1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */,
 			);
 			name = Frameworks;
@@ -94,6 +117,7 @@
 				E6B998701F46309B00B3AAD0 /* SleepDiariesTableViewController.swift */,
 				E6B998721F463FA100B3AAD0 /* SpeechRecorderViewController.swift */,
 				E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */,
+				E62DD4E11F48BDCB00C5D8FD /* RecordingDetailViewController.swift */,
 				E6B998801F46A27500B3AAD0 /* ClassificationService.swift */,
 				E6B9987A1F46916D00B3AAD0 /* Recording.swift */,
 				E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */,
@@ -102,6 +126,7 @@
 				E6B998611F46241C00B3AAD0 /* Assets.xcassets */,
 				E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */,
 				E6B998661F46241C00B3AAD0 /* Info.plist */,
+				E62DD4E31F48C60A00C5D8FD /* AudioPlaying.swift */,
 			);
 			path = Fyulaba;
 			sourceTree = "<group>";
@@ -119,6 +144,7 @@
 				E6B998511F46241C00B3AAD0 /* Resources */,
 				F7C05802C9446AFAB4DA2BCB /* [CP] Embed Pods Frameworks */,
 				ABA115F03F7616E421850C91 /* [CP] Copy Pods Resources */,
+				E62DD4E01F487FDA00C5D8FD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -206,11 +232,7 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
-				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
-				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 			);
@@ -220,11 +242,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Whisper.framework",
 			);
@@ -262,6 +280,8 @@
 				E6B998711F46309B00B3AAD0 /* SleepDiariesTableViewController.swift in Sources */,
 				E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */,
 				E6B998731F463FA100B3AAD0 /* SpeechRecorderViewController.swift in Sources */,
+				E62DD4E21F48BDCB00C5D8FD /* RecordingDetailViewController.swift in Sources */,
+				E62DD4E41F48C60A00C5D8FD /* AudioPlaying.swift in Sources */,
 				E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */,
 				E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */,
 				E6B9987F1F46A23400B3AAD0 /* SentimentPolarity.mlmodel in Sources */,
@@ -404,6 +424,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YGQRYMCYG9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Fyulaba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ofoto.ios.Fyulaba;
@@ -419,6 +443,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YGQRYMCYG9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Fyulaba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ofoto.ios.Fyulaba;

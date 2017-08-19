@@ -3,17 +3,13 @@ platform :ios, '10.0'
 target 'Fyulaba' do
     use_frameworks!
 
-    pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+    pod 'Disk', '~> 0.1.4'
     pod 'Whisper'
-    pod 'FontAwesome.swift'
-    pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka', :branch => 'feature/Xcode9-Swift3_2'
+    pod 'SwiftDate', '~> 4.0'
     pod 'Hero'
     pod 'DZNEmptyDataSet'
     pod 'Cartography'
-    pod 'RxSwift', '~> 3.0'
-    pod 'RxCocoa', '~> 3.0'
-    pod 'SwiftDate', '~> 4.0'
-    pod 'Disk', '~> 0.1.4'
+    pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
 
     post_install do |installer|
         installer.pods_project.targets.each do |target|
@@ -25,3 +21,4 @@ target 'Fyulaba' do
     end
 
 end
+
