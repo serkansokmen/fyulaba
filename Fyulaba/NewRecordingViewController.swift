@@ -1,5 +1,5 @@
 //
-//  SpeechRecorderViewController.swift
+//  NewRecordingViewController.swift
 //  Fyulaba
 //
 //  Created by Serkan Sokmen on 18/08/2017.
@@ -14,11 +14,11 @@ import Whisper
 import ChameleonFramework
 import Disk
 
-final class SpeechRecorderViewController: UIViewController {
+final class NewRecordingViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var resultTextView: UILabel!
+    @IBOutlet weak var resultTextView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private var inputPlot: AKNodeOutputPlot!
     @IBOutlet weak var infoLabel: UILabel!
@@ -99,8 +99,6 @@ final class SpeechRecorderViewController: UIViewController {
                 try player.reloadFile()
             } catch { self.showAlert("Errored reloading.", type: .error) }
 
-            self.transcribeAudio()
-
             let recordedDuration = player != nil ? player.audioFile.duration  : 0
             if recordedDuration > 0.0 {
                 recorder.stop()
@@ -116,7 +114,7 @@ final class SpeechRecorderViewController: UIViewController {
                                                                                               text: "",
                                                                                               createdAt: Date(),
                                                                                               fileURL: file.url)
-
+                                                                self.transcribeAudio(self.mainMixer)
                                                                 self.showAlert("Export succeeded", type: .success)
                                                             } else {
                                                                 self.showAlert("Export Failed", type: .error)
@@ -210,7 +208,7 @@ extension UIViewController {
 }
 
 // MARK: - AudioKit
-extension SpeechRecorderViewController {
+extension NewRecordingViewController {
     func setupAudio() {
         // Clean tempFiles !
         AKAudioFile.cleanTempDirectory()
@@ -247,7 +245,7 @@ extension SpeechRecorderViewController {
         AudioKit.output = mainMixer
     }
 
-    func transcribeAudio() {
+    func transcribeAudio(_ node: AKNode) {
 
         self.recognitionRequest?.endAudio()
 
@@ -256,9 +254,9 @@ extension SpeechRecorderViewController {
             recognitionTask.cancel()
             self.recognitionTask = nil
         }
-
+        
         // 2
-        let inputNode = mainMixer.avAudioNode
+        let inputNode = node.avAudioNode
 
         // 3
         self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
@@ -329,7 +327,7 @@ extension SpeechRecorderViewController {
 }
 
 // MARK: - Transcription management
-extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
+extension NewRecordingViewController: SFSpeechRecognizerDelegate {
 
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         self.recordButton.isEnabled = available
@@ -373,7 +371,7 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
     }
 }
 
-//extension SpeechRecorderViewController: RPPreviewViewControllerDelegate {
+//extension NewRecordingViewController: RPPreviewViewControllerDelegate {
 //
 //    func startVideoRecording() {
 //        let recorder = RPScreenRecorder.shared()

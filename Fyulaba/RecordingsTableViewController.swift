@@ -1,5 +1,5 @@
 //
-//  SleepDiariesTableViewController.swift
+//  RecordingsTableViewController.swift
 //  Fyulaba
 //
 //  Created by Serkan Sokmen on 17/08/2017.
@@ -19,7 +19,7 @@ enum HeroConstants: String {
 }
 
 
-final class SleepDiariesTableViewController: UITableViewController {
+final class RecordingsTableViewController: UITableViewController {
 
     var recordings = [Recording]()
     let classificationService = ClassificationService()
@@ -38,8 +38,8 @@ final class SleepDiariesTableViewController: UITableViewController {
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
-        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "RecorderNavigationController") as? UINavigationController else { return }
-        guard let vc = navVc.topViewController as? SpeechRecorderViewController else { return }
+        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "NewRecordingNavigationController") as? UINavigationController else { return }
+        guard let vc = navVc.topViewController as? NewRecordingViewController else { return }
         vc.delegate = self
         self.navigationController?.present(navVc, animated: true, completion: nil)
     }
@@ -112,7 +112,7 @@ final class SleepDiariesTableViewController: UITableViewController {
 
 }
 
-extension SleepDiariesTableViewController: SpeechRecordingDelegate {
+extension RecordingsTableViewController: SpeechRecordingDelegate {
     func didComplete(_ recording: Recording) {
         self.recordings.append(recording)
         try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
@@ -120,7 +120,7 @@ extension SleepDiariesTableViewController: SpeechRecordingDelegate {
     }
 }
 
-extension SleepDiariesTableViewController: DZNEmptyDataSetSource {
+extension RecordingsTableViewController: DZNEmptyDataSetSource {
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let attributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)]
         return NSAttributedString(string: "You don't seem to have any recordings", attributes: attributes)
