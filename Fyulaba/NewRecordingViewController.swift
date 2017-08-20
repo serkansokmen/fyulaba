@@ -154,6 +154,7 @@ final class NewRecordingViewController: UIViewController {
         super.viewDidLoad()
 
         resultTextView.text = ""
+        resultTextView.delegate = self
         speechRecognizer?.delegate = self
         self.requestSpeechAuthorization()
         self.speechRecognizer = SFSpeechRecognizer(locale: Locale.autoupdatingCurrent)
@@ -368,6 +369,12 @@ extension NewRecordingViewController: SFSpeechRecognizerDelegate {
                 }
             }
         }
+    }
+}
+
+extension NewRecordingViewController: UITextViewDelegate {
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print(textView.text)
     }
 }
 
