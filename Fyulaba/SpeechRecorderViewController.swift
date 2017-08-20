@@ -13,14 +13,12 @@ import AudioKit
 import Whisper
 import ChameleonFramework
 import Disk
-import ReplayKit
 
 final class SpeechRecorderViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var saveVideoButton: UIBarButtonItem!
-    @IBOutlet weak var resultTextView: UITextView!
+    @IBOutlet weak var resultTextView: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private var inputPlot: AKNodeOutputPlot!
     @IBOutlet weak var infoLabel: UILabel!
@@ -62,15 +60,6 @@ final class SpeechRecorderViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func handleSaveVideoTapped(_ sender: UIButton) {
-        let recorder = RPScreenRecorder.shared()
-        if recorder.isRecording {
-            self.stopVideoRecording()
-        } else {
-            self.startVideoRecording()
-        }
-    }
-
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
         if let recording = self.newRecording,
             let fileURL = recording.fileURL {
@@ -110,6 +99,8 @@ final class SpeechRecorderViewController: UIViewController {
                 try player.reloadFile()
             } catch { self.showAlert("Errored reloading.", type: .error) }
 
+            self.transcribeAudio()
+
             let recordedDuration = player != nil ? player.audioFile.duration  : 0
             if recordedDuration > 0.0 {
                 recorder.stop()
@@ -133,7 +124,6 @@ final class SpeechRecorderViewController: UIViewController {
                                                         }
                 }
                 setupUIForPlaying ()
-                self.transcribeAudio()
 
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
@@ -159,7 +149,6 @@ final class SpeechRecorderViewController: UIViewController {
             try Disk.remove(fileURL.lastPathComponent, from: .documents)
         } catch { self.showAlert("Error resetting", type: .error) }
 
-        //try? player.replaceFile((recorder.audioFile)!)
         setupUIForRecording()
     }
 
@@ -174,6 +163,10 @@ final class SpeechRecorderViewController: UIViewController {
 
         resetButton.setTitle(Constants.empty, for: UIControlState.disabled)
         recordButton.setTitle(Constants.empty, for: UIControlState.disabled)
+
+        self.isHeroEnabled = true
+        self.view.heroID = HeroConstants.recordings.rawValue
+        self.view.heroModifiers = [.scale(0.5), .fade]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -255,6 +248,7 @@ extension SpeechRecorderViewController {
     }
 
     func transcribeAudio() {
+
         self.recognitionRequest?.endAudio()
 
         // 1
@@ -264,11 +258,11 @@ extension SpeechRecorderViewController {
         }
 
         // 2
-        let inputNode = player.avAudioNode
+        let inputNode = mainMixer.avAudioNode
 
         // 3
         self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
+        guard let recognitionRequest = self.recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
         self.recognitionRequest?.shouldReportPartialResults = true
 
         // 4
@@ -379,36 +373,37 @@ extension SpeechRecorderViewController: SFSpeechRecognizerDelegate {
     }
 }
 
-extension SpeechRecorderViewController: RPPreviewViewControllerDelegate {
+//extension SpeechRecorderViewController: RPPreviewViewControllerDelegate {
+//
+//    func startVideoRecording() {
+//        let recorder = RPScreenRecorder.shared()
+//
+//        recorder.startRecording{ (error) in
+//            if let unwrappedError = error {
+//                print(unwrappedError.localizedDescription)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            self.saveVideoButton.title = "Stop"
+//        }
+//    }
+//
+//    func stopVideoRecording() {
+//        let recorder = RPScreenRecorder.shared()
+//
+//        recorder.stopRecording { [unowned self] (preview, error) in
+//            if let unwrappedPreview = preview {
+//                unwrappedPreview.previewControllerDelegate = self
+//                self.navigationController?.present(unwrappedPreview, animated: true)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            self.saveVideoButton.title = "Record Screen"
+//        }
+//    }
+//
+//    public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
+//        self.navigationController?.dismiss(animated: true)
+//    }
+//}
 
-    func startVideoRecording() {
-        let recorder = RPScreenRecorder.shared()
-
-        recorder.startRecording{ (error) in
-            if let unwrappedError = error {
-                print(unwrappedError.localizedDescription)
-            }
-        }
-        DispatchQueue.main.async {
-            self.saveVideoButton.title = "Stop"
-        }
-    }
-
-    func stopVideoRecording() {
-        let recorder = RPScreenRecorder.shared()
-
-        recorder.stopRecording { [unowned self] (preview, error) in
-            if let unwrappedPreview = preview {
-                unwrappedPreview.previewControllerDelegate = self
-                self.navigationController?.present(unwrappedPreview, animated: true)
-            }
-        }
-        DispatchQueue.main.async {
-            self.saveVideoButton.title = "Record Screen"
-        }
-    }
-
-    public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
-        self.navigationController?.dismiss(animated: true)
-    }
-}

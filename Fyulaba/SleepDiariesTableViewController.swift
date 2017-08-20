@@ -11,6 +11,12 @@ import SwiftDate
 import DZNEmptyDataSet
 import Disk
 import AudioKit
+import Hero
+
+enum HeroConstants: String {
+    case recordings = "recordings"
+
+}
 
 
 final class SleepDiariesTableViewController: UITableViewController {
@@ -22,9 +28,9 @@ final class SleepDiariesTableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.clearsSelectionOnViewWillAppear = true
+        self.tableView.emptyDataSetSource = self
 
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.handleAdd))
-
         self.navigationItem.rightBarButtonItems = [addItem, self.editButtonItem]
 
         guard let retrievedRecordings = try? Disk.retrieve("recordings.json", from: .documents, as: [Recording].self) else { return }
@@ -32,7 +38,10 @@ final class SleepDiariesTableViewController: UITableViewController {
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "ToAddSegue", sender: self)
+        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "RecorderNavigationController") as? UINavigationController else { return }
+        guard let vc = navVc.topViewController as? SpeechRecorderViewController else { return }
+        vc.delegate = self
+        self.navigationController?.present(navVc, animated: true, completion: nil)
     }
 
     // MARK: - Table view data source
@@ -51,14 +60,24 @@ final class SleepDiariesTableViewController: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath)
         let recording = self.recordings[indexPath.row]
-
         let sentiment = classificationService.predictSentiment(from: recording.text)
         cell.textLabel?.text = "\(sentiment.emoji) \(recording.title)"
         cell.detailTextLabel?.text = "\(recording.subtitle)\n\n" + classificationService
             .features(from: recording.text)
             .map { "\($0.key)" }
             .joined(separator: ", ")
+
+        cell.heroID = "cell_\(indexPath.row)"
+        cell.heroModifiers = [.arc]
+
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let recording = self.recordings[indexPath.row]
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "RecordingDetailViewController") as! RecordingDetailViewController
+        vc.recording = recording
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     // Override to support editing the table view.
@@ -76,6 +95,7 @@ final class SleepDiariesTableViewController: UITableViewController {
 
             DispatchQueue.main.async {
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.reloadEmptyDataSet()
             }
 
         } else if editingStyle == .insert {
@@ -89,25 +109,6 @@ final class SleepDiariesTableViewController: UITableViewController {
 //    }
 
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let identifier = segue.identifier else { return }
-        switch identifier {
-        case "ToAddSegue":
-            guard let nav = segue.destination as? UINavigationController,
-            let vc = nav.topViewController as? SpeechRecorderViewController
-            else { return }
-            vc.delegate = self
-
-        case "ToDetailSegue":
-            guard let vc = segue.destination as? RecordingDetailViewController else { return }
-            guard let selectedPath = self.tableView.indexPathForSelectedRow else { return }
-            vc.recording = self.recordings[selectedPath.row]
-
-        default:
-            break
-        }
-
-    }
 
 }
 
@@ -118,3 +119,16 @@ extension SleepDiariesTableViewController: SpeechRecordingDelegate {
         self.tableView.reloadData()
     }
 }
+
+extension SleepDiariesTableViewController: DZNEmptyDataSetSource {
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let attributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)]
+        return NSAttributedString(string: "You don't seem to have any recordings", attributes: attributes)
+    }
+
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)]
+        return NSAttributedString(string: "Go ahead and save speak and save some words.", attributes: attributes)
+    }
+}
+

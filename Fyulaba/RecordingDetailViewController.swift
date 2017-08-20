@@ -9,6 +9,7 @@
 import UIKit
 import AudioKit
 import ChameleonFramework
+import SwiftDate
 
 
 final class RecordingDetailViewController: UIViewController {
@@ -42,13 +43,25 @@ final class RecordingDetailViewController: UIViewController {
     internal var player: AKAudioPlayer!
     private var variSpeed: AKVariSpeed!
 
+    override func viewDidLoad() {
+        guard let recording = self.recording else { return }
+        self.textView.text = recording.text
+        do {
+            let (colloquial, relevantTime) = try recording.createdAt.colloquialSinceNow()
+            if let relevantTime = relevantTime {
+                self.title = "\(colloquial), \(relevantTime)"
+            }
+            self.title = colloquial
+        } catch {}
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let fileURL = self.recording?.fileURL else { return }
         self.setupPlayer(fileURL: fileURL)
 
-//        self.tracker = AKFrequencyTracker.init(self.player, hopSize: 200, peakCount: 20)
-//        self.silence = AKBooster(self.tracker, gain: 0)
+        //        self.tracker = AKFrequencyTracker.init(self.player, hopSize: 200, peakCount: 20)
+        //        self.silence = AKBooster(self.tracker, gain: 0)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,3 +97,4 @@ extension RecordingDetailViewController: AudioPlaying {
         AudioKit.stop()
     }
 }
+
