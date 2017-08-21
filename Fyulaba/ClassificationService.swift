@@ -9,6 +9,13 @@
 import CoreML
 
 final class ClassificationService {
+
+    static let shared: ClassificationService = {
+        let instance = ClassificationService()
+        // setup code
+        return instance
+    }()
+
     private enum Error: Swift.Error {
         case featuresMissing
     }
@@ -48,10 +55,7 @@ final class ClassificationService {
             return .neutral
         }
     }
-}
 
-// MARK: - Features
-extension ClassificationService {
     func features(from text: String) -> [String: Double] {
         var wordCounts = [String: Double]()
 

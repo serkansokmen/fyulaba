@@ -4,9 +4,9 @@ target 'Fyulaba' do
     use_frameworks!
 
     pod 'Disk', '~> 0.1.4'
-    pod 'Whisper'
     pod 'SwiftDate', '~> 4.0'
     pod 'Hero'
+    pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka', :branch => 'feature/Xcode9-Swift3_2'
     pod 'DZNEmptyDataSet'
     pod 'Cartography'
     pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'

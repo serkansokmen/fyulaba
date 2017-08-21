@@ -22,7 +22,6 @@ enum HeroConstants: String {
 final class RecordingsTableViewController: UITableViewController {
 
     var recordings = [Recording]()
-    let classificationService = ClassificationService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +59,13 @@ final class RecordingsTableViewController: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath)
         let recording = self.recordings[indexPath.row]
-        let sentiment = classificationService.predictSentiment(from: recording.text)
+        let sentiment = ClassificationService.shared.predictSentiment(from: recording.text)
         cell.textLabel?.text = "\(sentiment.emoji) \(recording.title)"
-        cell.detailTextLabel?.text = "\(recording.subtitle)\n\n" + classificationService
-            .features(from: recording.text)
-            .map { "\($0.key)" }
-            .joined(separator: ", ")
+        cell.detailTextLabel?.text = "\(recording.subtitle)\n\n"
+            + ClassificationService.shared
+                .features(from: recording.text)
+                .map { "\($0.key)" }
+                .joined(separator: ", ")
 
         cell.heroID = "cell_\(indexPath.row)"
         cell.heroModifiers = [.arc]
