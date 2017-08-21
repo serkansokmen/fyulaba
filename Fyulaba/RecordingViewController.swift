@@ -15,6 +15,7 @@ import Disk
 import Eureka
 import Cartography
 
+
 final class RecordingViewController: FormViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -32,8 +33,6 @@ final class RecordingViewController: FormViewController {
         case resetButtonRow = "resetButtonRow"
         case infoLabelRow = "infoLabelRow"
         case resultTextAreaRow = "resultTextAreaRow"
-        case cutoffFrequencyRow = "cutoffFrequencyRow"
-        case resonanceRow = "resonanceRow"
         case speedRow = "speedRow"
         case deleteRecordingRow = "deleteRecordingRow"
     }
@@ -45,7 +44,6 @@ final class RecordingViewController: FormViewController {
     var delegate: SpeechRecordingDelegate?
     var recording: Recording?
 
-    private var mainSection: Section?
     private var infoRow: LabelRow?
     private var recordRow: ButtonRow?
     private var resetRow: ButtonRow?
@@ -54,10 +52,7 @@ final class RecordingViewController: FormViewController {
     private var micMixer: AKMixer!
     private var recorder: AKNodeRecorder!
     private var player: AKAudioPlayer!
-    private var tape: AKAudioFile!
     private var micBooster: AKBooster!
-    private var moogLadder: AKMoogLadder!
-    private var delay: AKDelay!
     private var mainMixer: AKMixer!
     private var variSpeed: AKVariSpeed!
     private let mic = AKMicrophone()
@@ -69,11 +64,15 @@ final class RecordingViewController: FormViewController {
 
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
         guard let recording = self.recording else { return }
-        self.delegate?.didComplete(recording)
-        dismiss(animated: true, completion: nil)
+        self.delegate?.saveRecording(recording, completionHandler: {
+            AudioKit.stop()
+            self.dismiss(animated: true, completion: nil)
+        })
     }
 
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
+        AudioKit.stop()
+        AKAudioFile.cleanTempDirectory()
         dismiss(animated: true, completion: nil)
     }
 
@@ -81,14 +80,12 @@ final class RecordingViewController: FormViewController {
         super.viewDidLoad()
 
         requestSpeechAuthorization()
-        setupAudio()
-        setupForm()
 
         isHeroEnabled = true
         view.heroID = HeroConstants.recordings.rawValue
         view.heroModifiers = [.scale(0.5), .fade]
 
-        self.transcribeResultHandler = { result, sentiment in
+        transcribeResultHandler = { result, sentiment in
             guard let recording = self.recording else { return }
             self.recording = Recording(uuid: recording.uuid,
                                        text: result,
@@ -101,32 +98,111 @@ final class RecordingViewController: FormViewController {
             }
             self.resultRow?.reload()
         }
-        self.transcribeErrorHandler = { error in
-            print(error?.localizedDescription)
+        transcribeErrorHandler = { error in
+            if let error = error {
+                print("Transcription Error: \(error.localizedDescription)")
+            }
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        AudioKit.start()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        AudioKit.stop()
     }
 }
 
 // MARK: - AudioKit
 extension RecordingViewController {
 
+    func setupAudio() {
+
+        // Session settings
+        AKSettings.bufferLength = .medium
+
+        do {
+            try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
+        } catch {
+            AKLog("Could not set session category.")
+        }
+
+        AKSettings.defaultToSpeaker = true
+
+        // Patching
+        micMixer = AKMixer(mic)
+        micBooster = AKBooster(micMixer)
+
+        // Will set the level of microphone monitoring
+        micBooster.gain = 0
+
+        if let recording = self.recording {
+            if let fileURL = recording.fileURL,
+                Disk.exists(fileURL.lastPathComponent, in: .documents) {
+                do {
+                    let workingFile = try AKAudioFile(readFileName: fileURL.lastPathComponent, baseDir: .documents)
+                    do {
+                        self.recorder = try AKNodeRecorder(node: self.micMixer, file: workingFile)
+                    } catch let error {
+                        self.recorder = try AKNodeRecorder(node: self.micMixer)
+                        self.showAlert(error.localizedDescription, type: .error)
+                    }
+                } catch let error {
+                    self.recorder = try? AKNodeRecorder(node: self.micMixer)
+                    self.showAlert(error.localizedDescription, type: .error)
+                }
+            } else {
+                self.recorder = try? AKNodeRecorder(node: self.micMixer)
+            }
+        } else {
+            self.recorder = try? AKNodeRecorder(node: self.micMixer)
+        }
+
+        if let file = recorder.audioFile {
+            player = try? AKAudioPlayer(file: file)
+            player.looping = true
+            player.completionHandler = playingEnded
+        }
+
+        variSpeed = AKVariSpeed(player)
+        variSpeed.rate = 1.0
+
+        mainMixer = AKMixer(variSpeed, micBooster)
+
+        AudioKit.output = mainMixer
+    }
+
+    func playingEnded() {
+        DispatchQueue.main.async {
+            self.setupUIForPlaying ()
+        }
+    }
+
+    func setupUIForRecording () {
+        state = .readyToRecord
+        micBooster.gain = 0
+        infoRow?.title = "Ready to record"
+        recordRow?.title = "Record"
+        recordRow?.disabled = false
+        recordRow?.hidden = false
+        resetRow?.disabled = true
+        resetRow?.hidden = true
+        form.allRows.forEach {
+            $0.updateCell()
+            $0.reload()
+        }
+    }
+
+    func setupUIForPlaying () {
+        state = .readyToPlay
+        let recordedDuration = self.player != nil ? self.player.audioFile.duration  : 0
+        infoRow?.title = "Recorded: \(String(format: "%0.1f", recordedDuration)) seconds"
+        recordRow?.title = "Transcribe"
+        resetRow?.disabled = false
+        resetRow?.hidden = false
+        form.allRows.forEach {
+            $0.updateCell()
+            $0.reload()
+        }
+    }
+
     func setupForm() {
 
-        mainSection = Section()
-        mainSection?.tag = FormTag.mainSection.rawValue
-
         form +++  Section({ (section) in
-            section.header = self.makeAudioPlotView()
+            section.tag = FormTag.mainSection.rawValue
             section.footer = self.makeFooterView()
         })
         form.last!
@@ -170,22 +246,23 @@ extension RecordingViewController {
                         if recordedDuration > 0.0 {
                             self.recorder.stop()
                             let uuid = UUID().uuidString
-                            self.player.audioFile.exportAsynchronously(name: "\(uuid).m4a",
-                                baseDir: .documents,
-                                exportFormat: .m4a) { file, exportError in
-                                    if let error = exportError {
-                                        self.showAlert("Export Failed \(error)", type: .error)
-                                    } else {
-                                        if let file = file {
-                                            self.recording = Recording(uuid: file.fileName,
-                                                                          text: "",
-                                                                          createdAt: Date(),
-                                                                          fileURL: file.url)
-                                            self.showAlert("Export succeeded", type: .success)
-                                        } else {
-                                            self.showAlert("Export Failed", type: .error)
-                                        }
-                                    }
+                            let temporaryFileName = "\(uuid).caf"
+                            self.player.audioFile.exportAsynchronously(name: temporaryFileName,
+                                                                       baseDir: .temp,
+                                                                       exportFormat: .caf) { file, exportError in
+                                                                        if let error = exportError {
+                                                                            self.showAlert("Export Failed \(error)", type: .error)
+                                                                        } else {
+                                                                            if let file = file {
+                                                                                self.recording = Recording(uuid: uuid,
+                                                                                                           text: self.resultRow?.value ?? "",
+                                                                                                           createdAt: Date(),
+                                                                                                           fileURL: file.url)
+                                                                                print("Export succeeded")
+                                                                            } else {
+                                                                                self.showAlert("Export Failed", type: .error)
+                                                                            }
+                                                                        }
                             }
                             self.setupUIForPlaying ()
 
@@ -212,39 +289,23 @@ extension RecordingViewController {
                         self.setupUIForPlaying()
 
                     }
-                }
+            }
 
             <<< LabelRow(FormTag.infoLabelRow.rawValue)
 
             <<< TextAreaRow(FormTag.resultTextAreaRow.rawValue)
-
-            <<< SliderRow(FormTag.cutoffFrequencyRow.rawValue)
-                .cellSetup { (cell, row) in
-                    row.minimumValue = 0
-                    row.maximumValue = 5_000
-                    row.value = Float(self.moogLadder.cutoffFrequency)
-                }
-                .onChange { (row) in
-                    guard let value = row.value else { return }
-                    self.moogLadder.cutoffFrequency = Double(value)
-                }
-
-            <<< SliderRow(FormTag.resonanceRow.rawValue)
-                .cellSetup { (cell, row) in
-                    row.minimumValue = 0
-                    row.maximumValue = 5_000
-                    row.value = Float(self.moogLadder.resonance)
-                }
-                .onChange { (row) in
-                    guard let value = row.value else { return }
-                    self.moogLadder.resonance = Double(value)
-            }
 
             <<< SliderRow(FormTag.speedRow.rawValue)
                 .cellSetup { cell, row in
                     row.minimumValue = 0.01
                     row.maximumValue = 2.0
                     row.value = Float(self.variSpeed.rate)
+                    row.disabled = Condition.function([FormTag.recordButtonRow.rawValue], { form in
+                        return self.state == .recording
+                    })
+                    row.hidden = Condition.function([FormTag.recordButtonRow.rawValue], { form in
+                        return self.state == .readyToRecord
+                    })
                 }
                 .onChange { (row) in
                     guard let value = row.value else { return }
@@ -253,15 +314,13 @@ extension RecordingViewController {
                         guard let value = value else { return "" }
                         return String.init(format: "%0.1f Hz", value)
                     }
-                }
+            }
 
             <<< ButtonRow(FormTag.resetButtonRow.rawValue)
                 .onCellSelection { (cell, row) in
                     self.player.stop()
                     do {
                         try self.recorder.reset()
-                        guard let fileURL = self.recording?.fileURL else { return }
-                        try Disk.remove(fileURL.lastPathComponent, from: .documents)
                     } catch { print("Already reset") }
 
                     self.setupUIForRecording()
@@ -281,14 +340,14 @@ extension RecordingViewController {
                         } catch { print("Already reset") }
 
                         guard let recording = self.recording else { return }
-                        self.delegate?.didDelete(recording)
+                        self.delegate?.delete(recording)
                         self.dismiss(animated: true, completion: nil)
                     })
                     let no = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                     alert.addAction(yes)
                     alert.addAction(no)
                     self.present(alert, animated: true, completion: nil)
-                }
+        }
 
         infoRow = form.rowBy(tag: FormTag.infoLabelRow.rawValue)
         infoRow?.title = "Recording"
@@ -307,103 +366,29 @@ extension RecordingViewController {
         }
     }
 
-    func setupAudio() {
-        // Clean tempFiles !
-        AKAudioFile.cleanTempDirectory()
-
-        // Session settings
-        AKSettings.bufferLength = .medium
-
-        do {
-            try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
-        } catch {
-            AKLog("Could not set session category.")
-        }
-
-        AKSettings.defaultToSpeaker = true
-
-        // Patching
-        micMixer = AKMixer(mic)
-        micBooster = AKBooster(micMixer)
-
-        // Will set the level of microphone monitoring
-        micBooster.gain = 0
-        recorder = try? AKNodeRecorder(node: micMixer)
-        if let file = recorder.audioFile {
-            player = try? AKAudioPlayer(file: file)
-        }
-        player.looping = true
-        player.completionHandler = playingEnded
-
-        variSpeed = AKVariSpeed(self.player)
-        variSpeed.rate = 1.0
-
-        moogLadder = AKMoogLadder(variSpeed)
-        moogLadder.cutoffFrequency = 300 // Hz
-        moogLadder.resonance = 0.6
-
-        mainMixer = AKMixer(moogLadder, micBooster)
-
-        AudioKit.output = mainMixer
-    }
-
-    func playingEnded() {
-        DispatchQueue.main.async {
-            self.setupUIForPlaying ()
-        }
-    }
-
-    func setupUIForRecording () {
-        micBooster.gain = 0
-        infoRow?.title = "Ready to record"
-        recordRow?.title = "Record"
-        recordRow?.disabled = false
-        recordRow?.hidden = false
-        resetRow?.disabled = true
-        resetRow?.hidden = true
-        updateHeaderView()
-        form.allRows.forEach {
-            $0.updateCell()
-            $0.reload()
-        }
-        state = .readyToRecord
-    }
-
-    func setupUIForPlaying () {
-        let recordedDuration = self.player != nil ? self.player.audioFile.duration  : 0
-        infoRow?.title = "Recorded: \(String(format: "%0.1f", recordedDuration)) seconds"
-        recordRow?.title = "Transcribe"
-        resetRow?.disabled = false
-        resetRow?.hidden = false
-        updateHeaderView()
-        form.allRows.forEach {
-            $0.updateCell()
-            $0.reload()
-        }
-        state = .readyToPlay
-    }
-
-    private func updateHeaderView() {
-        guard let section = mainSection else { return }
-        section.header = makeAudioPlotView()
-        section.reload()
-    }
-
-    private func makeAudioPlotView() -> HeaderFooterView<UIView>? {
-        var header = HeaderFooterView<UIView>(.callback({
-            guard let state = self.state else {
-                return UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
-            }
-            switch state {
-            case .readyToRecord, .recording:
-                return AKNodeOutputPlot(self.mic, frame: CGRect(x: 0, y: 0, width: 100, height: 60))
-            case .readyToPlay, .playing:
-                return AKNodeOutputPlot(self.player, frame: CGRect(x: 0, y: 0, width: 100, height: 60))
-            }
-        }))
-        header.height = { 60 }
-        return header
-    }
+//    private func makeHeaderView(for state: RecordingState?) -> HeaderFooterView<UIView>? {
+//        var header = HeaderFooterView<UIView>(.callback({
+//            guard let state = state else { return UIView(frame: .zero) }
+//            switch state {
+//            case .readyToRecord, .recording:
+//                return AKNodeOutputPlot(self.mic, frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+//            case .readyToPlay, .playing:
+//                return AKNodeOutputPlot(self.player, frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+//            }
+//        }))
+//        header.onSetupView = { view, section in
+//            guard let view = view as? AKNodeOutputPlot else { return }
+//            guard let state = state else { return }
+//            switch state {
+//            case .readyToRecord, .recording:
+//                view.node = self.mic
+//            case .readyToPlay, .playing:
+//                view.node = self.player
+//            }
+//        }
+//        header.height = { 132 }
+//        return header
+//    }
 
     private func makeFooterView() -> HeaderFooterView<UIView>? {
         var footer = HeaderFooterView<UIView>(.callback({
@@ -412,6 +397,11 @@ extension RecordingViewController {
         }))
         footer.height = { 132 }
         return footer
+    }
+
+    private func updateHeaderView() {
+        guard let state = self.state else { return }
+
     }
 }
 
@@ -446,6 +436,7 @@ extension RecordingViewController: SFSpeechRecognizerDelegate {
                 enabled = false
                 message = "Speech recognition not yet authorized"
             }
+            print(authStatus)
 
             /* The callback may not be called on the main thread. Add an operation to the main queue if you want to perform action on UI. */
 
@@ -454,52 +445,14 @@ extension RecordingViewController: SFSpeechRecognizerDelegate {
                 if !enabled {
                     self.showAlert(message!, type: .error)
                 } else {
-                    if let recording = self.recording {
-                        if recording.fileURL != nil {
-                            self.setupUIForPlaying()
-                        } else {
-                            self.setupUIForRecording()
-                        }
-                    } else {
-                        self.setupUIForRecording()
-                    }
+
+                    self.setupAudio()
+                    AudioKit.start()
+
+                    self.setupForm()
+                    self.setupUIForRecording()
                 }
             }
         }
     }
 }
-
-//extension RecordingViewController: RPPreviewViewControllerDelegate {
-//
-//    func startVideoRecording() {
-//        let recorder = RPScreenRecorder.shared()
-//
-//        recorder.startRecording{ (error) in
-//            if let unwrappedError = error {
-//                print(unwrappedError.localizedDescription)
-//            }
-//        }
-//        DispatchQueue.main.async {
-//            self.saveVideoButton.title = "Stop"
-//        }
-//    }
-//
-//    func stopVideoRecording() {
-//        let recorder = RPScreenRecorder.shared()
-//
-//        recorder.stopRecording { [unowned self] (preview, error) in
-//            if let unwrappedPreview = preview {
-//                unwrappedPreview.previewControllerDelegate = self
-//                self.navigationController?.present(unwrappedPreview, animated: true)
-//            }
-//        }
-//        DispatchQueue.main.async {
-//            self.saveVideoButton.title = "Record Screen"
-//        }
-//    }
-//
-//    public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
-//        self.navigationController?.dismiss(animated: true)
-//    }
-//}
-

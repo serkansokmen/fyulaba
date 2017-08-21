@@ -10,6 +10,6 @@ import Foundation
 import AudioKit
 
 protocol SpeechRecordingDelegate {
-    func didComplete(_ recording: Recording)
-    func didDelete(_ recording: Recording)
+    func saveRecording(_ recording: Recording, completionHandler: (()->Void)?)
+    func delete(_ recording: Recording)
 }

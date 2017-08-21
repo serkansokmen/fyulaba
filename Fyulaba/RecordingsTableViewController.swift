@@ -34,6 +34,8 @@ final class RecordingsTableViewController: UITableViewController {
 
         guard let retrievedRecordings = try? Disk.retrieve("recordings.json", from: .documents, as: [Recording].self) else { return }
         self.recordings = retrievedRecordings
+
+        
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
@@ -114,13 +116,31 @@ final class RecordingsTableViewController: UITableViewController {
 }
 
 extension RecordingsTableViewController: SpeechRecordingDelegate {
-    func didComplete(_ recording: Recording) {
-        self.recordings.append(recording)
-        try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
+
+    func saveRecording(_ recording: Recording, completionHandler: (() -> Void)?) {
+        guard let fileURL = recording.fileURL else { return }
+        do {
+            try Disk.move(fileURL.lastPathComponent, in: .temporary, to: .documents)
+            let newFileURL = try Disk.getURL(for: fileURL.lastPathComponent, in: .documents)
+            let newRecording = Recording(uuid: recording.uuid,
+                                               text: recording.text,
+                                               createdAt: recording.createdAt,
+                                               fileURL: newFileURL)
+            if let existingIndex = self.recordings.index(where: { $0.uuid == newRecording.uuid }) {
+                self.recordings[existingIndex] = newRecording
+            } else {
+                self.recordings.append(newRecording)
+            }
+            try Disk.save(self.recordings, to: .documents, as: "recordings.json")
+            completionHandler?()
+        } catch let error {
+            self.showAlert(error.localizedDescription, type: .error)
+        }
+
         self.tableView.reloadData()
     }
 
-    func didDelete(_ recording: Recording) {
+    func delete(_ recording: Recording) {
         let newRecordings = self.recordings.filter { $0.uuid != recording.uuid }
         do {
             try Disk.save(newRecordings, to: .documents, as: "recordings.json")
