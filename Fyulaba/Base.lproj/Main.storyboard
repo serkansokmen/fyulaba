@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="1095" y="654"/>
         </scene>
-        <!--New Recording View Controller-->
+        <!--Recording View Controller-->
         <scene sceneID="5aL-fN-Eis">
             <objects>
-                <viewController id="kBq-MS-joG" customClass="NewRecordingViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kBq-MS-joG" customClass="RecordingViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UMp-GO-nkB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,7 +172,7 @@
         <!--Navigation Controller-->
         <scene sceneID="myS-1e-FLe">
             <objects>
-                <navigationController storyboardIdentifier="NewRecordingNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="4mZ-Pv-SKB" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Recorder" automaticallyAdjustsScrollViewInsets="NO" id="4mZ-Pv-SKB" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="o8m-bb-keo">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

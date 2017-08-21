@@ -71,6 +71,7 @@ final class RecordingDetailViewController: UIViewController {
 }
 
 extension RecordingDetailViewController: AudioPlaying {
+
     func setupPlayer(fileURL: URL) {
 
         guard let file = try? AKAudioFile(readFileName: fileURL.lastPathComponent, baseDir: .documents) else { return }
@@ -91,6 +92,7 @@ extension RecordingDetailViewController: AudioPlaying {
         AudioKit.output = self.variSpeed
         AudioKit.start()
     }
+
     func destroyPlayer() {
         self.player.stop()
         self.plot.node = nil

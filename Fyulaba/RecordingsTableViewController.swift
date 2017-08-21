@@ -37,10 +37,7 @@ final class RecordingsTableViewController: UITableViewController {
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
-        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "NewRecordingNavigationController") as? UINavigationController else { return }
-        guard let vc = navVc.topViewController as? NewRecordingViewController else { return }
-        vc.delegate = self
-        self.navigationController?.present(navVc, animated: true, completion: nil)
+        self.presentRecorder(with: nil)
     }
 
     // MARK: - Table view data source
@@ -75,9 +72,7 @@ final class RecordingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let recording = self.recordings[indexPath.row]
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "RecordingDetailViewController") as! RecordingDetailViewController
-        vc.recording = recording
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.presentRecorder(with: recording)
     }
 
     // Override to support editing the table view.
@@ -109,7 +104,13 @@ final class RecordingsTableViewController: UITableViewController {
 //    }
 
     // MARK: - Navigation
-
+    private func presentRecorder(with recording: Recording?) {
+        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "Recorder") as? UINavigationController else { return }
+        guard let vc = navVc.topViewController as? RecordingViewController else { return }
+        vc.delegate = self
+        vc.recording = recording
+        self.navigationController?.present(navVc, animated: true, completion: nil)
+    }
 }
 
 extension RecordingsTableViewController: SpeechRecordingDelegate {
@@ -117,6 +118,18 @@ extension RecordingsTableViewController: SpeechRecordingDelegate {
         self.recordings.append(recording)
         try? Disk.save(self.recordings, to: .documents, as: "recordings.json")
         self.tableView.reloadData()
+    }
+
+    func didDelete(_ recording: Recording) {
+        let newRecordings = self.recordings.filter { $0.uuid != recording.uuid }
+        do {
+            try Disk.save(newRecordings, to: .documents, as: "recordings.json")
+            // Delete the row from the data source
+            if let fileURL = recording.fileURL {
+                try Disk.remove(fileURL.lastPathComponent, from: .documents)
+            }
+        } catch {}
+        self.recordings = newRecordings
     }
 }
 

@@ -11,4 +11,5 @@ import AudioKit
 
 protocol SpeechRecordingDelegate {
     func didComplete(_ recording: Recording)
+    func didDelete(_ recording: Recording)
 }
