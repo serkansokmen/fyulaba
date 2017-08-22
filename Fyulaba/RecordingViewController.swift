@@ -70,14 +70,14 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
         guard let recording = self.recording else { return }
         self.delegate?.saveRecording(recording, completionHandler: {
             AudioKit.stop()
-            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
         })
     }
 
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
         AudioKit.stop()
         AKAudioFile.cleanTempDirectory()
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 
     override func viewDidLoad() {
@@ -361,7 +361,7 @@ extension RecordingViewController {
 
                         guard let recording = self.recording else { return }
                         self.delegate?.delete(recording)
-                        self.dismiss(animated: true, completion: nil)
+                        self.navigationController?.popViewController(animated: true)
                     })
                     let no = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                     alert.addAction(yes)

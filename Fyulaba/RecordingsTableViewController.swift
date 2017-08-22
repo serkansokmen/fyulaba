@@ -90,7 +90,7 @@ final class RecordingsTableViewController: UITableViewController, StoreSubscribe
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let recording = self.recordings[indexPath.row]
-//        self.presentRecorder(with: recording)
+        self.presentRecorder(with: recording)
     }
 
     // Override to support editing the table view.
@@ -123,11 +123,10 @@ final class RecordingsTableViewController: UITableViewController, StoreSubscribe
 
     // MARK: - Navigation
     private func presentRecorder(with recording: Recording?) {
-//        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "Recorder") as? UINavigationController else { return }
-//        guard let vc = navVc.topViewController as? RecordingViewController else { return }
-//        vc.delegate = self
-//        vc.recording = recording
-//        self.navigationController?.present(navVc, animated: true, completion: nil)
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: RecordingViewController.identifier) as? RecordingViewController else { return }
+        vc.delegate = self
+        vc.recording = recording
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
