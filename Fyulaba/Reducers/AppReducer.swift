@@ -10,7 +10,7 @@ import Foundation
 import ReSwift
 import ReSwiftRouter
 
-public enum Response<T> {
+enum Response<T> {
     case loading
     case success(T)
     case failure(Error)

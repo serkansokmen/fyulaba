@@ -91,20 +91,7 @@ final class RecordingsTableViewController: UITableViewController, Routable {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let recording = self.recordings[indexPath.row]
-            self.recordings.remove(at: indexPath.row)
-            do {
-                try Disk.save(self.recordings, to: .documents, as: "recordings.json")
-                // Delete the row from the data source
-                if let fileURL = recording.fileURL {
-                    try Disk.remove(fileURL.lastPathComponent, from: .documents)
-                }
-            } catch {}
-
-            DispatchQueue.main.async {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                tableView.reloadEmptyDataSet()
-            }
-
+            self.delete(recording)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    

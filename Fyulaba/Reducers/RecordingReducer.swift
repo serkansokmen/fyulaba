@@ -15,19 +15,16 @@ struct RecordingReducer: Reducer {
 
     func handleAction(action: Action, state: RecordingState?) -> RecordingState {
 
-        switch action {
-        case _ as ReSwiftInit:
-            break
-        case _ as FetchRecordingsAction:
-            do {
+        let state = state ?? RecordingState(recordings: .success([]))
+
+        do {
+            switch action {
+
+            case _ as FetchRecordingsAction:
                 let retrievedRecordings = try self.getRecordings()
                 return RecordingState(recordings: .success(retrievedRecordings))
-            } catch let err {
-                return RecordingState(recordings: .failure(err))
-            }
 
-        case let action as SaveRecordingAction:
-            do {
+            case let action as SaveRecordingAction:
                 var retrievedRecordings = try self.getRecordings()
                 if let existingIndex = retrievedRecordings.index(where: { $0.uuid == action.updatedRecording.uuid }) {
                     retrievedRecordings[existingIndex] = action.updatedRecording
@@ -35,12 +32,8 @@ struct RecordingReducer: Reducer {
                     retrievedRecordings.append(action.updatedRecording)
                 }
                 return RecordingState(recordings: .success(retrievedRecordings))
-            } catch let err {
-                return RecordingState(recordings: .failure(err))
-            }
 
-        case let action as RemoveRecordingAction:
-            do {
+            case let action as RemoveRecordingAction:
                 var retrievedRecordings = try self.getRecordings()
                 if let existingIndex = retrievedRecordings.index(where: { $0.uuid == action.recording.uuid }) {
                     let existingRecording = retrievedRecordings[existingIndex]
@@ -51,15 +44,13 @@ struct RecordingReducer: Reducer {
                     }
                 }
                 return RecordingState(recordings: .success(retrievedRecordings))
-            } catch let err {
-                return RecordingState(recordings: .failure(err))
+
+            default:
+                return state
             }
-
-        default:
-            break
+        } catch let err {
+            return RecordingState(recordings: .failure(err))
         }
-
-        return state ?? RecordingState(recordings: .success([]))
     }
 
     private func getRecordings() throws -> [Recording] {
