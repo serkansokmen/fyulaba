@@ -45,7 +45,7 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
         static let empty = ""
     }
 
-    var delegate: SpeechRecordingDelegate?
+    var delegate: SpeechRecording?
     var recording: Recording?
 
     private var infoRow: LabelRow?

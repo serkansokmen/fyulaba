@@ -9,7 +9,7 @@
 import Foundation
 import AudioKit
 
-protocol SpeechRecordingDelegate {
+protocol SpeechRecording {
     func saveRecording(_ recording: Recording, completionHandler: (()->Void)?)
     func delete(_ recording: Recording)
 }

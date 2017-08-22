@@ -135,7 +135,7 @@ extension RecordingsTableViewController: StoreSubscriber {
     }
 }
 
-extension RecordingsTableViewController: SpeechRecordingDelegate {
+extension RecordingsTableViewController: SpeechRecording {
 
     func saveRecording(_ recording: Recording, completionHandler: (() -> Void)?) {
         store.dispatch(SaveRecordingAction(updatedRecording: recording))
