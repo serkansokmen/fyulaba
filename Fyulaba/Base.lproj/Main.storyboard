@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fy6-2q-VHH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fy6-2q-VHH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13165.3"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,63 +111,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XgZ-30-TxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="311" y="654"/>
-        </scene>
-        <!--Recording Detail View Controller-->
-        <scene sceneID="aVW-1h-40P">
-            <objects>
-                <viewController storyboardIdentifier="RecordingDetailViewController" id="CoT-9T-7by" customClass="RecordingDetailViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xlE-Zn-GII">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hlY-tJ-c9o">
-                                <rect key="frame" x="20" y="40" width="335" height="607"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZSL-1T-902" customClass="AKNodeOutputPlot" customModule="AudioKit">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="152"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="diy-gX-Y59">
-                                        <rect key="frame" x="0.0" y="152" width="335" height="151.5"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4o-Mu-l87">
-                                        <rect key="frame" x="0.0" y="303.5" width="335" height="152"/>
-                                        <state key="normal" title="Play"/>
-                                        <connections>
-                                            <action selector="playButtonTouched:" destination="CoT-9T-7by" eventType="touchUpInside" id="cUL-zz-3fy"/>
-                                        </connections>
-                                    </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.01" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="fEq-Lr-y5K">
-                                        <rect key="frame" x="-2" y="455.5" width="339" height="152.5"/>
-                                        <connections>
-                                            <action selector="sliderChanged:" destination="CoT-9T-7by" eventType="valueChanged" id="c7c-bq-CWa"/>
-                                        </connections>
-                                    </slider>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="hlY-tJ-c9o" firstAttribute="top" secondItem="BgY-zD-Z5X" secondAttribute="top" constant="20" id="5Cm-CG-IhZ"/>
-                            <constraint firstItem="hlY-tJ-c9o" firstAttribute="trailing" secondItem="BgY-zD-Z5X" secondAttribute="trailing" constant="-20" id="DaO-Jc-Ips"/>
-                            <constraint firstItem="BgY-zD-Z5X" firstAttribute="bottom" secondItem="hlY-tJ-c9o" secondAttribute="bottom" constant="20" id="Ev0-sm-DV3"/>
-                            <constraint firstItem="hlY-tJ-c9o" firstAttribute="leading" secondItem="BgY-zD-Z5X" secondAttribute="leading" constant="20" id="G3g-cs-pSg"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="BgY-zD-Z5X"/>
-                    </view>
-                    <connections>
-                        <outlet property="playButton" destination="z4o-Mu-l87" id="Be3-ox-aQf"/>
-                        <outlet property="plot" destination="ZSL-1T-902" id="Kic-ee-BdX"/>
-                        <outlet property="textView" destination="diy-gX-Y59" id="j2K-EL-zCy"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mlx-wh-8TS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1892" y="153.37331334332833"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="myS-1e-FLe">

@@ -10,7 +10,6 @@ import Foundation
 import ReSwift
 import ReSwiftRouter
 
-struct AppState: StateType, HasNavigationState {
-    var navigationState: NavigationState
-    var recordings: [Recording]?
+struct RecordingState: StateType {
+    var recordings: Response<[Recording]>
 }

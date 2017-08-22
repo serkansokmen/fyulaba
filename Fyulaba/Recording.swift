@@ -26,7 +26,7 @@ extension NSRange {
 }
 
 
-struct Recording: Codable {
+struct Recording: Codable, Equatable {
 
     let uuid: String
     let text: String
@@ -55,6 +55,13 @@ struct Recording: Codable {
         } catch {
             return ""
         }
+    }
+
+    public static func ==(lhs: Recording, rhs: Recording) -> Bool {
+        return lhs.uuid == rhs.uuid &&
+            lhs.text == rhs.text &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.fileURL == rhs.fileURL
     }
 
 }

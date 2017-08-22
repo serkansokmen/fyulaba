@@ -20,7 +20,7 @@ enum HeroConstants: String {
 }
 
 
-final class RecordingsTableViewController: UITableViewController, StoreSubscriber, Routable {
+final class RecordingsTableViewController: UITableViewController, Routable {
 
     static let identifier = "RecordingsTableViewController"
 
@@ -40,18 +40,12 @@ final class RecordingsTableViewController: UITableViewController, StoreSubscribe
         super.viewWillAppear(animated)
 
         store.subscribe(self)
-        store.dispatch(loadRecordings)
+        store.dispatch(FetchRecordingsAction(query: nil))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
-    }
-
-    func newState(state: AppState) {
-        self.recordings = state.recordings ?? []
-        self.tableView.reloadData()
-        self.tableView.reloadEmptyDataSet()
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
@@ -116,11 +110,6 @@ final class RecordingsTableViewController: UITableViewController, StoreSubscribe
         }    
     }
 
-    // Override to support rearranging the table view.
-//    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-//
-//    }
-
     // MARK: - Navigation
     private func presentRecorder(with recording: Recording?) {
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: RecordingViewController.identifier) as? RecordingViewController else { return }
@@ -130,41 +119,31 @@ final class RecordingsTableViewController: UITableViewController, StoreSubscribe
     }
 }
 
+extension RecordingsTableViewController: StoreSubscriber {
+    func newState(state: RecordingState) {
+        switch state.recordings {
+        case .loading:
+            self.tableView.isHidden = true
+        case let .success(recordings):
+            self.tableView.isHidden = false
+            self.recordings = recordings
+            self.tableView.reloadData()
+            self.tableView.reloadEmptyDataSet()
+        case let .failure(error):
+            self.showAlert(error.localizedDescription, type: .warning)
+        }
+    }
+}
+
 extension RecordingsTableViewController: SpeechRecordingDelegate {
 
     func saveRecording(_ recording: Recording, completionHandler: (() -> Void)?) {
-        guard let fileURL = recording.fileURL else { return }
-        do {
-            try Disk.move(fileURL.lastPathComponent, in: .temporary, to: .documents)
-            let newFileURL = try Disk.getURL(for: fileURL.lastPathComponent, in: .documents)
-            let newRecording = Recording(uuid: recording.uuid,
-                                               text: recording.text,
-                                               createdAt: recording.createdAt,
-                                               fileURL: newFileURL)
-            if let existingIndex = self.recordings.index(where: { $0.uuid == newRecording.uuid }) {
-                self.recordings[existingIndex] = newRecording
-            } else {
-                self.recordings.append(newRecording)
-            }
-            try Disk.save(self.recordings, to: .documents, as: "recordings.json")
-            completionHandler?()
-        } catch let error {
-            self.showAlert(error.localizedDescription, type: .error)
-        }
-
+        store.dispatch(SaveRecordingAction(updatedRecording: recording))
         self.tableView.reloadData()
     }
 
     func delete(_ recording: Recording) {
-        let newRecordings = self.recordings.filter { $0.uuid != recording.uuid }
-        do {
-            try Disk.save(newRecordings, to: .documents, as: "recordings.json")
-            // Delete the row from the data source
-            if let fileURL = recording.fileURL {
-                try Disk.remove(fileURL.lastPathComponent, from: .documents)
-            }
-        } catch {}
-        self.recordings = newRecordings
+        store.dispatch(RemoveRecordingAction(recording: recording))
     }
 }
 

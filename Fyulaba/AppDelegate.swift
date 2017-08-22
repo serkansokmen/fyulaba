@@ -11,7 +11,7 @@ import ReSwift
 import ReSwiftRecorder
 
 // Store
-let store = Store<AppState>(
+let store = Store<State>(
     reducer: AppReducer(),
     state: nil
 )

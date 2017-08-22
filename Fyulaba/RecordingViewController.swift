@@ -121,7 +121,7 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
         store.unsubscribe(self)
     }
 
-    func newState(state: AppState) {
+    func newState(state: State) {
 //        self.recordings = state.recordings ?? []
     }
 }
@@ -421,7 +421,7 @@ extension RecordingViewController {
 
     private func updateHeaderView() {
         guard let state = self.state else { return }
-
+        print(state)
     }
 }
 

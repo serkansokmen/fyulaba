@@ -10,13 +10,19 @@ import Foundation
 import ReSwift
 import ReSwiftRouter
 
+public enum Response<T> {
+    case loading
+    case success(T)
+    case failure(Error)
+}
+
 struct AppReducer: Reducer {
 
-    func handleAction(action: Action, state: AppState?) -> AppState {
+    func handleAction(action: Action, state: State?) -> State {
 
-        return AppState(
+        return State(
             navigationState: NavigationReducer.handleAction(action, state: state?.navigationState),
-            recordings: recordingsReducer(state: state?.recordings ?? [], action: action)
+            recordingState: RecordingReducer().handleAction(action: action, state: state?.recordingState)
         )
     }
 }
