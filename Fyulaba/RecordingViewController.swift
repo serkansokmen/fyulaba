@@ -14,9 +14,13 @@ import ChameleonFramework
 import Disk
 import Eureka
 import Cartography
+import ReSwift
+import ReSwiftRouter
 
 
-final class RecordingViewController: FormViewController {
+final class RecordingViewController: FormViewController, StoreSubscriber, Routable {
+
+    static let identifier = "RecordingViewController"
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
@@ -103,6 +107,22 @@ final class RecordingViewController: FormViewController {
                 print("Transcription Error: \(error.localizedDescription)")
             }
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        store.subscribe(self)
+//        store.dispatch(LoadRecordingAction())
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.unsubscribe(self)
+    }
+
+    func newState(state: AppState) {
+//        self.recordings = state.recordings ?? []
     }
 }
 

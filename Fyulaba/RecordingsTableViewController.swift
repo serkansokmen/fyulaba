@@ -12,14 +12,17 @@ import DZNEmptyDataSet
 import Disk
 import AudioKit
 import Hero
+import ReSwift
+import ReSwiftRouter
 
 enum HeroConstants: String {
     case recordings = "recordings"
-
 }
 
 
-final class RecordingsTableViewController: UITableViewController {
+final class RecordingsTableViewController: UITableViewController, StoreSubscriber, Routable {
+
+    static let identifier = "RecordingsTableViewController"
 
     var recordings = [Recording]()
 
@@ -31,11 +34,24 @@ final class RecordingsTableViewController: UITableViewController {
 
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.handleAdd))
         self.navigationItem.rightBarButtonItems = [addItem, self.editButtonItem]
+    }
 
-        guard let retrievedRecordings = try? Disk.retrieve("recordings.json", from: .documents, as: [Recording].self) else { return }
-        self.recordings = retrievedRecordings
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-        
+        store.subscribe(self)
+        store.dispatch(loadRecordings)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.unsubscribe(self)
+    }
+
+    func newState(state: AppState) {
+        self.recordings = state.recordings ?? []
+        self.tableView.reloadData()
+        self.tableView.reloadEmptyDataSet()
     }
 
     @objc func handleAdd(_ sender: UIBarButtonItem) {
@@ -74,7 +90,7 @@ final class RecordingsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let recording = self.recordings[indexPath.row]
-        self.presentRecorder(with: recording)
+//        self.presentRecorder(with: recording)
     }
 
     // Override to support editing the table view.
@@ -107,11 +123,11 @@ final class RecordingsTableViewController: UITableViewController {
 
     // MARK: - Navigation
     private func presentRecorder(with recording: Recording?) {
-        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "Recorder") as? UINavigationController else { return }
-        guard let vc = navVc.topViewController as? RecordingViewController else { return }
-        vc.delegate = self
-        vc.recording = recording
-        self.navigationController?.present(navVc, animated: true, completion: nil)
+//        guard let navVc = self.storyboard?.instantiateViewController(withIdentifier: "Recorder") as? UINavigationController else { return }
+//        guard let vc = navVc.topViewController as? RecordingViewController else { return }
+//        vc.delegate = self
+//        vc.recording = recording
+//        self.navigationController?.present(navVc, animated: true, completion: nil)
     }
 }
 

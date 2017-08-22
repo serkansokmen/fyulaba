@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import ReSwift
+import ReSwiftRecorder
+
+// Store
+let store = Store<AppState>(
+    reducer: AppReducer(),
+    state: nil
+)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 

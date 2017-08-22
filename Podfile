@@ -10,6 +10,11 @@ target 'Fyulaba' do
     pod 'DZNEmptyDataSet'
     pod 'Cartography'
     pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+    pod 'ReSwift'
+    pod 'ReSwiftRouter'
+    pod 'ReSwiftRecorder'
+    pod 'RxSwift'
+    pod 'RxCocoa'
 
     post_install do |installer|
         installer.pods_project.targets.each do |target|
