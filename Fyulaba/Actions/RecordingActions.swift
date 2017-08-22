@@ -15,6 +15,10 @@ struct FetchRecordingsAction: Action {
     let query: String?
 }
 
+struct FetchRecordingAction: Action {
+    let uuid: String
+}
+
 struct PersistRecordingsAction: Action {
     let recordings: [Recording]
 }

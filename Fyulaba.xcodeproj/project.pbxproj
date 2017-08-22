@@ -13,11 +13,13 @@
 		E60BEE201F4BB43500DD7F9A /* RecordingReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE1F1F4BB43500DD7F9A /* RecordingReducer.swift */; };
 		E60BEE231F4BB49D00DD7F9A /* RecordingActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE221F4BB49D00DD7F9A /* RecordingActions.swift */; };
 		E60BEE261F4BB4D400DD7F9A /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE251F4BB4D400DD7F9A /* State.swift */; };
-		E60BEE291F4BBEFF00DD7F9A /* RecordingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE281F4BBEFF00DD7F9A /* RecordingState.swift */; };
+		E60BEE291F4BBEFF00DD7F9A /* RecordingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE281F4BBEFF00DD7F9A /* RecordingsState.swift */; };
 		E61D0A791F4A54B6007073BA /* UIViewController+Alerting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D0A781F4A54B6007073BA /* UIViewController+Alerting.swift */; };
 		E61D0A7B1F4A5B4F007073BA /* AudioPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */; };
 		E62DD4DE1F487FDA00C5D8FD /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; };
 		E62DD4DF1F487FDA00C5D8FD /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E69CEA8E1F4C90DD00273E6C /* RecordingFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69CEA8D1F4C90DC00273E6C /* RecordingFormState.swift */; };
+		E69CEA901F4C91FD00273E6C /* RecordingFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69CEA8F1F4C91FC00273E6C /* RecordingFormReducer.swift */; };
 		E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998561F46241C00B3AAD0 /* AppDelegate.swift */; };
 		E6B998601F46241C00B3AAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B9985E1F46241C00B3AAD0 /* Main.storyboard */; };
 		E6B998621F46241C00B3AAD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B998611F46241C00B3AAD0 /* Assets.xcassets */; };
@@ -54,10 +56,12 @@
 		E60BEE1F1F4BB43500DD7F9A /* RecordingReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingReducer.swift; sourceTree = "<group>"; };
 		E60BEE221F4BB49D00DD7F9A /* RecordingActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingActions.swift; sourceTree = "<group>"; };
 		E60BEE251F4BB4D400DD7F9A /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		E60BEE281F4BBEFF00DD7F9A /* RecordingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingState.swift; sourceTree = "<group>"; };
+		E60BEE281F4BBEFF00DD7F9A /* RecordingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsState.swift; sourceTree = "<group>"; };
 		E61D0A781F4A54B6007073BA /* UIViewController+Alerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerting.swift"; sourceTree = "<group>"; };
 		E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaying.swift; sourceTree = "<group>"; };
 		E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		E69CEA8D1F4C90DC00273E6C /* RecordingFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingFormState.swift; sourceTree = "<group>"; };
+		E69CEA8F1F4C91FC00273E6C /* RecordingFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingFormReducer.swift; sourceTree = "<group>"; };
 		E6B998531F46241C00B3AAD0 /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B998561F46241C00B3AAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6B9985F1F46241C00B3AAD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 			children = (
 				E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */,
 				E60BEE1F1F4BB43500DD7F9A /* RecordingReducer.swift */,
+				E69CEA8F1F4C91FC00273E6C /* RecordingFormReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -125,7 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				E60BEE251F4BB4D400DD7F9A /* State.swift */,
-				E60BEE281F4BBEFF00DD7F9A /* RecordingState.swift */,
+				E60BEE281F4BBEFF00DD7F9A /* RecordingsState.swift */,
+				E69CEA8D1F4C90DC00273E6C /* RecordingFormState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -202,16 +208,16 @@
 		E6B998551F46241C00B3AAD0 /* Fyulaba */ = {
 			isa = PBXGroup;
 			children = (
+				E6B998561F46241C00B3AAD0 /* AppDelegate.swift */,
+				E60BEE211F4BB47000DD7F9A /* Actions */,
+				E60BEE1C1F4BB3CE00DD7F9A /* Reducers */,
 				E630DFEA1F4C80290013EDEA /* Protocols */,
 				E630DFEB1F4C80820013EDEA /* Extensions */,
 				E630DFE61F4C7FEB0013EDEA /* Services */,
-				E60BEE211F4BB47000DD7F9A /* Actions */,
 				E60BEE271F4BBEE100DD7F9A /* States */,
 				E630DFE91F4C801C0013EDEA /* Models */,
 				E630DFE81F4C800E0013EDEA /* Views */,
 				E630DFE71F4C80020013EDEA /* View Controllers */,
-				E60BEE1C1F4BB3CE00DD7F9A /* Reducers */,
-				E6B998561F46241C00B3AAD0 /* AppDelegate.swift */,
 				E6B9985E1F46241C00B3AAD0 /* Main.storyboard */,
 				E6B998611F46241C00B3AAD0 /* Assets.xcassets */,
 				E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */,
@@ -375,10 +381,12 @@
 				E6B998711F46309B00B3AAD0 /* RecordingsTableViewController.swift in Sources */,
 				E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */,
 				E60BEE261F4BB4D400DD7F9A /* State.swift in Sources */,
+				E69CEA8E1F4C90DD00273E6C /* RecordingFormState.swift in Sources */,
+				E69CEA901F4C91FD00273E6C /* RecordingFormReducer.swift in Sources */,
 				E6B998731F463FA100B3AAD0 /* RecordingViewController.swift in Sources */,
 				E60741561F490D61006B4358 /* RecordingTableViewCell.swift in Sources */,
 				E6B998831F46A2CB00B3AAD0 /* SentimentType.swift in Sources */,
-				E60BEE291F4BBEFF00DD7F9A /* RecordingState.swift in Sources */,
+				E60BEE291F4BBEFF00DD7F9A /* RecordingsState.swift in Sources */,
 				E60BEE231F4BB49D00DD7F9A /* RecordingActions.swift in Sources */,
 				E61D0A791F4A54B6007073BA /* UIViewController+Alerting.swift in Sources */,
 				E61D0A7B1F4A5B4F007073BA /* AudioPlaying.swift in Sources */,

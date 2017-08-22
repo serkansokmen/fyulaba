@@ -106,7 +106,7 @@ final class RecordingsTableViewController: UITableViewController, Routable {
 }
 
 extension RecordingsTableViewController: StoreSubscriber {
-    func newState(state: RecordingState) {
+    func newState(state: RecordingsState) {
         switch state.recordings {
         case .loading:
             self.tableView.isHidden = true

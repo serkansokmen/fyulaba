@@ -11,15 +11,21 @@ import ReSwift
 import Disk
 
 
-struct RecordingReducer: Reducer {
+struct RecordingFormReducer: Reducer {
 
-    func handleAction(action: Action, state: RecordingsState?) -> RecordingsState {
+    func handleAction(action: Action, state: RecordingFormState?) -> RecordingFormState {
 
-        let state = state ?? RecordingsState(recordings: .success([]))
+        let state = state ?? RecordingFormState(recording:
+            .success(Recording(uuid: UUID().uuidString,
+                               text: "",
+                               createdAt: Date(),
+                               sentiment: nil,
+                               fileURL: nil)))
 
         switch action {
-        case _ as FetchRecordingsAction:
-            return RecordingsState(recordings: .loading)
+        case let action as FetchRecordingAction:
+            print(action.uuid)
+            return RecordingFormState(recording: .loading)
         default:
             return state
         }

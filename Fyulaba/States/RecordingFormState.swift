@@ -10,6 +10,6 @@ import Foundation
 import ReSwift
 import ReSwiftRouter
 
-struct RecordingState: StateType {
-    var recordings: Response<[Recording]>
+struct RecordingFormState: StateType {
+    var recording: Response<Recording>?
 }

@@ -18,13 +18,13 @@ import ReSwift
 import ReSwiftRouter
 
 
-final class RecordingViewController: FormViewController, StoreSubscriber, Routable {
+final class RecordingViewController: FormViewController, Routable {
 
     static let identifier = "RecordingViewController"
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    private enum RecordingState {
+    private enum RecorderState {
         case readyToRecord
         case recording
         case readyToPlay
@@ -60,7 +60,7 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
     private var variSpeed: AKVariSpeed!
     private let mic = AKMicrophone()
 
-    private var state: RecordingState?
+    private var state: RecorderState?
 
     private var transcribeResultHandler: SpeechTranscribeResultHandler?
     private var transcribeErrorHandler: SpeechTranscribeErrorHandler?
@@ -101,14 +101,6 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
                 print("Transcription Error: \(error.localizedDescription)")
             }
         }
-
-        if self.recording == nil {
-            self.recording = Recording(uuid: UUID().uuidString,
-                                       text: "",
-                                       createdAt: Date(),
-                                       sentiment: nil,
-                                       fileURL: nil)
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -122,9 +114,13 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
+}
 
-    func newState(state: State) {
-//        self.recordings = state.recordings ?? []
+// MARK: - StoreSubscriber
+extension RecordingViewController: StoreSubscriber {
+    func newState(state: RecordingFormState) {
+        //        self.recordings = state.recordings ?? []
+        print(state)
     }
 }
 
@@ -389,7 +385,7 @@ extension RecordingViewController {
         }
     }
 
-//    private func makeHeaderView(for state: RecordingState?) -> HeaderFooterView<UIView>? {
+//    private func makeHeaderView(for state: RecorderState?) -> HeaderFooterView<UIView>? {
 //        var header = HeaderFooterView<UIView>(.callback({
 //            guard let state = state else { return UIView(frame: .zero) }
 //            switch state {

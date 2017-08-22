@@ -22,7 +22,8 @@ struct AppReducer: Reducer {
 
         return State(
             navigationState: NavigationReducer.handleAction(action, state: state?.navigationState),
-            recordingState: RecordingReducer().handleAction(action: action, state: state?.recordingState)
+            recordingsState: RecordingReducer().handleAction(action: action, state: state?.recordingsState),
+            recordingFormState: RecordingFormReducer().handleAction(action: action, state: state?.recordingFormState)
         )
     }
 }
