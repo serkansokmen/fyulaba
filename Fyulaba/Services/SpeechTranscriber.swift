@@ -10,7 +10,7 @@ import Foundation
 import Speech
 import AudioKit
 
-typealias SpeechTranscribeResultHandler = (String, Sentiment?) -> Void
+typealias SpeechTranscribeResultHandler = (String, SentimentType?) -> Void
 typealias SpeechTranscribeErrorHandler = (Error?) -> Void
 
 class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {

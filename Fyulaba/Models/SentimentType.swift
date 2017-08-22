@@ -9,20 +9,14 @@
 import UIKit
 
 
-enum Sentiment {
-    case neutral
-    case positive
-    case negative
+enum SentimentType: String {
+
+    case neutral = "😐"
+    case positive = "😃"
+    case negative = "😔"
 
     var emoji: String {
-        switch self {
-        case .neutral:
-            return "😐"
-        case .positive:
-            return "😃"
-        case .negative:
-            return "😔"
-        }
+        return self.rawValue
     }
 
     var color: UIColor? {

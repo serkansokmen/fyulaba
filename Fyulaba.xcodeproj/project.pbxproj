@@ -24,10 +24,9 @@
 		E6B998651F46241C00B3AAD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */; };
 		E6B998711F46309B00B3AAD0 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998701F46309B00B3AAD0 /* RecordingsTableViewController.swift */; };
 		E6B998731F463FA100B3AAD0 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998721F463FA100B3AAD0 /* RecordingViewController.swift */; };
-		E6B998771F46596E00B3AAD0 /* SpeechRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998761F46596E00B3AAD0 /* SpeechRecording.swift */; };
 		E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9987A1F46916D00B3AAD0 /* Recording.swift */; };
 		E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998801F46A27500B3AAD0 /* ClassificationService.swift */; };
-		E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */; };
+		E6B998831F46A2CB00B3AAD0 /* SentimentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998821F46A2CB00B3AAD0 /* SentimentType.swift */; };
 		E6C451A31F4C5CE300F65D9E /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E6C451A21F4C5CE100F65D9E /* SentimentPolarity.mlmodel */; };
 		E6EA4AFB1F4A659B00B241AC /* SpeechTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */; };
 /* End PBXBuildFile section */
@@ -67,10 +66,9 @@
 		E6B998661F46241C00B3AAD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6B998701F46309B00B3AAD0 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsTableViewController.swift; sourceTree = "<group>"; };
 		E6B998721F463FA100B3AAD0 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
-		E6B998761F46596E00B3AAD0 /* SpeechRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecording.swift; sourceTree = "<group>"; };
 		E6B9987A1F46916D00B3AAD0 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
 		E6B998801F46A27500B3AAD0 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
-		E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentiment.swift; sourceTree = "<group>"; };
+		E6B998821F46A2CB00B3AAD0 /* SentimentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentimentType.swift; sourceTree = "<group>"; };
 		E6C451A21F4C5CE100F65D9E /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				E6B9987A1F46916D00B3AAD0 /* Recording.swift */,
-				E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */,
+				E6B998821F46A2CB00B3AAD0 /* SentimentType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */,
-				E6B998761F46596E00B3AAD0 /* SpeechRecording.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -375,13 +372,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6B998771F46596E00B3AAD0 /* SpeechRecording.swift in Sources */,
 				E6B998711F46309B00B3AAD0 /* RecordingsTableViewController.swift in Sources */,
 				E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */,
 				E60BEE261F4BB4D400DD7F9A /* State.swift in Sources */,
 				E6B998731F463FA100B3AAD0 /* RecordingViewController.swift in Sources */,
 				E60741561F490D61006B4358 /* RecordingTableViewCell.swift in Sources */,
-				E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */,
+				E6B998831F46A2CB00B3AAD0 /* SentimentType.swift in Sources */,
 				E60BEE291F4BBEFF00DD7F9A /* RecordingState.swift in Sources */,
 				E60BEE231F4BB49D00DD7F9A /* RecordingActions.swift in Sources */,
 				E61D0A791F4A54B6007073BA /* UIViewController+Alerting.swift in Sources */,

@@ -33,7 +33,7 @@ final class ClassificationService {
     }
 
     // MARK: - Prediction
-    func predictSentiment(from text: String) -> Sentiment {
+    func predictSentiment(from text: String) -> SentimentType {
         do {
             let inputFeatures = features(from: text)
             // Make prediction only with 2 or more words

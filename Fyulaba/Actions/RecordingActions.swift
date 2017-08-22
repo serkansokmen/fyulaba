@@ -15,7 +15,15 @@ struct FetchRecordingsAction: Action {
     let query: String?
 }
 
-struct SaveRecordingAction: Action {
+struct PersistRecordingsAction: Action {
+    let recordings: [Recording]
+}
+
+struct AddRecordingAction: Action {
+    let newRecording: Recording
+}
+
+struct UpdateRecordingAction: Action {
     let updatedRecording: Recording
 }
 

@@ -91,7 +91,7 @@ final class RecordingsTableViewController: UITableViewController, Routable {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let recording = self.recordings[indexPath.row]
-            self.delete(recording)
+            store.dispatch(RemoveRecordingAction(recording: recording))
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -100,7 +100,6 @@ final class RecordingsTableViewController: UITableViewController, Routable {
     // MARK: - Navigation
     private func presentRecorder(with recording: Recording?) {
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: RecordingViewController.identifier) as? RecordingViewController else { return }
-        vc.delegate = self
         vc.recording = recording
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -119,17 +118,6 @@ extension RecordingsTableViewController: StoreSubscriber {
         case let .failure(error):
             self.showAlert(error.localizedDescription, type: .warning)
         }
-    }
-}
-
-extension RecordingsTableViewController: SpeechRecording {
-
-    func saveRecording(_ recording: Recording, completionHandler: (() -> Void)?) {
-        store.dispatch(SaveRecordingAction(updatedRecording: recording))
-    }
-
-    func delete(_ recording: Recording) {
-        store.dispatch(RemoveRecordingAction(recording: recording))
     }
 }
 

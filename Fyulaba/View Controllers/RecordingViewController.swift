@@ -45,7 +45,6 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
         static let empty = ""
     }
 
-    var delegate: SpeechRecording?
     var recording: Recording?
 
     private var infoRow: LabelRow?
@@ -68,10 +67,9 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
 
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
         guard let recording = self.recording else { return }
-        self.delegate?.saveRecording(recording, completionHandler: {
-            AudioKit.stop()
-            self.navigationController?.popViewController(animated: true)
-        })
+        store.dispatch(UpdateRecordingAction(updatedRecording: recording))
+        AudioKit.stop()
+        self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func handleCancel(_ sender: UIBarButtonItem) {
@@ -91,21 +89,25 @@ final class RecordingViewController: FormViewController, StoreSubscriber, Routab
 
         transcribeResultHandler = { result, sentiment in
             guard let recording = self.recording else { return }
-            self.recording = Recording(uuid: recording.uuid,
-                                       text: result,
-                                       createdAt: recording.createdAt,
-                                       fileURL: recording.fileURL)
-            if let sentiment = sentiment {
-                self.resultRow?.value = "\(sentiment.emoji) \(result)"
-            } else {
-                self.resultRow?.value = result
-            }
-            self.resultRow?.reload()
+            let updatedRecording = Recording(uuid: recording.uuid,
+                                             text: result,
+                                             createdAt: recording.createdAt,
+                                             sentiment: recording.sentiment,
+                                             fileURL: recording.fileURL)
+            store.dispatch(UpdateRecordingAction(updatedRecording: updatedRecording))
         }
         transcribeErrorHandler = { error in
             if let error = error {
                 print("Transcription Error: \(error.localizedDescription)")
             }
+        }
+
+        if self.recording == nil {
+            self.recording = Recording(uuid: UUID().uuidString,
+                                       text: "",
+                                       createdAt: Date(),
+                                       sentiment: nil,
+                                       fileURL: nil)
         }
     }
 
@@ -277,6 +279,7 @@ extension RecordingViewController {
                                                                                 self.recording = Recording(uuid: uuid,
                                                                                                            text: self.resultRow?.value ?? "",
                                                                                                            createdAt: Date(),
+                                                                                                           sentiment: nil,
                                                                                                            fileURL: file.url)
                                                                                 print("Export succeeded")
                                                                             } else {
@@ -360,7 +363,7 @@ extension RecordingViewController {
                         } catch { print("Already reset") }
 
                         guard let recording = self.recording else { return }
-                        self.delegate?.delete(recording)
+                        store.dispatch(RemoveRecordingAction(recording: recording))
                         self.navigationController?.popViewController(animated: true)
                     })
                     let no = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

@@ -31,17 +31,22 @@ struct Recording: Codable, Equatable {
     let uuid: String
     let text: String
     let createdAt: Date
+    var sentiment: String?
     var fileURL: URL?
 
     private enum CodingKeys: String, CodingKey {
         case uuid = "uuid"
         case text = "text"
         case createdAt = "created_at"
+        case sentiment
         case fileURL = "file_url"
     }
 
     var title: String {
-        return self.text
+        guard let sentiment = self.sentiment else {
+            return self.text
+        }
+        return "\(sentiment) \(self.text)"
     }
 
     var subtitle: String {
@@ -58,10 +63,7 @@ struct Recording: Codable, Equatable {
     }
 
     public static func ==(lhs: Recording, rhs: Recording) -> Bool {
-        return lhs.uuid == rhs.uuid &&
-            lhs.text == rhs.text &&
-            lhs.createdAt == rhs.createdAt &&
-            lhs.fileURL == rhs.fileURL
+        return lhs.uuid == rhs.uuid
     }
 
 }
