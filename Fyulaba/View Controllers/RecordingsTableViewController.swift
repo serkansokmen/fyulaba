@@ -139,7 +139,6 @@ extension RecordingsTableViewController: SpeechRecording {
 
     func saveRecording(_ recording: Recording, completionHandler: (() -> Void)?) {
         store.dispatch(SaveRecordingAction(updatedRecording: recording))
-        self.tableView.reloadData()
     }
 
     func delete(_ recording: Recording) {
