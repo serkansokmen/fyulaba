@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		2217918A2C906AEA39EAE298 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */; };
 		E60741561F490D61006B4358 /* RecordingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60741551F490D61006B4358 /* RecordingTableViewCell.swift */; };
+		E60BEE1E1F4BB3F300DD7F9A /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */; };
+		E60BEE201F4BB43500DD7F9A /* RecordingsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE1F1F4BB43500DD7F9A /* RecordingsReducer.swift */; };
+		E60BEE231F4BB49D00DD7F9A /* RecordingsActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE221F4BB49D00DD7F9A /* RecordingsActions.swift */; };
+		E60BEE261F4BB4D400DD7F9A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE251F4BB4D400DD7F9A /* AppState.swift */; };
 		E61D0A791F4A54B6007073BA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D0A781F4A54B6007073BA /* Extensions.swift */; };
 		E61D0A7B1F4A5B4F007073BA /* AudioPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */; };
 		E62DD4DE1F487FDA00C5D8FD /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; };
@@ -26,7 +30,6 @@
 		E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998801F46A27500B3AAD0 /* ClassificationService.swift */; };
 		E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */; };
 		E6EA4AFB1F4A659B00B241AC /* SpeechTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */; };
-		E6EA4B011F4B51FE00B241AC /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EA4B001F4B51FE00B241AC /* Store.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +51,10 @@
 		425B125F435AC808F98A76F3 /* Pods-Fyulaba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.release.xcconfig"; sourceTree = "<group>"; };
 		8DDD5FD4B8188F7029207A6F /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
 		E60741551F490D61006B4358 /* RecordingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTableViewCell.swift; sourceTree = "<group>"; };
+		E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		E60BEE1F1F4BB43500DD7F9A /* RecordingsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsReducer.swift; sourceTree = "<group>"; };
+		E60BEE221F4BB49D00DD7F9A /* RecordingsActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsActions.swift; sourceTree = "<group>"; };
+		E60BEE251F4BB4D400DD7F9A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E61D0A781F4A54B6007073BA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaying.swift; sourceTree = "<group>"; };
 		E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
@@ -66,7 +73,6 @@
 		E6B998801F46A27500B3AAD0 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
 		E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sentiment.swift; sourceTree = "<group>"; };
 		E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
-		E6EA4B001F4B51FE00B241AC /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E60BEE1C1F4BB3CE00DD7F9A /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */,
+				E60BEE1F1F4BB43500DD7F9A /* RecordingsReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		E60BEE211F4BB47000DD7F9A /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				E60BEE221F4BB49D00DD7F9A /* RecordingsActions.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
 		E6B9984A1F46241C00B3AAD0 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +144,8 @@
 		E6B998551F46241C00B3AAD0 /* Fyulaba */ = {
 			isa = PBXGroup;
 			children = (
+				E60BEE211F4BB47000DD7F9A /* Actions */,
+				E60BEE1C1F4BB3CE00DD7F9A /* Reducers */,
 				E6B998561F46241C00B3AAD0 /* AppDelegate.swift */,
 				E6B998701F46309B00B3AAD0 /* RecordingsTableViewController.swift */,
 				E6B998721F463FA100B3AAD0 /* RecordingViewController.swift */,
@@ -129,7 +154,6 @@
 				E6B998761F46596E00B3AAD0 /* SpeechRecordingDelegate.swift */,
 				E6B998801F46A27500B3AAD0 /* ClassificationService.swift */,
 				E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */,
-				E6EA4B001F4B51FE00B241AC /* Store.swift */,
 				E6B9987A1F46916D00B3AAD0 /* Recording.swift */,
 				E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */,
 				E6B998821F46A2CB00B3AAD0 /* Sentiment.swift */,
@@ -139,6 +163,7 @@
 				E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */,
 				E6B998661F46241C00B3AAD0 /* Info.plist */,
 				E6B9987E1F46A23100B3AAD0 /* SentimentPolarity.mlmodel */,
+				E60BEE251F4BB4D400DD7F9A /* AppState.swift */,
 			);
 			path = Fyulaba;
 			sourceTree = "<group>";
@@ -305,17 +330,20 @@
 				E6B998771F46596E00B3AAD0 /* SpeechRecordingDelegate.swift in Sources */,
 				E6B998711F46309B00B3AAD0 /* RecordingsTableViewController.swift in Sources */,
 				E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */,
+				E60BEE261F4BB4D400DD7F9A /* AppState.swift in Sources */,
 				E6B998731F463FA100B3AAD0 /* RecordingViewController.swift in Sources */,
 				E60741561F490D61006B4358 /* RecordingTableViewCell.swift in Sources */,
 				E6B998831F46A2CB00B3AAD0 /* Sentiment.swift in Sources */,
+				E60BEE231F4BB49D00DD7F9A /* RecordingsActions.swift in Sources */,
 				E61D0A791F4A54B6007073BA /* Extensions.swift in Sources */,
-				E6EA4B011F4B51FE00B241AC /* Store.swift in Sources */,
 				E61D0A7B1F4A5B4F007073BA /* AudioPlaying.swift in Sources */,
 				E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */,
 				E6823A711F49E8850001974D /* RecordingDetailViewController.swift in Sources */,
 				E6B9987F1F46A23400B3AAD0 /* SentimentPolarity.mlmodel in Sources */,
+				E60BEE201F4BB43500DD7F9A /* RecordingsReducer.swift in Sources */,
 				E6EA4AFB1F4A659B00B241AC /* SpeechTranscriber.swift in Sources */,
 				E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */,
+				E60BEE1E1F4BB3F300DD7F9A /* AppReducer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
