@@ -1,5 +1,5 @@
 //
-//  RecordSpeechViewController.swift
+//  RecorderViewController.swift
 //  Fyulaba
 //
 //  Created by Serkan Sokmen on 24/08/2017.
@@ -7,15 +7,16 @@
 //
 
 import UIKit
+import ReSwiftRouter
 
-class RecordSpeechViewController: UIViewController {
-
-    static let identifier = "RecordSpeechViewController"
+class RecorderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
     }
+
+}
+
+extension RecorderViewController: Routable {
 
 }

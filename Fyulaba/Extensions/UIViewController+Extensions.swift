@@ -34,3 +34,15 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 }
+
+protocol Identifiable {
+    static var identifier: String { get }
+}
+
+extension Identifiable where Self: UIViewController {
+    static var identifier: String {
+        return String(describing: self)
+    }
+}
+
+extension UIViewController: Identifiable { }

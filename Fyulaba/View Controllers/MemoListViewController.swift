@@ -8,14 +8,12 @@
 
 import UIKit
 import ReSwift
+import ReSwiftRouter
 import DZNEmptyDataSet
 
 class MemoListViewController: UITableViewController {
 
-    static let identifier = "MemoListViewController"
-    static let navigationIdentifier = "MemoListNavigationController"
-
-    var items = [MemoItem]()
+    var tableDataSource: TableDataSource<MemoListCell, MemoItem>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +29,19 @@ class MemoListViewController: UITableViewController {
     @objc func handleCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self) { state in
+            state.memoItems
+        }
+        store.dispatch(FetchMemoListAction(query: nil))
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.unsubscribe(self)
+    }
 }
 
 extension MemoListViewController: StoreSubscriber {
@@ -41,7 +52,12 @@ extension MemoListViewController: StoreSubscriber {
         case .loading:
             break
         case let .success(items):
-            self.items = items
+            self.tableDataSource = TableDataSource(cellIdentifier: MemoListCell.identifier, models: items) { cell, model in
+                cell.textLabel?.text = model.title
+                cell.textLabel?.textAlignment = .center
+                return cell
+            }
+            self.tableView.dataSource = tableDataSource
             self.tableView.reloadData()
             self.tableView.reloadEmptyDataSet()
         case let .error(error):
@@ -50,37 +66,22 @@ extension MemoListViewController: StoreSubscriber {
     }
 }
 
+extension MemoListViewController: Routable {
+
+}
+
 // MARK: - Table view data source
 extension MemoListViewController {
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return self.items.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListCell.identifier, for: indexPath)
-        let item = self.items[indexPath.row]
-        print(item)
-        return cell
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = self.items[indexPath.row]
-//        self.presentRecorder(with: item)
+        //        self.presentRecorder(with: item)
     }
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = self.items[indexPath.row]
-            store.dispatch(DeleteMemoAction(item: item))
+//            let item = self.items[indexPath.row]
+//            store.dispatch(DeleteMemoAction(item: item))
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -98,5 +99,6 @@ extension MemoListViewController: DZNEmptyDataSetSource {
         return NSAttributedString(string: "Go ahead and save speak and save some words.", attributes: attributes)
     }
 }
+
 
 

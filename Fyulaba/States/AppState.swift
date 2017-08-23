@@ -7,8 +7,10 @@
 //
 
 import ReSwift
+import ReSwiftRouter
 
 // States
 struct AppState: StateType {
+    var routingState: RoutingState
     let memoItems: MemoItemsState
 }

@@ -7,6 +7,7 @@
 //
 
 import ReSwift
+import ReSwiftRouter
 
 struct AppReducer: Reducer {
 
@@ -14,6 +15,7 @@ struct AppReducer: Reducer {
 
     func handleAction(action: Action, state: AppState?) -> AppState {
         return AppState(
+            routingState: RoutingReducer().handleAction(action: action, state: state?.routingState),
             memoItems: MemoItemsReducer(with: self.persistanceManager)
                 .handleAction(action: action, state: state?.memoItems)
         )

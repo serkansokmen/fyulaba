@@ -2,7 +2,7 @@
 //  MemoListCell.swift
 //  Fyulaba
 //
-//  Created by Serkan Sokmen on 23/08/2017.
+//  Created by Serkan Sokmen on 24/08/2017.
 //  Copyright © 2017 Serkan Sokmen. All rights reserved.
 //
 
@@ -22,5 +22,5 @@ class MemoListCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }
