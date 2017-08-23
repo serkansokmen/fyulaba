@@ -25,6 +25,9 @@
 		E689885E1F4E0A280095465F /* MemoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885D1F4E0A280095465F /* MemoManager.swift */; };
 		E6D3027B1F4E13D800F9A405 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027A1F4E13D800F9A405 /* MemoListViewController.swift */; };
 		E6D3027E1F4E19EA00F9A405 /* UIViewController+Alerting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027D1F4E19E700F9A405 /* UIViewController+Alerting.swift */; };
+		E6D302831F4E1CFC00F9A405 /* MemoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D302821F4E1CFC00F9A405 /* MemoListCell.swift */; };
+		E6D8508E1F4E25580086858D /* RecordSpeechViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D8508C1F4E25580086858D /* RecordSpeechViewController.swift */; };
+		E6D8508F1F4E25580086858D /* RecordSpeechViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6D8508D1F4E25580086858D /* RecordSpeechViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +66,9 @@
 		E689885D1F4E0A280095465F /* MemoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoManager.swift; sourceTree = "<group>"; };
 		E6D3027A1F4E13D800F9A405 /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		E6D3027D1F4E19E700F9A405 /* UIViewController+Alerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerting.swift"; sourceTree = "<group>"; };
+		E6D302821F4E1CFC00F9A405 /* MemoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCell.swift; sourceTree = "<group>"; };
+		E6D8508C1F4E25580086858D /* RecordSpeechViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSpeechViewController.swift; sourceTree = "<group>"; };
+		E6D8508D1F4E25580086858D /* RecordSpeechViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordSpeechViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,9 +123,10 @@
 		E68988281F4DE8410095465F /* Fyulaba */ = {
 			isa = PBXGroup;
 			children = (
-				E689885F1F4E0F9A0095465F /* View Controllers */,
-				E68988581F4E033A0095465F /* Services */,
 				E68988291F4DE8410095465F /* AppDelegate.swift */,
+				E689885F1F4E0F9A0095465F /* View Controllers */,
+				E6D302811F4E1CE000F9A405 /* Views */,
+				E68988581F4E033A0095465F /* Services */,
 				E68988491F4DFEDF0095465F /* Models */,
 				E68988411F4DEFF80095465F /* States */,
 				E68988521F4E021C0095465F /* Actions */,
@@ -181,6 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				E6D3027A1F4E13D800F9A405 /* MemoListViewController.swift */,
+				E6D8508C1F4E25580086858D /* RecordSpeechViewController.swift */,
+				E6D8508D1F4E25580086858D /* RecordSpeechViewController.xib */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -191,6 +200,14 @@
 				E6D3027D1F4E19E700F9A405 /* UIViewController+Alerting.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E6D302811F4E1CE000F9A405 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E6D302821F4E1CFC00F9A405 /* MemoListCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E68988341F4DE8410095465F /* LaunchScreen.storyboard in Resources */,
+				E6D8508F1F4E25580086858D /* RecordSpeechViewController.xib in Resources */,
 				E68988311F4DE8410095465F /* Assets.xcassets in Resources */,
 				E689882F1F4DE8410095465F /* Main.storyboard in Resources */,
 			);
@@ -353,8 +371,10 @@
 				E689885C1F4E03B30095465F /* AppReducer.swift in Sources */,
 				E6D3027B1F4E13D800F9A405 /* MemoListViewController.swift in Sources */,
 				E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */,
+				E6D8508E1F4E25580086858D /* RecordSpeechViewController.swift in Sources */,
 				E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */,
 				E689882A1F4DE8410095465F /* AppDelegate.swift in Sources */,
+				E6D302831F4E1CFC00F9A405 /* MemoListCell.swift in Sources */,
 				E689884C1F4DFF0E0095465F /* MemoItem.swift in Sources */,
 				E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */,
 			);

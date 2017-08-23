@@ -13,6 +13,7 @@ import DZNEmptyDataSet
 class MemoListViewController: UITableViewController {
 
     static let identifier = "MemoListViewController"
+    static let navigationIdentifier = "MemoListNavigationController"
 
     var items = [MemoItem]()
 
@@ -21,14 +22,14 @@ class MemoListViewController: UITableViewController {
 
         self.clearsSelectionOnViewWillAppear = true
         self.tableView.emptyDataSetSource = self
-
-        let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.handleAdd))
-        self.navigationItem.rightBarButtonItems = [addItem, self.editButtonItem]
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
+                                                                target: nil,
+                                                                action: #selector(self.handleCancel))
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    @objc func handleAdd(_ sender: UIBarButtonItem) {
-//        store.dispatch()
-//        self.presentRecorder(with: nil)
+    @objc func handleCancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -64,7 +65,7 @@ extension MemoListViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MemoItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListCell.identifier, for: indexPath)
         let item = self.items[indexPath.row]
         print(item)
         return cell
