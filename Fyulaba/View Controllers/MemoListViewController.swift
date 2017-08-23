@@ -21,13 +21,13 @@ class MemoListViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = true
         self.tableView.emptyDataSetSource = self
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                                                target: nil,
+                                                                target: self,
                                                                 action: #selector(self.handleCancel))
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     @objc func handleCancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        store.dispatch(RoutingAction(destination: .parent))
     }
 
     override func viewWillAppear(_ animated: Bool) {

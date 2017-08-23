@@ -10,7 +10,7 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 
-class RootViewController: UIViewController {
+class RootViewController: UIViewController, Routable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,35 +50,3 @@ extension RootViewController: StoreSubscriber {
     }
 }
 
-extension RootViewController: Routable, UIPopoverPresentationControllerDelegate {
-//    func pushRouteSegment(routeElementIdentifier: String,
-//                          completionHandler: @escaping RoutingCompletionHandler) -> Routable {
-//
-//        switch routeElementIdentifier {
-//        case "MemoList":
-//            let vc = MemoListViewController(nibName: MemoListViewController.identifier, bundle: nil)
-//            let nav = UINavigationController(rootViewController: vc)
-//            nav.modalPresentationStyle = .popover
-//            nav.preferredContentSize = CGSize(width: 200, height: 200)
-//            let popover = nav.popoverPresentationController
-//            popover?.delegate = self
-//            popover?.permittedArrowDirections = .any
-//            popover?.sourceView = self.view
-//            popover?.sourceRect = CGRect(x: 100, y: 100, width: 100, height: 100)
-//
-//            present(vc, animated: true, completion: completionHandler)
-//
-//            return vc
-//        default:
-//            return RecorderViewController(nibName: RecorderViewController.identifier, bundle: nil)
-//        }
-//    }
-//
-//    func popRouteSegment(routeElementIdentifier: RouteElementIdentifier,
-//                         completionHandler: @escaping RoutingCompletionHandler) {
-//        if routeElementIdentifier == "MemoList" {
-//            dismiss(animated: true, completion: completionHandler)
-//        }
-//    }
-
-}

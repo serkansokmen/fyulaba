@@ -9,14 +9,10 @@
 import UIKit
 import ReSwiftRouter
 
-class RecorderViewController: UIViewController {
+class RecorderViewController: UIViewController, Routable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
-}
-
-extension RecorderViewController: Routable {
 
 }
