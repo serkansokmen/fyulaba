@@ -7,40 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2217918A2C906AEA39EAE298 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */; };
-		E60741561F490D61006B4358 /* RecordingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60741551F490D61006B4358 /* RecordingTableViewCell.swift */; };
-		E60BEE1E1F4BB3F300DD7F9A /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */; };
-		E60BEE201F4BB43500DD7F9A /* RecordingReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE1F1F4BB43500DD7F9A /* RecordingReducer.swift */; };
-		E60BEE231F4BB49D00DD7F9A /* RecordingActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE221F4BB49D00DD7F9A /* RecordingActions.swift */; };
-		E60BEE261F4BB4D400DD7F9A /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE251F4BB4D400DD7F9A /* State.swift */; };
-		E60BEE291F4BBEFF00DD7F9A /* RecordingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BEE281F4BBEFF00DD7F9A /* RecordingsState.swift */; };
-		E61D0A791F4A54B6007073BA /* UIViewController+Alerting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D0A781F4A54B6007073BA /* UIViewController+Alerting.swift */; };
-		E61D0A7B1F4A5B4F007073BA /* AudioPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */; };
-		E62DD4DE1F487FDA00C5D8FD /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; };
-		E62DD4DF1F487FDA00C5D8FD /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E69CEA8E1F4C90DD00273E6C /* RecordingFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69CEA8D1F4C90DC00273E6C /* RecordingFormState.swift */; };
-		E69CEA901F4C91FD00273E6C /* RecordingFormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69CEA8F1F4C91FC00273E6C /* RecordingFormReducer.swift */; };
-		E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998561F46241C00B3AAD0 /* AppDelegate.swift */; };
-		E6B998601F46241C00B3AAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B9985E1F46241C00B3AAD0 /* Main.storyboard */; };
-		E6B998621F46241C00B3AAD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B998611F46241C00B3AAD0 /* Assets.xcassets */; };
-		E6B998651F46241C00B3AAD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */; };
-		E6B998711F46309B00B3AAD0 /* RecordingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998701F46309B00B3AAD0 /* RecordingsTableViewController.swift */; };
-		E6B998731F463FA100B3AAD0 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998721F463FA100B3AAD0 /* RecordingViewController.swift */; };
-		E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B9987A1F46916D00B3AAD0 /* Recording.swift */; };
-		E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998801F46A27500B3AAD0 /* ClassificationService.swift */; };
-		E6B998831F46A2CB00B3AAD0 /* SentimentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B998821F46A2CB00B3AAD0 /* SentimentType.swift */; };
-		E6C451A31F4C5CE300F65D9E /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E6C451A21F4C5CE100F65D9E /* SentimentPolarity.mlmodel */; };
-		E6EA4AFB1F4A659B00B241AC /* SpeechTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */; };
+		019FADC4DFE896E2BD1931E5 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */; };
+		E689882A1F4DE8410095465F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988291F4DE8410095465F /* AppDelegate.swift */; };
+		E689882F1F4DE8410095465F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E689882D1F4DE8410095465F /* Main.storyboard */; };
+		E68988311F4DE8410095465F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E68988301F4DE8410095465F /* Assets.xcassets */; };
+		E68988341F4DE8410095465F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E68988321F4DE8410095465F /* LaunchScreen.storyboard */; };
+		E68988431F4DF4660095465F /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68988421F4DF4610095465F /* AudioKit.framework */; };
+		E68988441F4DF4660095465F /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E68988421F4DF4610095465F /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E689884C1F4DFF0E0095465F /* MemoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689884A1F4DFEDF0095465F /* MemoItem.swift */; };
+		E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689884B1F4DFEDF0095465F /* SentimentType.swift */; };
+		E689884F1F4DFF5F0095465F /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689884E1F4DFF5F0095465F /* AppState.swift */; };
+		E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988501F4DFF970095465F /* MemoItemsState.swift */; };
+		E68988551F4E02450095465F /* MemoItemActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988541F4E02450095465F /* MemoItemActions.swift */; };
+		E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988561F4E02FE0095465F /* MemoItemsReducer.swift */; };
+		E689885A1F4E03450095465F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988591F4E03450095465F /* PersistanceManager.swift */; };
+		E689885C1F4E03B30095465F /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885B1F4E03B30095465F /* AppReducer.swift */; };
+		E689885E1F4E0A280095465F /* MemoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885D1F4E0A280095465F /* MemoManager.swift */; };
+		E6D3027B1F4E13D800F9A405 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027A1F4E13D800F9A405 /* MemoListViewController.swift */; };
+		E6D3027E1F4E19EA00F9A405 /* UIViewController+Alerting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027D1F4E19E700F9A405 /* UIViewController+Alerting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E62DD4E01F487FDA00C5D8FD /* Embed Frameworks */ = {
+		E68988451F4DF4660095465F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E62DD4DF1F487FDA00C5D8FD /* AudioKit.framework in Embed Frameworks */,
+				E68988441F4DF4660095465F /* AudioKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,199 +42,171 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fyulaba.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		425B125F435AC808F98A76F3 /* Pods-Fyulaba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.release.xcconfig"; sourceTree = "<group>"; };
-		8DDD5FD4B8188F7029207A6F /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
-		E60741551F490D61006B4358 /* RecordingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTableViewCell.swift; sourceTree = "<group>"; };
-		E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
-		E60BEE1F1F4BB43500DD7F9A /* RecordingReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingReducer.swift; sourceTree = "<group>"; };
-		E60BEE221F4BB49D00DD7F9A /* RecordingActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingActions.swift; sourceTree = "<group>"; };
-		E60BEE251F4BB4D400DD7F9A /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		E60BEE281F4BBEFF00DD7F9A /* RecordingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsState.swift; sourceTree = "<group>"; };
-		E61D0A781F4A54B6007073BA /* UIViewController+Alerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerting.swift"; sourceTree = "<group>"; };
-		E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaying.swift; sourceTree = "<group>"; };
-		E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
-		E69CEA8D1F4C90DC00273E6C /* RecordingFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingFormState.swift; sourceTree = "<group>"; };
-		E69CEA8F1F4C91FC00273E6C /* RecordingFormReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingFormReducer.swift; sourceTree = "<group>"; };
-		E6B998531F46241C00B3AAD0 /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6B998561F46241C00B3AAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E6B9985F1F46241C00B3AAD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E6B998611F46241C00B3AAD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6B998641F46241C00B3AAD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E6B998661F46241C00B3AAD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E6B998701F46309B00B3AAD0 /* RecordingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsTableViewController.swift; sourceTree = "<group>"; };
-		E6B998721F463FA100B3AAD0 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
-		E6B9987A1F46916D00B3AAD0 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
-		E6B998801F46A27500B3AAD0 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
-		E6B998821F46A2CB00B3AAD0 /* SentimentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentimentType.swift; sourceTree = "<group>"; };
-		E6C451A21F4C5CE100F65D9E /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
-		E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
+		259D136405CFECB85690A83A /* Pods-Fyulaba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.release.xcconfig"; sourceTree = "<group>"; };
+		9E544B71808A9B54C2158997 /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
+		D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fyulaba.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E68988261F4DE8410095465F /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E68988291F4DE8410095465F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E689882E1F4DE8410095465F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E68988301F4DE8410095465F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E68988331F4DE8410095465F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E68988351F4DE8410095465F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E68988421F4DF4610095465F /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
+		E689884A1F4DFEDF0095465F /* MemoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItem.swift; sourceTree = "<group>"; };
+		E689884B1F4DFEDF0095465F /* SentimentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentimentType.swift; sourceTree = "<group>"; };
+		E689884E1F4DFF5F0095465F /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		E68988501F4DFF970095465F /* MemoItemsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemsState.swift; sourceTree = "<group>"; };
+		E68988541F4E02450095465F /* MemoItemActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemActions.swift; sourceTree = "<group>"; };
+		E68988561F4E02FE0095465F /* MemoItemsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemsReducer.swift; sourceTree = "<group>"; };
+		E68988591F4E03450095465F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
+		E689885B1F4E03B30095465F /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		E689885D1F4E0A280095465F /* MemoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoManager.swift; sourceTree = "<group>"; };
+		E6D3027A1F4E13D800F9A405 /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
+		E6D3027D1F4E19E700F9A405 /* UIViewController+Alerting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerting.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E6B998501F46241C00B3AAD0 /* Frameworks */ = {
+		E68988231F4DE8410095465F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E62DD4DE1F487FDA00C5D8FD /* AudioKit.framework in Frameworks */,
-				2217918A2C906AEA39EAE298 /* Pods_Fyulaba.framework in Frameworks */,
+				E68988431F4DF4660095465F /* AudioKit.framework in Frameworks */,
+				019FADC4DFE896E2BD1931E5 /* Pods_Fyulaba.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A396313765B6ADEC1BE8DD7 /* Pods */ = {
+		971A0F4CE072108B5A7B05F6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8DDD5FD4B8188F7029207A6F /* Pods-Fyulaba.debug.xcconfig */,
-				425B125F435AC808F98A76F3 /* Pods-Fyulaba.release.xcconfig */,
+				9E544B71808A9B54C2158997 /* Pods-Fyulaba.debug.xcconfig */,
+				259D136405CFECB85690A83A /* Pods-Fyulaba.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		391E9E89881B77877D1118B2 /* Frameworks */ = {
+		B373AF5930B85DF4EA451D4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E62DD4DD1F487FCA00C5D8FD /* AudioKit.framework */,
-				1B13106B8DCF266146C32CB1 /* Pods_Fyulaba.framework */,
+				E68988421F4DF4610095465F /* AudioKit.framework */,
+				D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E60BEE1C1F4BB3CE00DD7F9A /* Reducers */ = {
+		E689881D1F4DE8410095465F = {
 			isa = PBXGroup;
 			children = (
-				E60BEE1D1F4BB3F300DD7F9A /* AppReducer.swift */,
-				E60BEE1F1F4BB43500DD7F9A /* RecordingReducer.swift */,
-				E69CEA8F1F4C91FC00273E6C /* RecordingFormReducer.swift */,
-			);
-			path = Reducers;
-			sourceTree = "<group>";
-		};
-		E60BEE211F4BB47000DD7F9A /* Actions */ = {
-			isa = PBXGroup;
-			children = (
-				E60BEE221F4BB49D00DD7F9A /* RecordingActions.swift */,
-			);
-			path = Actions;
-			sourceTree = "<group>";
-		};
-		E60BEE271F4BBEE100DD7F9A /* States */ = {
-			isa = PBXGroup;
-			children = (
-				E60BEE251F4BB4D400DD7F9A /* State.swift */,
-				E60BEE281F4BBEFF00DD7F9A /* RecordingsState.swift */,
-				E69CEA8D1F4C90DC00273E6C /* RecordingFormState.swift */,
-			);
-			path = States;
-			sourceTree = "<group>";
-		};
-		E630DFE61F4C7FEB0013EDEA /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				E6B998801F46A27500B3AAD0 /* ClassificationService.swift */,
-				E6EA4AFA1F4A659B00B241AC /* SpeechTranscriber.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		E630DFE71F4C80020013EDEA /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				E6B998701F46309B00B3AAD0 /* RecordingsTableViewController.swift */,
-				E6B998721F463FA100B3AAD0 /* RecordingViewController.swift */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		E630DFE81F4C800E0013EDEA /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E60741551F490D61006B4358 /* RecordingTableViewCell.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		E630DFE91F4C801C0013EDEA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E6B9987A1F46916D00B3AAD0 /* Recording.swift */,
-				E6B998821F46A2CB00B3AAD0 /* SentimentType.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		E630DFEA1F4C80290013EDEA /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				E61D0A7A1F4A5B4F007073BA /* AudioPlaying.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		E630DFEB1F4C80820013EDEA /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E61D0A781F4A54B6007073BA /* UIViewController+Alerting.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		E6B9984A1F46241C00B3AAD0 = {
-			isa = PBXGroup;
-			children = (
-				E6B998551F46241C00B3AAD0 /* Fyulaba */,
-				E6B998541F46241C00B3AAD0 /* Products */,
-				0A396313765B6ADEC1BE8DD7 /* Pods */,
-				391E9E89881B77877D1118B2 /* Frameworks */,
+				E68988281F4DE8410095465F /* Fyulaba */,
+				E68988271F4DE8410095465F /* Products */,
+				971A0F4CE072108B5A7B05F6 /* Pods */,
+				B373AF5930B85DF4EA451D4E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		E6B998541F46241C00B3AAD0 /* Products */ = {
+		E68988271F4DE8410095465F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E6B998531F46241C00B3AAD0 /* Fyulaba.app */,
+				E68988261F4DE8410095465F /* Fyulaba.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E6B998551F46241C00B3AAD0 /* Fyulaba */ = {
+		E68988281F4DE8410095465F /* Fyulaba */ = {
 			isa = PBXGroup;
 			children = (
-				E6B998561F46241C00B3AAD0 /* AppDelegate.swift */,
-				E60BEE211F4BB47000DD7F9A /* Actions */,
-				E60BEE1C1F4BB3CE00DD7F9A /* Reducers */,
-				E630DFEA1F4C80290013EDEA /* Protocols */,
-				E630DFEB1F4C80820013EDEA /* Extensions */,
-				E630DFE61F4C7FEB0013EDEA /* Services */,
-				E60BEE271F4BBEE100DD7F9A /* States */,
-				E630DFE91F4C801C0013EDEA /* Models */,
-				E630DFE81F4C800E0013EDEA /* Views */,
-				E630DFE71F4C80020013EDEA /* View Controllers */,
-				E6B9985E1F46241C00B3AAD0 /* Main.storyboard */,
-				E6B998611F46241C00B3AAD0 /* Assets.xcassets */,
-				E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */,
-				E6B998661F46241C00B3AAD0 /* Info.plist */,
-				E6C451A21F4C5CE100F65D9E /* SentimentPolarity.mlmodel */,
+				E689885F1F4E0F9A0095465F /* View Controllers */,
+				E68988581F4E033A0095465F /* Services */,
+				E68988291F4DE8410095465F /* AppDelegate.swift */,
+				E68988491F4DFEDF0095465F /* Models */,
+				E68988411F4DEFF80095465F /* States */,
+				E68988521F4E021C0095465F /* Actions */,
+				E68988531F4E02210095465F /* Reducers */,
+				E689882D1F4DE8410095465F /* Main.storyboard */,
+				E6D3027C1F4E19E700F9A405 /* Extensions */,
+				E68988301F4DE8410095465F /* Assets.xcassets */,
+				E68988321F4DE8410095465F /* LaunchScreen.storyboard */,
+				E68988351F4DE8410095465F /* Info.plist */,
 			);
 			path = Fyulaba;
+			sourceTree = "<group>";
+		};
+		E68988411F4DEFF80095465F /* States */ = {
+			isa = PBXGroup;
+			children = (
+				E689884E1F4DFF5F0095465F /* AppState.swift */,
+				E68988501F4DFF970095465F /* MemoItemsState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
+		E68988491F4DFEDF0095465F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E689884A1F4DFEDF0095465F /* MemoItem.swift */,
+				E689884B1F4DFEDF0095465F /* SentimentType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E68988521F4E021C0095465F /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				E68988541F4E02450095465F /* MemoItemActions.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		E68988531F4E02210095465F /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				E689885B1F4E03B30095465F /* AppReducer.swift */,
+				E68988561F4E02FE0095465F /* MemoItemsReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		E68988581F4E033A0095465F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E68988591F4E03450095465F /* PersistanceManager.swift */,
+				E689885D1F4E0A280095465F /* MemoManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E689885F1F4E0F9A0095465F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E6D3027A1F4E13D800F9A405 /* MemoListViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E6D3027C1F4E19E700F9A405 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E6D3027D1F4E19E700F9A405 /* UIViewController+Alerting.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E6B998521F46241C00B3AAD0 /* Fyulaba */ = {
+		E68988251F4DE8410095465F /* Fyulaba */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E6B998691F46241C00B3AAD0 /* Build configuration list for PBXNativeTarget "Fyulaba" */;
+			buildConfigurationList = E68988381F4DE8410095465F /* Build configuration list for PBXNativeTarget "Fyulaba" */;
 			buildPhases = (
-				FB3E4C4BFABE8513CE33999C /* [CP] Check Pods Manifest.lock */,
-				E6B9984F1F46241C00B3AAD0 /* Sources */,
-				E6B998501F46241C00B3AAD0 /* Frameworks */,
-				E6B998511F46241C00B3AAD0 /* Resources */,
-				F7C05802C9446AFAB4DA2BCB /* [CP] Embed Pods Frameworks */,
-				ABA115F03F7616E421850C91 /* [CP] Copy Pods Resources */,
-				E62DD4E01F487FDA00C5D8FD /* Embed Frameworks */,
+				5ADB120935E4D5899F47DE25 /* [CP] Check Pods Manifest.lock */,
+				E68988221F4DE8410095465F /* Sources */,
+				E68988231F4DE8410095465F /* Frameworks */,
+				E68988241F4DE8410095465F /* Resources */,
+				B5D59EDB7B3D0B14FEFF376C /* [CP] Embed Pods Frameworks */,
+				7C711D0F92E686FFC673710F /* [CP] Copy Pods Resources */,
+				E68988451F4DF4660095465F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -248,25 +214,26 @@
 			);
 			name = Fyulaba;
 			productName = Fyulaba;
-			productReference = E6B998531F46241C00B3AAD0 /* Fyulaba.app */;
+			productReference = E68988261F4DE8410095465F /* Fyulaba.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E6B9984B1F46241C00B3AAD0 /* Project object */ = {
+		E689881E1F4DE8410095465F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Serkan Sokmen";
 				TargetAttributes = {
-					E6B998521F46241C00B3AAD0 = {
+					E68988251F4DE8410095465F = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = E6B9984E1F46241C00B3AAD0 /* Build configuration list for PBXProject "Fyulaba" */;
+			buildConfigurationList = E68988211F4DE8410095465F /* Build configuration list for PBXProject "Fyulaba" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -274,86 +241,31 @@
 				en,
 				Base,
 			);
-			mainGroup = E6B9984A1F46241C00B3AAD0;
-			productRefGroup = E6B998541F46241C00B3AAD0 /* Products */;
+			mainGroup = E689881D1F4DE8410095465F;
+			productRefGroup = E68988271F4DE8410095465F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E6B998521F46241C00B3AAD0 /* Fyulaba */,
+				E68988251F4DE8410095465F /* Fyulaba */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E6B998511F46241C00B3AAD0 /* Resources */ = {
+		E68988241F4DE8410095465F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6B998651F46241C00B3AAD0 /* LaunchScreen.storyboard in Resources */,
-				E6B998621F46241C00B3AAD0 /* Assets.xcassets in Resources */,
-				E6B998601F46241C00B3AAD0 /* Main.storyboard in Resources */,
+				E68988341F4DE8410095465F /* LaunchScreen.storyboard in Resources */,
+				E68988311F4DE8410095465F /* Assets.xcassets in Resources */,
+				E689882F1F4DE8410095465F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		ABA115F03F7616E421850C91 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-resources.sh",
-				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
-				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterShareExtensionUIResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F7C05802C9446AFAB4DA2BCB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
-				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
-				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
-				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
-				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
-				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
-				"${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReSwiftRecorder/ReSwiftRecorder.framework",
-				"${BUILT_PRODUCTS_DIR}/ReSwiftRouter/ReSwiftRouter.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwiftRecorder.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwiftRouter.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB3E4C4BFABE8513CE33999C /* [CP] Check Pods Manifest.lock */ = {
+		5ADB120935E4D5899F47DE25 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -371,49 +283,98 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7C711D0F92E686FFC673710F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5D59EDB7B3D0B14FEFF376C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Disk/Disk.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReSwiftRecorder/ReSwiftRecorder.framework",
+				"${BUILT_PRODUCTS_DIR}/ReSwiftRouter/ReSwiftRouter.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Disk.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwiftRecorder.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwiftRouter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E6B9984F1F46241C00B3AAD0 /* Sources */ = {
+		E68988221F4DE8410095465F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6B998711F46309B00B3AAD0 /* RecordingsTableViewController.swift in Sources */,
-				E6B998811F46A27500B3AAD0 /* ClassificationService.swift in Sources */,
-				E60BEE261F4BB4D400DD7F9A /* State.swift in Sources */,
-				E69CEA8E1F4C90DD00273E6C /* RecordingFormState.swift in Sources */,
-				E69CEA901F4C91FD00273E6C /* RecordingFormReducer.swift in Sources */,
-				E6B998731F463FA100B3AAD0 /* RecordingViewController.swift in Sources */,
-				E60741561F490D61006B4358 /* RecordingTableViewCell.swift in Sources */,
-				E6B998831F46A2CB00B3AAD0 /* SentimentType.swift in Sources */,
-				E60BEE291F4BBEFF00DD7F9A /* RecordingsState.swift in Sources */,
-				E60BEE231F4BB49D00DD7F9A /* RecordingActions.swift in Sources */,
-				E61D0A791F4A54B6007073BA /* UIViewController+Alerting.swift in Sources */,
-				E61D0A7B1F4A5B4F007073BA /* AudioPlaying.swift in Sources */,
-				E6C451A31F4C5CE300F65D9E /* SentimentPolarity.mlmodel in Sources */,
-				E6B9987B1F46916D00B3AAD0 /* Recording.swift in Sources */,
-				E60BEE201F4BB43500DD7F9A /* RecordingReducer.swift in Sources */,
-				E6EA4AFB1F4A659B00B241AC /* SpeechTranscriber.swift in Sources */,
-				E6B998571F46241C00B3AAD0 /* AppDelegate.swift in Sources */,
-				E60BEE1E1F4BB3F300DD7F9A /* AppReducer.swift in Sources */,
+				E68988551F4E02450095465F /* MemoItemActions.swift in Sources */,
+				E689885E1F4E0A280095465F /* MemoManager.swift in Sources */,
+				E689884F1F4DFF5F0095465F /* AppState.swift in Sources */,
+				E689885A1F4E03450095465F /* PersistanceManager.swift in Sources */,
+				E6D3027E1F4E19EA00F9A405 /* UIViewController+Alerting.swift in Sources */,
+				E689885C1F4E03B30095465F /* AppReducer.swift in Sources */,
+				E6D3027B1F4E13D800F9A405 /* MemoListViewController.swift in Sources */,
+				E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */,
+				E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */,
+				E689882A1F4DE8410095465F /* AppDelegate.swift in Sources */,
+				E689884C1F4DFF0E0095465F /* MemoItem.swift in Sources */,
+				E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E6B9985E1F46241C00B3AAD0 /* Main.storyboard */ = {
+		E689882D1F4DE8410095465F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E6B9985F1F46241C00B3AAD0 /* Base */,
+				E689882E1F4DE8410095465F /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		E6B998631F46241C00B3AAD0 /* LaunchScreen.storyboard */ = {
+		E68988321F4DE8410095465F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E6B998641F46241C00B3AAD0 /* Base */,
+				E68988331F4DE8410095465F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -421,7 +382,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		E6B998671F46241C00B3AAD0 /* Debug */ = {
+		E68988361F4DE8410095465F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -478,7 +439,7 @@
 			};
 			name = Debug;
 		};
-		E6B998681F46241C00B3AAD0 /* Release */ = {
+		E68988371F4DE8410095465F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -528,11 +489,12 @@
 			};
 			name = Release;
 		};
-		E6B9986A1F46241C00B3AAD0 /* Debug */ = {
+		E68988391F4DE8410095465F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8DDD5FD4B8188F7029207A6F /* Pods-Fyulaba.debug.xcconfig */;
+			baseConfigurationReference = 9E544B71808A9B54C2158997 /* Pods-Fyulaba.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YGQRYMCYG9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -547,11 +509,12 @@
 			};
 			name = Debug;
 		};
-		E6B9986B1F46241C00B3AAD0 /* Release */ = {
+		E689883A1F4DE8410095465F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 425B125F435AC808F98A76F3 /* Pods-Fyulaba.release.xcconfig */;
+			baseConfigurationReference = 259D136405CFECB85690A83A /* Pods-Fyulaba.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YGQRYMCYG9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -569,25 +532,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E6B9984E1F46241C00B3AAD0 /* Build configuration list for PBXProject "Fyulaba" */ = {
+		E68988211F4DE8410095465F /* Build configuration list for PBXProject "Fyulaba" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E6B998671F46241C00B3AAD0 /* Debug */,
-				E6B998681F46241C00B3AAD0 /* Release */,
+				E68988361F4DE8410095465F /* Debug */,
+				E68988371F4DE8410095465F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E6B998691F46241C00B3AAD0 /* Build configuration list for PBXNativeTarget "Fyulaba" */ = {
+		E68988381F4DE8410095465F /* Build configuration list for PBXNativeTarget "Fyulaba" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E6B9986A1F46241C00B3AAD0 /* Debug */,
-				E6B9986B1F46241C00B3AAD0 /* Release */,
+				E68988391F4DE8410095465F /* Debug */,
+				E689883A1F4DE8410095465F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E6B9984B1F46241C00B3AAD0 /* Project object */;
+	rootObject = E689881E1F4DE8410095465F /* Project object */;
 }

@@ -26,7 +26,7 @@ extension NSRange {
 }
 
 
-struct Recording: Codable, Equatable {
+struct MemoItem: Codable, Equatable {
 
     let uuid: String
     let text: String
@@ -62,7 +62,7 @@ struct Recording: Codable, Equatable {
         }
     }
 
-    public static func ==(lhs: Recording, rhs: Recording) -> Bool {
+    public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {
         return lhs.uuid == rhs.uuid
     }
 

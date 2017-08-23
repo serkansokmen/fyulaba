@@ -13,8 +13,8 @@ target 'Fyulaba' do
     pod 'ReSwift'
     pod 'ReSwiftRouter'
     pod 'ReSwiftRecorder'
-#    pod 'RxSwift'
-#    pod 'RxCocoa'
+    pod 'RxSwift'
+    pod 'RxCocoa'
 
     post_install do |installer|
         installer.pods_project.targets.each do |target|
@@ -26,4 +26,3 @@ target 'Fyulaba' do
     end
 
 end
-
