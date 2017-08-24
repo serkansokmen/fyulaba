@@ -24,9 +24,13 @@
 		E689885A1F4E03450095465F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988591F4E03450095465F /* PersistanceManager.swift */; };
 		E689885C1F4E03B30095465F /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885B1F4E03B30095465F /* AppReducer.swift */; };
 		E689885E1F4E0A280095465F /* MemoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885D1F4E0A280095465F /* MemoManager.swift */; };
+		E6A59C6C1F4E578600779ECE /* MemoProcessingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6B1F4E578600779ECE /* MemoProcessingState.swift */; };
+		E6A59C701F4E59FB00779ECE /* MemoProcessingReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6F1F4E59FB00779ECE /* MemoProcessingReducer.swift */; };
+		E6A59C721F4E5AE400779ECE /* MemoProcessingActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C711F4E5AE400779ECE /* MemoProcessingActions.swift */; };
+		E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */; };
 		E6D3027E1F4E19EA00F9A405 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */; };
 		E6D850921F4E30A60086858D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850901F4E30A60086858D /* RootViewController.swift */; };
-		E6D850961F4E31380086858D /* RecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850941F4E31380086858D /* RecorderViewController.swift */; };
+		E6D850961F4E31380086858D /* MemoProcessingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850941F4E31380086858D /* MemoProcessingViewController.swift */; };
 		E6D850991F4E35760086858D /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850981F4E35760086858D /* AppRouter.swift */; };
 		E6D8509B1F4E35D20086858D /* RoutingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D8509A1F4E35D20086858D /* RoutingState.swift */; };
 		E6D8509D1F4E361F0086858D /* RoutingReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D8509C1F4E361F0086858D /* RoutingReducer.swift */; };
@@ -71,9 +75,13 @@
 		E68988591F4E03450095465F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		E689885B1F4E03B30095465F /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E689885D1F4E0A280095465F /* MemoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoManager.swift; sourceTree = "<group>"; };
+		E6A59C6B1F4E578600779ECE /* MemoProcessingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoProcessingState.swift; sourceTree = "<group>"; };
+		E6A59C6F1F4E59FB00779ECE /* MemoProcessingReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoProcessingReducer.swift; sourceTree = "<group>"; };
+		E6A59C711F4E5AE400779ECE /* MemoProcessingActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoProcessingActions.swift; sourceTree = "<group>"; };
+		E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
 		E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		E6D850901F4E30A60086858D /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		E6D850941F4E31380086858D /* RecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewController.swift; sourceTree = "<group>"; };
+		E6D850941F4E31380086858D /* MemoProcessingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoProcessingViewController.swift; sourceTree = "<group>"; };
 		E6D850981F4E35760086858D /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		E6D8509A1F4E35D20086858D /* RoutingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingState.swift; sourceTree = "<group>"; };
 		E6D8509C1F4E361F0086858D /* RoutingReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingReducer.swift; sourceTree = "<group>"; };
@@ -160,6 +168,7 @@
 				E689884E1F4DFF5F0095465F /* AppState.swift */,
 				E6D8509A1F4E35D20086858D /* RoutingState.swift */,
 				E68988501F4DFF970095465F /* MemoItemsState.swift */,
+				E6A59C6B1F4E578600779ECE /* MemoProcessingState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -176,8 +185,9 @@
 		E68988521F4E021C0095465F /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				E68988541F4E02450095465F /* MemoItemActions.swift */,
 				E6D850A71F4E41220086858D /* RoutingActions.swift */,
+				E68988541F4E02450095465F /* MemoItemActions.swift */,
+				E6A59C711F4E5AE400779ECE /* MemoProcessingActions.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -188,6 +198,7 @@
 				E689885B1F4E03B30095465F /* AppReducer.swift */,
 				E6D8509C1F4E361F0086858D /* RoutingReducer.swift */,
 				E68988561F4E02FE0095465F /* MemoItemsReducer.swift */,
+				E6A59C6F1F4E59FB00779ECE /* MemoProcessingReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -205,8 +216,9 @@
 			isa = PBXGroup;
 			children = (
 				E6D850901F4E30A60086858D /* RootViewController.swift */,
-				E6D850941F4E31380086858D /* RecorderViewController.swift */,
 				E6D8509E1F4E3D9B0086858D /* MemoListViewController.swift */,
+				E6D850941F4E31380086858D /* MemoProcessingViewController.swift */,
+				E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -398,6 +410,8 @@
 				E6D3027E1F4E19EA00F9A405 /* UIViewController+Extensions.swift in Sources */,
 				E6D850A41F4E3EB70086858D /* TableDataSource.swift in Sources */,
 				E689885C1F4E03B30095465F /* AppReducer.swift in Sources */,
+				E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */,
+				E6A59C721F4E5AE400779ECE /* MemoProcessingActions.swift in Sources */,
 				E6D8509D1F4E361F0086858D /* RoutingReducer.swift in Sources */,
 				E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */,
 				E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */,
@@ -405,8 +419,10 @@
 				E6D850921F4E30A60086858D /* RootViewController.swift in Sources */,
 				E6D850991F4E35760086858D /* AppRouter.swift in Sources */,
 				E689884C1F4DFF0E0095465F /* MemoItem.swift in Sources */,
-				E6D850961F4E31380086858D /* RecorderViewController.swift in Sources */,
+				E6A59C6C1F4E578600779ECE /* MemoProcessingState.swift in Sources */,
+				E6D850961F4E31380086858D /* MemoProcessingViewController.swift in Sources */,
 				E6D850A81F4E41220086858D /* RoutingActions.swift in Sources */,
+				E6A59C701F4E59FB00779ECE /* MemoProcessingReducer.swift in Sources */,
 				E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */,
 				E6D8509B1F4E35D20086858D /* RoutingState.swift in Sources */,
 			);
