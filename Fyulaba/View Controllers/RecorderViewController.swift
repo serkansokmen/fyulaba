@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReSwift
 import ReSwiftRouter
 
 class RecorderViewController: UIViewController, Routable {
@@ -15,4 +16,21 @@ class RecorderViewController: UIViewController, Routable {
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self)
+        store.dispatch(FetchMemoListAction(query: nil))
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.unsubscribe(self)
+    }
+
+}
+
+extension RecorderViewController: StoreSubscriber {
+    func newState(state: RecorderViewController.StoreSubscriberStateType) {
+
+    }
 }
