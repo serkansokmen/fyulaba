@@ -7,70 +7,104 @@
 //
 
 import ReSwift
+import Speech
 import AudioKit
 
 struct MemoRecorderReducer: Reducer {
 
     func handleAction(action: Action, state: MemoRecorderState?) -> MemoRecorderState {
         
-        guard let state = state else { return MemoRecorderState() }
+        var state = state ?? MemoRecorderState()
         
         switch action {
-        case _ as SetupAudio:
-
-            // Session settings
-            AKSettings.bufferLength = .medium
-            do {
-                try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
-            } catch {
-                AKLog("Could not set session category.")
+            
+        case _ as RequestAuthorization:
+            
+            SFSpeechRecognizer.requestAuthorization { (authStatus) in
+                
+                switch authStatus {
+                    
+                case .authorized:
+                    state.authorizationState = .authorized
+                    
+                case .denied:
+                    state.authorizationState = .denied("User denied access to speech recognition")
+                    
+                case .restricted:
+                     state.authorizationState = .denied("Speech recognition restricted on this device")
+                    
+                case .notDetermined:
+                    state.authorizationState = .denied("Speech recognition not yet authorized")
+                }
+                
+                OperationQueue.main.addOperation {
+                    
+                    // here you can perform UI action, e.g. enable or disable a record button
+                    switch state.authorizationState {
+                    case .none:
+                        break
+                    case .authorized:
+                        store.dispatch(SetAudioState(state: .ready(nil)))
+                    case let .denied(message):
+                        store.dispatch(RequestAuthorizationError(reason: message))
+                    }
+                }
             }
-
-            AKSettings.defaultToSpeaker = true
-
-            // Patching
-//            state.micMixer = AKMixer(state.mic)
-//            state.micBooster = AKBooster(state.micMixer)
-//
-//            // Will set the level of microphone monitoring
-//            state.micBooster?.gain = 0
-//
-//            state.recorder
-//            if let recording = self.recording {
-//                if let fileURL = recording.fileURL,
-//                    Disk.exists(fileURL.lastPathComponent, in: .documents) {
-//                    do {
-//                        let workingFile = try AKAudioFile(readFileName: fileURL.lastPathComponent, baseDir: .documents)
-//                        do {
-//                            self.recorder = try AKNodeRecorder(node: self.micMixer, file: workingFile)
-//                        } catch let error {
-//                            self.recorder = try AKNodeRecorder(node: self.micMixer)
-//                            self.showAlert(error.localizedDescription, type: .error)
-//                        }
-//                    } catch let error {
-//                        self.recorder = try? AKNodeRecorder(node: self.micMixer)
-//                        self.showAlert(error.localizedDescription, type: .error)
-//                    }
-//                } else {
-//                    self.recorder = try? AKNodeRecorder(node: self.micMixer)
-//                }
-//            } else {
-//                self.recorder = try? AKNodeRecorder(node: self.micMixer)
-//            }
-//
-//            if let file = recorder.audioFile {
-//                player = try? AKAudioPlayer(file: file)
-//                player.looping = true
-//                player.completionHandler = playingEnded
-//            }
-//
-//            variSpeed = AKVariSpeed(player)
-//            variSpeed.rate = 1.0
-//
-//            mainMixer = AKMixer(variSpeed, micBooster)
-//
-//            AudioKit.output = mainMixer
-
+            
+        case let action as RequestAuthorizationError:
+            state.authorizationState = .denied(action.reason)
+            return state
+            
+        case let action as SetAudioState:
+            
+            switch action.state {
+            case .none:
+                return state
+            
+            case .ready:
+                AKSettings.bufferLength = .medium
+                do {
+                    try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
+                } catch {
+                    AKLog("Could not set session category.")
+                }
+                AKSettings.defaultToSpeaker = true
+                
+                state.micMixer = AKMixer(state.mic)
+                state.micBooster = AKBooster(state.micMixer)
+                state.micBooster?.gain = 0
+                state.recorder = try? AKNodeRecorder(node: state.micMixer)
+                if let file = state.recorder?.audioFile {
+                    state.player = try? AKAudioPlayer(file: file)
+                    state.player?.looping = true
+                    state.player?.completionHandler = {
+                        DispatchQueue.main.async {
+                            store.dispatch(SetAudioState(state: .playbackCompleted(state.player)))
+                        }
+                    }
+                    state.variSpeed = AKVariSpeed(state.player)
+                    state.variSpeed?.rate = 1.0
+                    state.mainMixer = AKMixer(state.variSpeed, state.micBooster)
+                    AudioKit.output = state.mainMixer
+                    AudioKit.start()
+                }
+                
+            case .recording:
+                return state
+            
+            case .playing:
+                break
+                
+            case let .playbackCompleted(player):
+                print("Playback completed")
+                break
+                
+            case let .error(error):
+                print(error.localizedDescription)
+                
+            }
+            
+            
         default:
             break
         }

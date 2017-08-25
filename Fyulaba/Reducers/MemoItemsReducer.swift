@@ -18,22 +18,14 @@ struct MemoItemsReducer: Reducer {
 
         switch action {
         case _ as FetchMemoListingAction:
-
-            switch state {
-
-            case .none:
-                do {
-                    try api.getItems(query: "") { items in return
-                        DispatchQueue.main.async {
-                            store.dispatch(SetMemoItemsAction(items: items))
-                        }
+            do {
+                try api.getItems(query: "") { items in return
+                    DispatchQueue.main.async {
+                        store.dispatch(SetMemoItemsAction(items: items))
                     }
-                } catch let error {
-                    return .error(error)
                 }
-                break
-
-            default: break
+            } catch let error {
+                return .error(error)
             }
 
         default:

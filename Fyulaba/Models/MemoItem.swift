@@ -27,7 +27,7 @@ import AudioKit
 
 
 struct MemoItem: Codable, Equatable {
-
+    
     let uuid: String
     let text: String
     let createdAt: Date
@@ -61,7 +61,7 @@ struct MemoItem: Codable, Equatable {
             return ""
         }
     }
-
+    
     public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {
         return lhs.uuid == rhs.uuid
     }

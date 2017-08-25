@@ -8,4 +8,10 @@
 
 import ReSwift
 
-struct SetupAudio: Action { }
+struct RequestAuthorization: Action { }
+struct RequestAuthorizationError: Action {
+    let reason: String
+}
+struct SetAudioState: Action {
+    let state: MemoAudioStateType
+}

@@ -8,10 +8,10 @@
 
 import ReSwift
 
-func routingReducer(action: Action, state: RoutingState?) -> RoutingState {
-    let state = state ?? RoutingState()
-    return state
-}
+//func routingReducer(action: Action, state: RoutingState?) -> RoutingState {
+//    let state = state ?? RoutingState()
+//    return state
+//}
 
 struct RoutingReducer: Reducer {
 
