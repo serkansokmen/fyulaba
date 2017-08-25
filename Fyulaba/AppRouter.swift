@@ -11,7 +11,7 @@ import ReSwift
 enum RoutingDestination: String {
     case root = "RootViewController"
     case memoList = "MemoListViewController"
-//    case memoProcessing = "MemoProcessingViewController"
+    case memoRecorder = "MemoRecorderViewController"
     case memoDetail = "MemoDetailViewController"
     case parent = "ParentViewController"
 }

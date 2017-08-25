@@ -18,16 +18,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="qac-QB-XNp">
-                                <rect key="frame" x="433" y="353.5" width="158.5" height="61"/>
+                                <rect key="frame" x="432.5" y="343" width="160" height="84"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fyulaba" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jsc-IF-LcN">
-                                        <rect key="frame" x="26.5" y="0.0" width="106" height="43"/>
-                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="66"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="55"/>
                                         <color key="textColor" red="0.15410047769546509" green="0.41306763887405396" blue="0.69063264131546021" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Investigate Your Memories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCz-mp-ndM">
-                                        <rect key="frame" x="0.0" y="45" width="158.5" height="16"/>
+                                        <rect key="frame" x="0.5" y="68" width="158.5" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <color key="textColor" red="0.51784205436706543" green="0.58159953355789185" blue="0.58617168664932251" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

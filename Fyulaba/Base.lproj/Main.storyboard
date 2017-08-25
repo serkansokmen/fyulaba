@@ -76,7 +76,30 @@
                     <view key="view" contentMode="scaleToFill" id="frH-Fq-bqT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="qwB-5Y-yr7">
+                                <rect key="frame" x="107.5" y="292.5" width="160" height="84"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fyulaba" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBB-ru-evd">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="66"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="55"/>
+                                        <color key="textColor" red="0.15410047769999999" green="0.41306763889999998" blue="0.69063264130000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Investigate Your Memories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lyl-DO-ral">
+                                        <rect key="frame" x="0.5" y="68" width="158.5" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                        <color key="textColor" red="0.51784205439999997" green="0.58159953360000005" blue="0.58617168659999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qwB-5Y-yr7" firstAttribute="centerY" secondItem="frH-Fq-bqT" secondAttribute="centerY" id="Bp5-ia-22a"/>
+                            <constraint firstItem="qwB-5Y-yr7" firstAttribute="centerX" secondItem="frH-Fq-bqT" secondAttribute="centerX" id="nCU-pp-mtk"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="biV-61-syw"/>
                     </view>
                     <navigationItem key="navigationItem" id="h4q-Td-TOX"/>
