@@ -13,5 +13,6 @@ import ReSwiftRouter
 struct AppState: StateType {
     var routingState: RoutingState
     let memoItems: MemoItemsState
+    let speechAuthorization: SpeechAuthorizationState
     let memoRecorder: MemoRecorderState
 }

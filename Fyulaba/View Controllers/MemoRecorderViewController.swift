@@ -9,9 +9,10 @@
 import UIKit
 import ReSwift
 import ReSwiftRouter
+import AudioKit
 
 class MemoRecorderViewController: UIViewController, Routable {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -21,18 +22,22 @@ class MemoRecorderViewController: UIViewController, Routable {
         store.subscribe(self) { state in
             state.memoRecorder
         }
-        store.dispatch(RequestAuthorization())
+        store.dispatch(SetupMemoRecorder(file: nil))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
-
 }
 
 extension MemoRecorderViewController: StoreSubscriber {
     func newState(state: MemoRecorderState) {
-        print(state)
+        switch state {
+        case let .ready(file):
+            print(file)
+        default:
+            break
+        }
     }
 }

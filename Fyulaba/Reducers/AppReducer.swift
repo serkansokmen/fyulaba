@@ -20,7 +20,11 @@ struct AppReducer: Reducer {
             
                 memoItems: MemoItemsReducer(with: self.persistanceManager).handleAction(action: action, state: state?.memoItems),
             
+                speechAuthorization: SpeechAuthorizationReducer().handleAction(action: action, state: state?.speechAuthorization),
+                
                 memoRecorder: MemoRecorderReducer().handleAction(action: action, state: state?.memoRecorder)
+                
+        
             )
     }
 }

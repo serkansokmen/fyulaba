@@ -7,11 +7,20 @@
 //
 
 import ReSwift
+import AudioKit
 
-struct RequestAuthorization: Action { }
-struct RequestAuthorizationError: Action {
-    let reason: String
+struct SetupMemoRecorder: Action {
+    let file: AKAudioFile?
 }
-struct SetAudioState: Action {
-    let state: MemoAudioStateType
+
+struct SetupMemoRecorderSuccess: Action {
+    let file: AKAudioFile?
+}
+
+struct SetMemoRecorderRecording: Action { }
+
+struct SetMemoRecorderPlaying: Action { }
+
+struct SetMemoRecorderError: Action {
+    let error: Error?
 }

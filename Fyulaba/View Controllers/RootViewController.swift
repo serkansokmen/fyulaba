@@ -38,6 +38,7 @@ class RootViewController: UIViewController, Routable {
     }
 
     @objc func createMemoTapped(_ sender: UIButton) {
+        store.dispatch(RequestSpeechAuthorization())
         store.dispatch(RoutingAction(destination: .memoRecorder))
     }
 
