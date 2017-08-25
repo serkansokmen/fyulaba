@@ -6,8 +6,7 @@
 //  Copyright © 2017 Serkan Sokmen. All rights reserved.
 //
 
-import ReSwift
-import Disk
+import Foundation
 
 typealias ItemsCompletion<T> = (([T]) -> Void)
 typealias ItemCompletion<T> = ((T) -> Void)
