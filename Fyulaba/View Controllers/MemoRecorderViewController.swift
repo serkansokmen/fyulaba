@@ -19,9 +19,9 @@ class MemoRecorderViewController: UIViewController, Routable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         store.subscribe(self) { state in
-            state.memoItems
+            state.memoRecorder
         }
-        store.dispatch(FetchMemoListingAction())
+        store.dispatch(RequestAuthorization())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -32,7 +32,7 @@ class MemoRecorderViewController: UIViewController, Routable {
 }
 
 extension MemoRecorderViewController: StoreSubscriber {
-    func newState(state: MemoItemsState) {
+    func newState(state: MemoRecorderState) {
         print(state)
     }
 }

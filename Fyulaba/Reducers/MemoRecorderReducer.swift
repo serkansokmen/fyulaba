@@ -41,12 +41,12 @@ struct MemoRecorderReducer: Reducer {
                     
                     // here you can perform UI action, e.g. enable or disable a record button
                     switch state.authorizationState {
-                    case .none:
-                        break
                     case .authorized:
                         store.dispatch(SetAudioState(state: .ready(nil)))
                     case let .denied(message):
                         store.dispatch(RequestAuthorizationError(reason: message))
+                    case .none:
+                        break
                     }
                 }
             }
@@ -95,7 +95,7 @@ struct MemoRecorderReducer: Reducer {
             case .playing:
                 break
                 
-            case let .playbackCompleted(player):
+            case .playbackCompleted(_):
                 print("Playback completed")
                 break
                 
