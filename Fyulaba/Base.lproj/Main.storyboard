@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="2239" y="-376"/>
         </scene>
-        <!--Memo Processing View Controller-->
+        <!--Memo Recorder View Controller-->
         <scene sceneID="DuT-mM-LNS">
             <objects>
-                <viewController storyboardIdentifier="MemoProcessingViewController" id="Qdm-Ks-nAf" customClass="MemoProcessingViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemoRecorderViewController" id="Qdm-Ks-nAf" customClass="MemoRecorderViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZI6-iv-NBB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

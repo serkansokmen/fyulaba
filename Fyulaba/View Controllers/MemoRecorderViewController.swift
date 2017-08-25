@@ -10,7 +10,7 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 
-class MemoProcessingViewController: UIViewController, Routable {
+class MemoRecorderViewController: UIViewController, Routable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,7 @@ class MemoProcessingViewController: UIViewController, Routable {
 
 }
 
-extension MemoProcessingViewController: StoreSubscriber {
+extension MemoRecorderViewController: StoreSubscriber {
     func newState(state: MemoItemsState) {
         print(state)
     }

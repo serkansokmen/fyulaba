@@ -9,7 +9,7 @@
 import ReSwift
 import AudioKit
 
-struct MemoProcessingState: StateType {
+struct MemoRecorderState: StateType {
     
 //    var recorder: AKNodeRecorder!
 //    var mic: AKMicrophone!

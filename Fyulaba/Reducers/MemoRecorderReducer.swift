@@ -9,11 +9,11 @@
 import ReSwift
 import AudioKit
 
-struct MemoProcessingReducer: Reducer {
+struct MemoRecorderReducer: Reducer {
 
-    func handleAction(action: Action, state: MemoProcessingState?) -> MemoProcessingState {
+    func handleAction(action: Action, state: MemoRecorderState?) -> MemoRecorderState {
         
-        guard let state = state else { return MemoProcessingState() }
+        guard let state = state else { return MemoRecorderState() }
         
         switch action {
         case _ as SetupAudio:
