@@ -1,5 +1,5 @@
 //
-//  RecorderViewController.swift
+//  MemoDetailViewController.swift
 //  Fyulaba
 //
 //  Created by Serkan Sokmen on 24/08/2017.
@@ -10,7 +10,7 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 
-class RecorderViewController: UIViewController, Routable {
+class MemoDetailViewController: UIViewController, Routable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,19 +18,20 @@ class RecorderViewController: UIViewController, Routable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self)
-        store.dispatch(FetchMemoListAction(query: nil))
+        store.subscribe(self) { state in
+            state.memoItems
+        }
+        store.dispatch(FetchMemoListingAction())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
-
 }
 
-extension RecorderViewController: StoreSubscriber {
-    func newState(state: RecorderViewController.StoreSubscriberStateType) {
-
+extension MemoDetailViewController: StoreSubscriber {
+    func newState(state: MemoItemsState) {
+        print(state)
     }
 }

@@ -38,7 +38,7 @@ class RootViewController: UIViewController, Routable {
     }
 
     @objc func createMemoTapped(_ sender: UIButton) {
-        store.dispatch(RoutingAction(destination: .recorder))
+//        store.dispatch(RoutingAction(destination: .memoProcessing))
     }
 
 }

@@ -9,9 +9,9 @@
 import ReSwift
 
 struct RoutingState: StateType {
-    var navigationState: RoutingDestination
+    var destination: RoutingDestination
 
-    init(navigationState: RoutingDestination = .root) {
-        self.navigationState = navigationState
+    init(destination: RoutingDestination = .root) {
+        self.destination = destination
     }
 }

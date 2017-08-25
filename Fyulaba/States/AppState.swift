@@ -13,4 +13,5 @@ import ReSwiftRouter
 struct AppState: StateType {
     var routingState: RoutingState
     let memoItems: MemoItemsState
+//    let memoProcessing: MemoProcessingState
 }

@@ -11,7 +11,7 @@ import ReSwift
 import ReSwiftRouter
 import DZNEmptyDataSet
 
-class MemoListViewController: UITableViewController {
+class MemoListViewController: UITableViewController, Routable {
 
     var tableDataSource: TableDataSource<MemoListCell, MemoItem>?
 
@@ -35,56 +35,42 @@ class MemoListViewController: UITableViewController {
         store.subscribe(self) { state in
             state.memoItems
         }
-        store.dispatch(FetchMemoListAction(query: nil))
+        store.dispatch(FetchMemoListingAction())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
+
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let items = tableDataSource.map { cell, model in
+//            return model
+//        }
+//        let item = store.dispatch(RoutingAction(destination: .memoDetail))
+//    }
 }
 
 extension MemoListViewController: StoreSubscriber {
     func newState(state: MemoItemsState) {
-        switch state {
-        case .none:
-            break
-        case .loading:
-            break
-        case let .success(items):
-            self.tableDataSource = TableDataSource(cellIdentifier: MemoListCell.identifier, models: items) { cell, model in
-                cell.textLabel?.text = model.title
-                cell.textLabel?.textAlignment = .center
-                return cell
-            }
-            self.tableView.dataSource = tableDataSource
-            self.tableView.reloadData()
-            self.tableView.reloadEmptyDataSet()
-        case let .error(error):
-            self.showAlert(error?.localizedDescription, type: .warning)
-        }
-    }
-}
-
-extension MemoListViewController: Routable {
-
-}
-
-// MARK: - Table view data source
-extension MemoListViewController {
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        self.presentRecorder(with: item)
-    }
-
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-//            let item = self.items[indexPath.row]
-//            store.dispatch(DeleteMemoAction(item: item))
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
+//        switch state {
+//
+//        case let .success(items):
+//            self.tableDataSource = TableDataSource(cellIdentifier: MemoListCell.identifier, models: items) { cell, model in
+//                cell.textLabel?.text = model.title
+//                cell.textLabel?.textAlignment = .center
+//                return cell
+//            }
+//            self.tableView.dataSource = tableDataSource
+//            self.tableView.reloadData()
+//            self.tableView.reloadEmptyDataSet()
+//
+//        case let .error(error):
+//            self.showAlert(error?.localizedDescription, type: .warning)
+//
+//        default:
+//            break
+//        }
     }
 }
 

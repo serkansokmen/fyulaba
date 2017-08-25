@@ -14,38 +14,36 @@ struct MemoItemsReducer: Reducer {
 
     func handleAction(action: Action, state: MemoItemsState?) -> MemoItemsState {
 
+        let state = state ?? .none
+
         switch action {
-        case let action as FetchMemoListAction:
-            fetchMemoItems(query: action.query)
-            break
+        case _ as FetchMemoListingAction:
+
+            switch state {
+
+            case .none:
+                do {
+                    try api.getItems(query: "") { items in return
+                        DispatchQueue.main.async {
+                            store.dispatch(SetMemoItemsAction(items: items))
+                        }
+                    }
+                } catch let error {
+                    return .error(error)
+                }
+                break
+
+            default: break
+            }
+
         default:
             break
         }
 
-//        switch state {
-//        case .loading:
-//            state.items = .none
-//        case .success(items):
-//            state.items = items
-//        }
-
-        return state ?? .none
+        return state
     }
 
     init(with manager: MemoManager) {
         self.api = manager
-    }
-
-    func fetchMemoItems(query: String?) {
-        do {
-            try api.getItems(query: query) { items in
-                print(items)
-                DispatchQueue.main.async {
-                    store.dispatch(SetMemoItemsAction(items: items))
-                }
-            }
-        } catch let error {
-            print(error.localizedDescription)
-        }
     }
 }

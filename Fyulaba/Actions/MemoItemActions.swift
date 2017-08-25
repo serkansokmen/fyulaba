@@ -8,9 +8,7 @@
 
 import ReSwift
 
-struct FetchMemoListAction: Action {
-    let query: String?
-}
+struct FetchMemoListingAction: Action { }
 
 struct SetMemoItemsAction: Action {
     let items: [MemoItem]

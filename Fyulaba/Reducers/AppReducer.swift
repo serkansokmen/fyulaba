@@ -20,5 +20,4 @@ struct AppReducer: Reducer {
                 .handleAction(action: action, state: state?.memoItems)
         )
     }
-    
 }

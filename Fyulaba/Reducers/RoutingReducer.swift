@@ -21,7 +21,7 @@ struct RoutingReducer: Reducer {
 
         switch action {
         case let action as RoutingAction:
-            state.navigationState = action.destination
+            state.destination = action.destination
         default: break
         }
 

@@ -11,9 +11,9 @@ import ReSwift
 enum RoutingDestination: String {
     case root = "RootViewController"
     case memoList = "MemoListViewController"
-    case recorder = "RecorderViewController"
+//    case memoProcessing = "MemoProcessingViewController"
+    case memoDetail = "MemoDetailViewController"
     case parent = "ParentViewController"
-//    case player = "PlayerViewController"
 }
 
 
@@ -52,11 +52,13 @@ extension AppRouter: StoreSubscriber {
     func newState(state: RoutingState) {
         let shouldAnimate = navigationController.topViewController != nil
 
-        switch state.navigationState {
-        case .root:
-            navigationController.popToRootViewController(animated: shouldAnimate)
-        case .memoList:
-            pushViewController(identifier: MemoListViewController.identifier, animated: shouldAnimate)
+        switch state.destination {
+
+//        case .root:
+//            navigationController.popToRootViewController(animated: shouldAnimate)
+
+//        case .memoList:
+//            pushViewController(identifier: MemoListViewController.identifier, animated: shouldAnimate)
 //            let vc = instantiateViewController(identifier: MemoListViewController.identifier) as! MemoListViewController
 //            let nav = UINavigationController(rootViewController: vc)
 //            nav.modalPresentationStyle = .popover
@@ -68,13 +70,11 @@ extension AppRouter: StoreSubscriber {
 //            popover?.sourceRect = CGRect(x: 100, y: 100, width: 100, height: 100)
 //
 //            present(nav, animated: true, completion: completionHandler)
-        case .recorder:
-            pushViewController(identifier: RecorderViewController.identifier, animated: shouldAnimate)
+
         case .parent:
             navigationController.popViewController(animated: shouldAnimate)
+        default:
+            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
         }
-
-        guard state.navigationState != .parent else { return }
-        pushViewController(identifier: state.navigationState.rawValue, animated: shouldAnimate)
     }
 }
