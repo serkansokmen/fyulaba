@@ -19,7 +19,7 @@ struct MemoItemsReducer: Reducer {
         switch action {
         case _ as FetchMemoListingAction:
             do {
-                try api.getItems(query: "") { items in return
+                try api.getItems(query: "") { items in
                     DispatchQueue.main.async {
                         store.dispatch(SetMemoItemsAction(items: items))
                     }

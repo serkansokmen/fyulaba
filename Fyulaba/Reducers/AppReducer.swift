@@ -17,14 +17,9 @@ struct AppReducer: Reducer {
         return
             AppState(
                 routingState: RoutingReducer().handleAction(action: action, state: state?.routingState),
-            
                 memoItems: MemoItemsReducer(with: self.persistanceManager).handleAction(action: action, state: state?.memoItems),
-            
                 speechAuthorization: SpeechAuthorizationReducer().handleAction(action: action, state: state?.speechAuthorization),
-                
                 memoRecorder: MemoRecorderReducer().handleAction(action: action, state: state?.memoRecorder)
-                
-        
             )
     }
 }

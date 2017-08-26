@@ -11,6 +11,7 @@ import ReSwift
 enum MemoItemsState: StateType {
     case none
     case loading
-    case success([MemoItem])
+    case list([MemoItem])
+    case detail(MemoItem)
     case error(Error?)
 }

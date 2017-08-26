@@ -21,7 +21,6 @@ class MemoDetailViewController: UIViewController, Routable {
         store.subscribe(self) { state in
             state.memoItems
         }
-        store.dispatch(FetchMemoListingAction())
     }
 
     override func viewWillDisappear(_ animated: Bool) {

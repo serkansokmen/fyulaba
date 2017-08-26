@@ -64,7 +64,11 @@ struct MemoRecorderReducer: Reducer {
         
         case _ as DoneMemoRecorder:
             MemoRecorder.shared.done  { file in
-                print(file)
+                let memo = MemoItem(uuid: UUID().uuidString, text: "", createdAt: Date(), sentiment: nil, fileURL: file.url)
+                DispatchQueue.main.async {
+                    store.dispatch(AddMemoAction(newItem: memo))
+                    store.dispatch(RoutingAction(destination: .memoDetail))
+                }
             }
             return .none
             
