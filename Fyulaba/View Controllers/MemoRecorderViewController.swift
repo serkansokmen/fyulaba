@@ -13,9 +13,17 @@ import AudioKit
 
 class MemoRecorderViewController: UIViewController, Routable {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    @IBOutlet weak var plotView: AKOutputWaveformPlot!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var stopRecordingButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var stopPlayingButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -29,15 +37,65 @@ class MemoRecorderViewController: UIViewController, Routable {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
+    
+    @IBAction func handleRecord(_ sender: UIButton) {
+        store.dispatch(SetMemoRecorderStartRecording())
+    }
+    
+    @IBAction func handleStopRecording(_ sender: UIButton) {
+        store.dispatch(SetMemoRecorderStopRecording())
+    }
+    
+    @IBAction func handlePlay(_ sender: UIButton) {
+        store.dispatch(SetMemoRecorderStartPlaying())
+    }
+    
+    @IBAction func handleStopPlaying(_ sender: UIButton) {
+        store.dispatch(SetMemoRecorderStopPlaying())
+    }
+    
+    @IBAction func handleReset(_ sender: UIButton) {
+        store.dispatch(ResetMemoRecorder())
+    }
+    
+    @IBAction func handleDone(_ sender: UIButton) {
+        store.dispatch(DoneMemoRecorder())
+    }
 }
 
 extension MemoRecorderViewController: StoreSubscriber {
     func newState(state: MemoRecorderState) {
         switch state {
         case let .ready(file):
-            print(file)
+            let hasDuration = file != nil ? file!.duration > 0.0 : false
+            recordButton.isEnabled = true
+            stopRecordingButton.isEnabled = false
+            playButton.isEnabled = hasDuration
+            stopPlayingButton.isEnabled = false
+            resetButton.isEnabled = hasDuration
+            doneButton.isEnabled = hasDuration
+        case .recording:
+            recordButton.isEnabled = false
+            stopRecordingButton.isEnabled = true
+            playButton.isEnabled = false
+            stopPlayingButton.isEnabled = false
+            resetButton.isEnabled = false
+            doneButton.isEnabled = false
+        case .playing:
+            recordButton.isEnabled = false
+            stopRecordingButton.isEnabled = false
+            playButton.isEnabled = false
+            stopPlayingButton.isEnabled = true
+            resetButton.isEnabled = false
+            doneButton.isEnabled = false
         default:
-            break
+            recordButton.isEnabled = false
+            stopRecordingButton.isEnabled = false
+            playButton.isEnabled = false
+            stopPlayingButton.isEnabled = false
+            resetButton.isEnabled = false
+            doneButton.isEnabled = false
         }
+        print(state)
     }
 }

@@ -19,19 +19,54 @@ struct MemoRecorderReducer: Reducer {
             
             MemoRecorder.shared.setup(with: action.file) {
                 DispatchQueue.main.async {
-                    store.dispatch(SetupMemoRecorderSuccess(file: action.file))
+                    store.dispatch(SetupMemoRecorderSuccess())
                 }
             }
             return .initialising
         
-        case let action as SetupMemoRecorderSuccess:
-            return .ready(action.file)
+        case _ as SetupMemoRecorderSuccess:
+            DispatchQueue.main.async {
+                store.dispatch(StartAudioEngine())
+            }
+            return .initialising
         
-        case _ as SetMemoRecorderRecording:
+        case _ as StartAudioEngine:
+            MemoRecorder.shared.startEngine()
+            return .ready(MemoRecorder.shared.workingFile)
+        
+        case _ as StopAudioEngine:
+            MemoRecorder.shared.stopEngine()
+            return .none
+        
+        case _ as SetMemoRecorderStartRecording:
+            try? MemoRecorder.shared.startRecording()
             return .recording
         
-        case _ as SetMemoRecorderPlaying:
+        case _ as SetMemoRecorderStopRecording:
+            MemoRecorder.shared.stopRecording { file in
+                DispatchQueue.main.async {
+                    store.dispatch(StartAudioEngine())
+                }
+            }
+            return .ready(MemoRecorder.shared.workingFile)
+        
+        case _ as SetMemoRecorderStartPlaying:
+            MemoRecorder.shared.startPlaying()
             return .playing
+        
+        case _ as SetMemoRecorderStopPlaying:
+            MemoRecorder.shared.stopPlaying()
+            return .ready(MemoRecorder.shared.workingFile)
+        
+        case _ as ResetMemoRecorder:
+            MemoRecorder.shared.reset()
+            return .ready(MemoRecorder.shared.workingFile)
+        
+        case _ as DoneMemoRecorder:
+            MemoRecorder.shared.done  { file in
+                print(file)
+            }
+            return .none
             
         case let action as SetMemoRecorderError:
             return .error(action.error)

@@ -52,7 +52,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVA-AH-1xd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2239" y="-376"/>
+            <point key="canvasLocation" x="2822" y="-376"/>
         </scene>
         <!--Memo Recorder View Controller-->
         <scene sceneID="DuT-mM-LNS">
@@ -61,13 +61,107 @@
                     <view key="view" contentMode="scaleToFill" id="ZI6-iv-NBB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Z6-oC-Yqb">
+                                <rect key="frame" x="67.5" y="167.5" width="240" height="332"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyZ-fF-k9k" customClass="AKOutputWaveformPlot" customModule="AudioKit">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="60"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Jld-U8-7KD"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="KEa-sk-lW7">
+                                        <rect key="frame" x="69.5" y="68" width="101" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fq-Os-aUh">
+                                                <rect key="frame" x="0.0" y="0.0" width="49" height="60"/>
+                                                <state key="normal" title="Record"/>
+                                                <connections>
+                                                    <action selector="handleRecord:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="cN0-oW-Z3U"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLs-K3-ZQm">
+                                                <rect key="frame" x="69" y="0.0" width="32" height="60"/>
+                                                <state key="normal" title="Stop"/>
+                                                <connections>
+                                                    <action selector="handleStopRecording:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="pdq-zS-evd"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-0C-Uge">
+                                        <rect key="frame" x="79" y="136" width="82" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBx-Bf-2x2">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="60"/>
+                                                <state key="normal" title="Play"/>
+                                                <connections>
+                                                    <action selector="handlePlay:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="deB-me-dPa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6UF-ZE-Ufa">
+                                                <rect key="frame" x="50" y="0.0" width="32" height="60"/>
+                                                <state key="normal" title="Stop"/>
+                                                <connections>
+                                                    <action selector="handleStopPlaying:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="ZzE-R4-2zC"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssx-yr-Llv">
+                                        <rect key="frame" x="100.5" y="204" width="39" height="60"/>
+                                        <state key="normal" title="Reset"/>
+                                        <connections>
+                                            <action selector="handleReset:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="2G2-hc-lhU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4tu-3a-WzG">
+                                        <rect key="frame" x="101.5" y="272" width="37" height="60"/>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="handleDone:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="2nX-Ub-3lp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0Z6-oC-Yqb" firstAttribute="centerX" secondItem="ZI6-iv-NBB" secondAttribute="centerX" id="2Er-s1-iNS"/>
+                            <constraint firstItem="0Z6-oC-Yqb" firstAttribute="centerY" secondItem="ZI6-iv-NBB" secondAttribute="centerY" id="pqB-k7-dPG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="HQ0-Wg-eat"/>
                     </view>
+                    <connections>
+                        <outlet property="doneButton" destination="4tu-3a-WzG" id="Tdm-Jl-wu1"/>
+                        <outlet property="playButton" destination="EBx-Bf-2x2" id="3ue-uV-FFh"/>
+                        <outlet property="plotView" destination="xyZ-fF-k9k" id="zIy-Ea-GzF"/>
+                        <outlet property="recordButton" destination="1Fq-Os-aUh" id="ToY-HF-Q4D"/>
+                        <outlet property="resetButton" destination="Ssx-yr-Llv" id="LH9-xh-JHF"/>
+                        <outlet property="stopPlayingButton" destination="6UF-ZE-Ufa" id="fOa-lx-zTv"/>
+                        <outlet property="stopRecordingButton" destination="bLs-K3-ZQm" id="aq5-T8-1dO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZxR-Zb-uQ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1510" y="-376"/>
+        </scene>
+        <!--Memo Detail View Controller-->
+        <scene sceneID="DaR-Fs-ed3">
+            <objects>
+                <viewController id="all-7k-n0q" customClass="MemoDetailViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QG2-7R-VaM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="w6z-CW-5H7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WMI-4W-qJ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2172" y="-376"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="0mA-fQ-AUL">
@@ -78,7 +172,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="qwB-5Y-yr7">
-                                <rect key="frame" x="107.5" y="292.5" width="160" height="84"/>
+                                <rect key="frame" x="107.5" y="291.5" width="160" height="84"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fyulaba" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBB-ru-evd">
                                         <rect key="frame" x="0.0" y="0.0" width="160" height="66"/>
@@ -87,7 +181,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Investigate Your Memories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lyl-DO-ral">
-                                        <rect key="frame" x="0.5" y="68" width="158.5" height="16"/>
+                                        <rect key="frame" x="1" y="68" width="158.5" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <color key="textColor" red="0.51784205439999997" green="0.58159953360000005" blue="0.58617168659999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

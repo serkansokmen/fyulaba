@@ -13,6 +13,7 @@ import ReSwiftRouter
 class RootViewController: UIViewController, Routable {
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks,
