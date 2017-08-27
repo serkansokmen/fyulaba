@@ -10,22 +10,27 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 import AudioKit
+import Cartography
+import ChameleonFramework
 
 class MemoRecorderViewController: UIViewController, Routable {
     
-    @IBOutlet weak var plotView: AKRollingOutputPlot!
+    @IBOutlet weak var plotView: EZAudioPlot!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopRecordingButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopPlayingButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var durationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestAuthorization(completion: {
             OperationQueue.main.addOperation {
-                store.dispatch(SetMemoRecorderReady(memo: nil))
+                let file = try? AKAudioFile()
+                setupWorkingAudioFile(file, completion: { workingFile in
+                    store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
+                })
             }
         }, denied: { message in
             self.showAlert(message, type: .error)
@@ -63,45 +68,84 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBAction func handleReset(_ sender: UIButton) {
         store.dispatch(ResetMemoRecorder())
     }
-    
-    @IBAction func handleDone(_ sender: UIButton) {
-//        store.dispatch(DoneMemoRecorder())
-    }
 }
 
 extension MemoRecorderViewController: StoreSubscriber {
     func newState(state: MemoRecorderState) {
-        switch state {
-        case let .ready(file):
-            let hasDuration = file != nil ? file!.duration > 0.0 : false
+        
+        guard let fileURL = state.memo.fileURL else { return }
+        guard let file = try? AKAudioFile(forReading: fileURL) else { return }
+        
+        switch state.recordingState {
+        case .ready:
+            let hasDuration = file.duration > 0.0
             recordButton.isEnabled = true
             stopRecordingButton.isEnabled = false
             playButton.isEnabled = hasDuration
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = hasDuration
-            doneButton.isEnabled = hasDuration
+            durationLabel.isHidden = false
+            
         case .recording:
             recordButton.isEnabled = false
             stopRecordingButton.isEnabled = true
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
-            doneButton.isEnabled = false
+            durationLabel.isHidden = true
+            
         case .playing:
             recordButton.isEnabled = false
             stopRecordingButton.isEnabled = false
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = true
             resetButton.isEnabled = false
-            doneButton.isEnabled = false
+            durationLabel.isHidden = false
+            
+        case .paused:
+            recordButton.isEnabled = true
+            stopRecordingButton.isEnabled = false
+            playButton.isEnabled = true
+            stopPlayingButton.isEnabled = false
+            resetButton.isEnabled = true
+            durationLabel.isHidden = true
+            
         default:
-            recordButton.isEnabled = false
+            recordButton.isEnabled = true
             stopRecordingButton.isEnabled = false
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
-            doneButton.isEnabled = false
+            durationLabel.isHidden = true
         }
-        print(state)
+        
+        durationLabel.text = "Duration: \(file.duration)"
+        
+//        self.updatePlotView(state)
+    }
+    
+    private func updatePlotView(_ state: MemoRecorderState) {
+        
+        plotView.subviews.forEach { $0.removeFromSuperview() }
+        
+//        guard let audioNode = state.audioNode else { return }
+        let plot = AKNodeOutputPlot(state.audioNode, frame: plotView.bounds)
+        plot.plotType = .rolling
+        plot.shouldFill = true
+        plot.shouldMirror = true
+        
+        switch state.recordingState {
+        case .recording:
+            plot.color = .flatRed
+        case .playing:
+            plot.color = .flatGreen
+        default:
+            plot.color = .flatGray
+        }
+        
+        plotView.addSubview(plot)
+        constrain(plot) {
+            $0.edges == $0.superview!.edges
+        }
     }
 }

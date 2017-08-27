@@ -43,12 +43,12 @@ class MemoListViewController: UITableViewController, Routable {
         store.unsubscribe(self)
     }
 
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let items = tableDataSource.map { cell, model in
-//            return model
-//        }
-//        let item = store.dispatch(RoutingAction(destination: .memoDetail))
-//    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        _ = tableDataSource.map { items in
+            let item = items
+//            let item = store.dispatch(RoutingAction(destination: .memoDetail))
+        }
+    }
 }
 
 extension MemoListViewController: StoreSubscriber {

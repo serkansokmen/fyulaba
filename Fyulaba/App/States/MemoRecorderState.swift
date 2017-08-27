@@ -9,12 +9,18 @@
 import ReSwift
 import AudioKit
 
-enum MemoRecorderState: StateType {
+enum MemoRecorderRecordingState: StateType {
     case none
     case initialising
-    case ready(AKAudioFile?)
+    case ready
     case recording
     case playing
-    case stopped
+    case paused
     case error(Error?)
+}
+
+struct MemoRecorderState: StateType {
+    var memo: MemoItem
+    var recordingState: MemoRecorderRecordingState
+    var audioNode: AKNode?
 }

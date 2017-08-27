@@ -9,6 +9,7 @@
 import UIKit
 import ReSwift
 import ReSwiftRouter
+//import ReSwiftRecorder
 
 let store = Store<AppState>(reducer: AppReducer(), state: nil)
 let api = MemoManager()

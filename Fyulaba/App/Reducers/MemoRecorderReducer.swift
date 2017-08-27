@@ -9,50 +9,74 @@
 import ReSwift
 import AudioKit
 
-struct MemoRecorderReducer: Reducer {
 
+struct MemoRecorderReducer: Reducer {
+    
     func handleAction(action: Action, state: MemoRecorderState?) -> MemoRecorderState {
+        
+        var state = state ?? MemoRecorderState(memo: MemoItem(uuid: UUID().uuidString,
+                                                              text: "",
+                                                              createdAt: Date(),
+                                                              sentiment: nil,
+                                                              fileName: nil,
+                                                              fileExt: nil,
+                                                              fileURL: nil),
+                                               recordingState: .none,
+                                               audioNode: nil)
         
         switch action {
             
         case let action as SetMemoRecorderReady:
-            guard let memo = action.memo else { return .ready(nil) }
-            guard let fileURL = memo.fileURL else { return .ready(nil) }
-            guard let file = try? AKAudioFile(readFileName: fileURL.absoluteString, baseDir: .documents) else { return .ready(nil) }
-            return .ready(file)
-        
+            state.recordingState = .ready
+            state.memo.fileName = action.workingFile?.fileName
+            state.memo.fileExt = action.workingFile?.fileExt
+            state.memo.fileURL = action.workingFile?.url
+            state.audioNode = MemoRecorder.shared.mic
+            
+        case let action as SelectMemoItem:
+            state.memo = action.item ?? state.memo
+            
         case _ as SetMemoRecorderStartRecording:
             try? MemoRecorder.shared.startRecording()
-            return .recording
+            state.recordingState = .recording
+            state.audioNode = MemoRecorder.shared.mic
         
         case _ as SetMemoRecorderStopRecording:
             MemoRecorder.shared.stopRecording { file in
-                let memo = MemoItem(uuid: UUID().uuidString, text: "", createdAt: Date(), sentiment: nil, fileURL: file.url)
-                DispatchQueue.main.async {
-                    store.dispatch(AddMemoItem(newItem: memo))
-                    store.dispatch(RoutingAction(destination: .memoDetail))
-                }
+                print(file)
+//                let memo = MemoItem(uuid: UUID().uuidString, text: "", createdAt: Date(), sentiment: nil, fileURL: file.url)
+//                DispatchQueue.main.async {
+//                    store.dispatch(AddMemoItem(newItem: memo))
+//                    store.dispatch(RoutingAction(destination: .memoDetail))
+//                }
             }
-            return .stopped
+            state.audioNode = nil
+            state.recordingState = .paused
         
         case _ as SetMemoRecorderStartPlaying:
             MemoRecorder.shared.startPlaying()
-            return .playing
+            state.recordingState = .playing
+            state.audioNode = MemoRecorder.shared.player
         
         case _ as SetMemoRecorderStopPlaying:
             MemoRecorder.shared.stopPlaying()
-            return .stopped
+            state.recordingState = .paused
+            state.audioNode = nil
         
         case _ as ResetMemoRecorder:
             MemoRecorder.shared.reset()
-            return .stopped
+            state.recordingState = .none
+            state.audioNode = nil
         
         case let action as SetMemoRecorderError:
-            return .error(action.error)
+            state.recordingState = .error(action.error)
+            state.audioNode = nil
             
         default:
-            return .none
+            return state
         }
+        
+        return state
     }
 
 }

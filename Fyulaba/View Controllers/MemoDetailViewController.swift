@@ -31,6 +31,6 @@ class MemoDetailViewController: UIViewController, Routable {
 
 extension MemoDetailViewController: StoreSubscriber {
     func newState(state: MemoItemsState) {
-        print(state)
+//        print(state)
     }
 }

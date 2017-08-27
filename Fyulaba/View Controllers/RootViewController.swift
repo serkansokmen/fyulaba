@@ -9,6 +9,7 @@
 import UIKit
 import ReSwift
 import ReSwiftRouter
+import AudioKit
 
 class RootViewController: UIViewController, Routable {
 
@@ -47,7 +48,7 @@ class RootViewController: UIViewController, Routable {
 extension RootViewController: StoreSubscriber {
     
     func newState(state: AppState) {
-        print(state)
+//        print(state)
     }
 }
 

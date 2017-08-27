@@ -32,8 +32,12 @@ func requestAuthorization(completion completionHandler: (() -> Void)?, denied de
     }
 }
 
+func setupWorkingAudioFile(_ file: AKAudioFile?, completion completionHandler: ((AKAudioFile?) -> Void)?) {
+    MemoRecorder.shared.setup(with: file, completion: completionHandler)
+}
+
 struct SetMemoRecorderReady: Action {
-    let memo: MemoItem?
+    let workingFile: AKAudioFile?
 }
 struct SetMemoRecorderStartRecording: Action { }
 struct SetMemoRecorderStopRecording: Action { }

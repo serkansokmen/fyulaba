@@ -12,7 +12,6 @@ class MemoRecorder {
     
     static let shared: MemoRecorder = {
         let instance = MemoRecorder()
-        
         // setup code
         return instance
     }()
@@ -35,8 +34,10 @@ class MemoRecorder {
         self.mainMixer = nil
     }
     
-    func setup(with memoItem: MemoItem?, completion completionHandler: @escaping (() -> Void)) {
+    func setup(with audioFile: AKAudioFile?, completion completionHandler: ((AKAudioFile?) -> Void)?) {
+        
         AKSettings.bufferLength = .medium
+        
         do {
             try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
         } catch {
@@ -49,11 +50,12 @@ class MemoRecorder {
         micBooster = AKBooster(micMixer)
         micBooster?.gain = 0
         
-//        if let file = workingFile {
-//            recorder = try? AKNodeRecorder(node: micMixer, file: file)
-//        } else {
-        recorder = try? AKNodeRecorder(node: micMixer)
-//        }
+        if let file = audioFile {
+            recorder = try? AKNodeRecorder(node: micMixer, file: file)
+        } else {
+            recorder = try? AKNodeRecorder(node: micMixer)
+        }
+//        recorder?.durationToRecord = 60.0
         
         if let file = recorder?.audioFile {
             player = try? AKAudioPlayer(file: file)
@@ -64,9 +66,8 @@ class MemoRecorder {
             mainMixer = AKMixer(variSpeed, micBooster)
             AudioKit.output = mainMixer
             AudioKit.start()
+            completionHandler?(file)
         }
-        
-        completionHandler()
     }
     
     deinit {
@@ -80,9 +81,8 @@ class MemoRecorder {
 //        SpeechTranscriber.shared.recognizeSpeechFromNode(self.mic.avAudioNode,
 //                                                         resultHandler: self.transcribeResultHandler!,
 //                                                         errorHandler: self.transcribeErrorHandler!)
-        
         do {
-            try recorder?.record()
+            try self.recorder?.record()
         } catch let error {
             print(error.localizedDescription)
         }
@@ -101,10 +101,10 @@ class MemoRecorder {
             recorder?.stop()
             
             let uuid = UUID().uuidString
-            let temporaryFileName = "\(uuid).caf"
+            let temporaryFileName = "\(uuid).m4a"
             player?.audioFile.exportAsynchronously(name: temporaryFileName,
-                                                   baseDir: .temp,
-                                                   exportFormat: .caf) { file, exportError in
+                                                   baseDir: .documents,
+                                                   exportFormat: .m4a) { file, exportError in
                                                         if let error = exportError {
                                                             print(error.localizedDescription)
                                                         } else {

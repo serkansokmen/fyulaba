@@ -32,13 +32,17 @@ struct MemoItem: Codable, Equatable {
     let text: String
     let createdAt: Date
     var sentiment: String?
+    var fileName: String?
+    var fileExt: String?
     var fileURL: URL?
 
     private enum CodingKeys: String, CodingKey {
-        case uuid = "uuid"
-        case text = "text"
+        case uuid
+        case text
         case createdAt = "created_at"
         case sentiment
+        case fileName = "file_name"
+        case fileExt = "file_extension"
         case fileURL = "file_url"
     }
 
@@ -60,6 +64,12 @@ struct MemoItem: Codable, Equatable {
         } catch {
             return ""
         }
+    }
+    
+    var fileNamePlusExtension: String? {
+        guard let fileName = self.fileName else { return nil }
+        guard let fileExt = self.fileExt else { return nil }
+        return "\(fileName).\(fileExt)"
     }
     
     public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {

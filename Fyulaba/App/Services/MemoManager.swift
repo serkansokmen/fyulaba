@@ -34,9 +34,15 @@ struct MemoManager: PersistanceManager  {
         if let existingIndex = newItems.index(where: { $0.uuid == item.uuid }) {
             newItems[existingIndex] = item
         } else {
-            var newItem = MemoItem(uuid: item.uuid, text: item.text, createdAt: item.createdAt, sentiment: item.sentiment, fileURL: nil)
-            let workingFile = try AKAudioFile(writeIn: .documents, name: "\(item.uuid).m4a")
-            newItem.fileURL = workingFile.url
+            guard let filePath = item.fileNamePlusExtension else { return }
+            let workingFile = try AKAudioFile(readFileName: filePath, baseDir: .documents)
+            let newItem = MemoItem(uuid: item.uuid,
+                                   text: item.text,
+                                   createdAt: item.createdAt,
+                                   sentiment: item.sentiment,
+                                   fileName: workingFile.fileName,
+                                   fileExt: workingFile.fileExt,
+                                   fileURL: workingFile.url)
             newItems.append(newItem)
         }
         completion(newItems)

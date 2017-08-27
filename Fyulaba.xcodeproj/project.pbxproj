@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		019FADC4DFE896E2BD1931E5 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */; };
 		E63B200E1F4E469C006839C3 /* MemoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B200C1F4E469C006839C3 /* MemoListCell.swift */; };
-		E652B9121F522D4500437105 /* MemoDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E652B9111F522D4500437105 /* MemoDetailState.swift */; };
 		E670A3331F4E481E005D364E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E689882D1F4DE8410095465F /* Main.storyboard */; };
 		E689882A1F4DE8410095465F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988291F4DE8410095465F /* AppDelegate.swift */; };
 		E68988311F4DE8410095465F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E68988301F4DE8410095465F /* Assets.xcassets */; };
@@ -61,7 +60,6 @@
 		9E544B71808A9B54C2158997 /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
 		D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fyulaba.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E63B200C1F4E469C006839C3 /* MemoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCell.swift; sourceTree = "<group>"; };
-		E652B9111F522D4500437105 /* MemoDetailState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailState.swift; sourceTree = "<group>"; };
 		E68988261F4DE8410095465F /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E68988291F4DE8410095465F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E689882E1F4DE8410095465F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 				E6D8509A1F4E35D20086858D /* RoutingState.swift */,
 				E68988501F4DFF970095465F /* MemoItemsState.swift */,
 				E6A59C6B1F4E578600779ECE /* MemoRecorderState.swift */,
-				E652B9111F522D4500437105 /* MemoDetailState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -426,7 +423,6 @@
 				E689885C1F4E03B30095465F /* AppReducer.swift in Sources */,
 				E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */,
 				E6A59C721F4E5AE400779ECE /* MemoRecorderActions.swift in Sources */,
-				E652B9121F522D4500437105 /* MemoDetailState.swift in Sources */,
 				E6D8509D1F4E361F0086858D /* RoutingReducer.swift in Sources */,
 				E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */,
 				E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */,
