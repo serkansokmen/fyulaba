@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 target 'Fyulaba' do
     use_frameworks!
@@ -10,6 +10,11 @@ target 'Fyulaba' do
     pod 'DZNEmptyDataSet'
     pod 'Cartography'
     pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
+    pod 'ReSwift'
+    pod 'ReSwiftRouter'
+    pod 'ReSwiftRecorder'
+    pod 'RxSwift'
+    pod 'RxCocoa'
 
     post_install do |installer|
         installer.pods_project.targets.each do |target|
@@ -21,4 +26,3 @@ target 'Fyulaba' do
     end
 
 end
-

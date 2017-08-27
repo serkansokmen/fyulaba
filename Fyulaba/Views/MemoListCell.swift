@@ -1,14 +1,16 @@
 //
-//  RecordingTableViewCell.swift
+//  MemoListCell.swift
 //  Fyulaba
 //
-//  Created by Serkan Sokmen on 20/08/2017.
+//  Created by Serkan Sokmen on 24/08/2017.
 //  Copyright © 2017 Serkan Sokmen. All rights reserved.
 //
 
 import UIKit
 
-class RecordingTableViewCell: UITableViewCell {
+class MemoListCell: UITableViewCell {
+
+    static let identifier = "MemoListCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,5 +22,5 @@ class RecordingTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }
