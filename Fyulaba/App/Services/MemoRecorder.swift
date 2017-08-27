@@ -55,23 +55,27 @@ class MemoRecorder {
         } else {
             recorder = try? AKNodeRecorder(node: micMixer)
         }
-//        recorder?.durationToRecord = 60.0
+        recorder?.durationToRecord = 60.0
         
         if let file = recorder?.audioFile {
             player = try? AKAudioPlayer(file: file)
             player?.looping = true
 //            player?.completionHandler = playbackCompletionHandler
-            variSpeed = AKVariSpeed(player)
-            variSpeed?.rate = 1.0
-            mainMixer = AKMixer(variSpeed, micBooster)
-            AudioKit.output = mainMixer
-            AudioKit.start()
-            completionHandler?(file)
         }
+        variSpeed = AKVariSpeed(player)
+        variSpeed?.rate = 1.0
+        mainMixer = AKMixer(variSpeed, micBooster)
+        AudioKit.output = mainMixer
+        if !AudioKit.engine.isRunning {
+            AudioKit.start()
+        }
+        completionHandler?(recorder?.audioFile)
     }
     
     deinit {
-        AudioKit.stop()
+        if AudioKit.engine.isRunning {
+            AudioKit.stop()
+        }
     }
     
     func startRecording() throws {
@@ -88,7 +92,7 @@ class MemoRecorder {
         }
     }
     
-    func stopRecording(completion comlpetionHandler: ((AKAudioFile) -> Void)?) {
+    func stopRecording(completion completionHandler: ((AKAudioFile) -> Void)?) {
         micBooster?.gain = 0
         do {
             try player?.reloadFile()
@@ -110,7 +114,7 @@ class MemoRecorder {
                                                         } else {
                                                             if let file = file {
                                                                 print("Export succeeded \(file.url)")
-                                                                comlpetionHandler?(file)
+                                                                completionHandler?(file)
                                                             }
                                                         }
             }

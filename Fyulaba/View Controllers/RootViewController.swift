@@ -12,6 +12,8 @@ import ReSwiftRouter
 import AudioKit
 
 class RootViewController: UIViewController, Routable {
+    
+    private var workingMemo: MemoItem?
 
     override func viewDidLoad() {
         
@@ -23,15 +25,20 @@ class RootViewController: UIViewController, Routable {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                                 target: self,
                                                                 action: #selector(self.createMemoTapped(_:)))
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         store.subscribe(self)
+        
+        requestAuthorization(completion: {
+            OperationQueue.main.addOperation {
+                setupWorkingAudioFile(self.workingMemo, completion: { workingFile in
+                    store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
+                })
+            }
+        }, denied: { message in
+            self.showAlert(message, type: .error)
+        })
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    
+    deinit {
         store.unsubscribe(self)
     }
 
@@ -48,7 +55,7 @@ class RootViewController: UIViewController, Routable {
 extension RootViewController: StoreSubscriber {
     
     func newState(state: AppState) {
-//        print(state)
+        self.workingMemo = state.memoRecorder.memo
     }
 }
 

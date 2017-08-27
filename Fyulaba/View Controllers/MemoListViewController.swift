@@ -24,30 +24,30 @@ class MemoListViewController: UITableViewController, Routable {
                                                                 target: self,
                                                                 action: #selector(self.handleCancel))
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        store.subscribe(self) { state in
+            state.memoItems
+        }
         fetchMemoItems(query: nil)
+    }
+    
+    deinit {
+        store.unsubscribe(self)
     }
 
     @objc func handleCancel(_ sender: UIBarButtonItem) {
         store.dispatch(RoutingAction(destination: .parent))
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        store.subscribe(self) { state in
-            state.memoItems
-        }
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        store.unsubscribe(self)
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        _ = tableDataSource.map { items in
-            let item = items
-//            let item = store.dispatch(RoutingAction(destination: .memoDetail))
-        }
+//        store.dispatch(SelectedRow())
+//        tableDataSource
+//        _ = tableDataSource.map { items in
+//            let memoItems = items.map<> { cell, item in
+//                let item = items[indexPath.row]
+//                print(item)
+//            }
+////            let item = store.dispatch(RoutingAction(destination: .memoDetail))
+//        }
     }
 }
 

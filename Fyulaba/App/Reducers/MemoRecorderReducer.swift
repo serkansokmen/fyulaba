@@ -41,15 +41,7 @@ struct MemoRecorderReducer: Reducer {
             state.recordingState = .recording
             state.audioNode = MemoRecorder.shared.mic
         
-        case _ as SetMemoRecorderStopRecording:
-            MemoRecorder.shared.stopRecording { file in
-                print(file)
-//                let memo = MemoItem(uuid: UUID().uuidString, text: "", createdAt: Date(), sentiment: nil, fileURL: file.url)
-//                DispatchQueue.main.async {
-//                    store.dispatch(AddMemoItem(newItem: memo))
-//                    store.dispatch(RoutingAction(destination: .memoDetail))
-//                }
-            }
+        case _ as SetMemoRecorderCompletedRecording:
             state.audioNode = nil
             state.recordingState = .paused
         

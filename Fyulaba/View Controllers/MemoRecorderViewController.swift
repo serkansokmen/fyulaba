@@ -25,28 +25,19 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestAuthorization(completion: {
-            OperationQueue.main.addOperation {
-                let file = try? AKAudioFile()
-                setupWorkingAudioFile(file, completion: { workingFile in
-                    store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
-                })
-            }
-        }, denied: { message in
-            self.showAlert(message, type: .error)
-        })
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         store.subscribe(self) { state in
             state.memoRecorder
         }
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
+    }
+    
+    deinit {
+        store.unsubscribe(self)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        store.dispatch(ResetMemoRecorder())
         super.viewWillDisappear(animated)
-        store.unsubscribe(self)
     }
     
     @IBAction func handleRecord(_ sender: UIButton) {
@@ -54,7 +45,15 @@ class MemoRecorderViewController: UIViewController, Routable {
     }
     
     @IBAction func handleStopRecording(_ sender: UIButton) {
-        store.dispatch(SetMemoRecorderStopRecording())
+        stopRecording { file in
+            DispatchQueue.main.async {
+                store.dispatch(SetMemoRecorderCompletedRecording(workingFile: file))
+            }
+        }
+    }
+    
+    @objc func handleBack(_ sender: UIBarButtonItem) {
+        store.dispatch(RoutingAction(destination: .parent))
     }
     
     @IBAction func handlePlay(_ sender: UIButton) {
@@ -76,7 +75,10 @@ extension MemoRecorderViewController: StoreSubscriber {
         guard let fileURL = state.memo.fileURL else { return }
         guard let file = try? AKAudioFile(forReading: fileURL) else { return }
         
+        durationLabel.text = "Duration: \(file.duration)"
+        
         switch state.recordingState {
+        
         case .ready:
             let hasDuration = file.duration > 0.0
             recordButton.isEnabled = true
@@ -108,7 +110,11 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = true
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = true
-            durationLabel.isHidden = true
+            durationLabel.isHidden = false
+        
+        case let .error(error):
+            durationLabel.text = error?.localizedDescription
+            durationLabel.isHidden = false
             
         default:
             recordButton.isEnabled = true
@@ -116,10 +122,8 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
-            durationLabel.isHidden = true
+            durationLabel.isHidden = false
         }
-        
-        durationLabel.text = "Duration: \(file.duration)"
         
 //        self.updatePlotView(state)
     }
