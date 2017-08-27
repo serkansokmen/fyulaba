@@ -8,10 +8,7 @@
 
 import ReSwift
 
-enum MemoItemsState: StateType {
-    case none
-    case loading
-    case list([MemoItem])
-    case detail(MemoItem)
-    case error(Error?)
+struct MemoItemsState: StateType {
+    let items: [MemoItem]
+    let selectedItem: MemoItem?
 }

@@ -11,6 +11,7 @@ import ReSwift
 import ReSwiftRouter
 
 let store = Store<AppState>(reducer: AppReducer(), state: nil)
+let api = MemoManager()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

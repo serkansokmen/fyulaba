@@ -73,6 +73,7 @@ extension AppRouter: StoreSubscriber {
 
         case .parent:
             navigationController.popViewController(animated: shouldAnimate)
+            
         default:
             pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
         }

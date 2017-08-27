@@ -24,6 +24,7 @@ class MemoListViewController: UITableViewController, Routable {
                                                                 target: self,
                                                                 action: #selector(self.handleCancel))
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        fetchMemoItems(query: nil)
     }
 
     @objc func handleCancel(_ sender: UIBarButtonItem) {
@@ -35,7 +36,6 @@ class MemoListViewController: UITableViewController, Routable {
         store.subscribe(self) { state in
             state.memoItems
         }
-        store.dispatch(FetchMemoListingAction())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,24 +53,15 @@ class MemoListViewController: UITableViewController, Routable {
 
 extension MemoListViewController: StoreSubscriber {
     func newState(state: MemoItemsState) {
-//        switch state {
-//
-//        case let .success(items):
-//            self.tableDataSource = TableDataSource(cellIdentifier: MemoListCell.identifier, models: items) { cell, model in
-//                cell.textLabel?.text = model.title
-//                cell.textLabel?.textAlignment = .center
-//                return cell
-//            }
-//            self.tableView.dataSource = tableDataSource
-//            self.tableView.reloadData()
-//            self.tableView.reloadEmptyDataSet()
-//
-//        case let .error(error):
-//            self.showAlert(error?.localizedDescription, type: .warning)
-//
-//        default:
-//            break
-//        }
+        tableDataSource = TableDataSource(cellIdentifier: MemoListCell.identifier,
+                                          models: state.items) { cell, model in
+            cell.textLabel?.text = model.title
+            cell.textLabel?.textAlignment = .center
+            return cell
+        }
+        tableView.dataSource = tableDataSource
+        tableView.reloadData()
+        tableView.reloadEmptyDataSet()
     }
 }
 

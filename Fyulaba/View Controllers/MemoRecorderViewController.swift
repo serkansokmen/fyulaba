@@ -13,7 +13,7 @@ import AudioKit
 
 class MemoRecorderViewController: UIViewController, Routable {
     
-    @IBOutlet weak var plotView: AKOutputWaveformPlot!
+    @IBOutlet weak var plotView: AKRollingOutputPlot!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopRecordingButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -21,16 +21,22 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        requestAuthorization(completion: {
+            OperationQueue.main.addOperation {
+                store.dispatch(SetMemoRecorderReady(memo: nil))
+            }
+        }, denied: { message in
+            self.showAlert(message, type: .error)
+        })
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         store.subscribe(self) { state in
             state.memoRecorder
         }
-        store.dispatch(SetupMemoRecorder(file: nil))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,7 +65,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     }
     
     @IBAction func handleDone(_ sender: UIButton) {
-        store.dispatch(DoneMemoRecorder())
+//        store.dispatch(DoneMemoRecorder())
     }
 }
 

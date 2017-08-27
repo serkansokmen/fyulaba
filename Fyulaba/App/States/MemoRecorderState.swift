@@ -15,5 +15,6 @@ enum MemoRecorderState: StateType {
     case ready(AKAudioFile?)
     case recording
     case playing
+    case stopped
     case error(Error?)
 }

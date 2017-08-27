@@ -17,7 +17,6 @@ class MemoRecorder {
         return instance
     }()
     
-    var workingFile: AKAudioFile?
     var recorder: AKNodeRecorder?
     var mic: AKMicrophone?
     var micBooster: AKBooster?
@@ -36,7 +35,7 @@ class MemoRecorder {
         self.mainMixer = nil
     }
     
-    func setup(with workingFile: AKAudioFile?, completion completionHandler: @escaping (() -> Void)) {
+    func setup(with memoItem: MemoItem?, completion completionHandler: @escaping (() -> Void)) {
         AKSettings.bufferLength = .medium
         do {
             try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
@@ -50,11 +49,11 @@ class MemoRecorder {
         micBooster = AKBooster(micMixer)
         micBooster?.gain = 0
         
-        if let file = workingFile {
-            recorder = try? AKNodeRecorder(node: micMixer, file: file)
-        } else {
-            recorder = try? AKNodeRecorder(node: micMixer)
-        }
+//        if let file = workingFile {
+//            recorder = try? AKNodeRecorder(node: micMixer, file: file)
+//        } else {
+        recorder = try? AKNodeRecorder(node: micMixer)
+//        }
         
         if let file = recorder?.audioFile {
             player = try? AKAudioPlayer(file: file)
@@ -64,20 +63,13 @@ class MemoRecorder {
             variSpeed?.rate = 1.0
             mainMixer = AKMixer(variSpeed, micBooster)
             AudioKit.output = mainMixer
-
-            self.workingFile = file
+            AudioKit.start()
         }
         
         completionHandler()
     }
     
-    func startEngine() {
-        guard recorder?.audioFile != nil else { return }
-        AudioKit.start()
-    }
-    
-    func stopEngine() {
-        guard recorder?.audioFile != nil else { return }
+    deinit {
         AudioKit.stop()
     }
     
@@ -96,7 +88,7 @@ class MemoRecorder {
         }
     }
     
-    func stopRecording(_ completion: ((AKAudioFile) -> Void)?) {
+    func stopRecording(completion comlpetionHandler: ((AKAudioFile) -> Void)?) {
         micBooster?.gain = 0
         do {
             try player?.reloadFile()
@@ -118,8 +110,7 @@ class MemoRecorder {
                                                         } else {
                                                             if let file = file {
                                                                 print("Export succeeded \(file.url)")
-                                                                self.workingFile = file
-                                                                completion?(file)
+                                                                comlpetionHandler?(file)
                                                             }
                                                         }
             }
@@ -141,10 +132,5 @@ class MemoRecorder {
         } catch let err {
             print(err.localizedDescription)
         }
-    }
-    
-    func done(_ completion: ((AKAudioFile) -> Void)) {
-        guard let file = self.workingFile else { return }
-        completion(file)
     }
 }
