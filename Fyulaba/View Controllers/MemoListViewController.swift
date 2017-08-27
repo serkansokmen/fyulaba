@@ -35,7 +35,7 @@ class MemoListViewController: UITableViewController, Routable {
     }
 
     @objc func handleCancel(_ sender: UIBarButtonItem) {
-        store.dispatch(RoutingAction(destination: .parent))
+        store.dispatch(RoutingAction(destination: .root))
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

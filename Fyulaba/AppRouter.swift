@@ -13,7 +13,6 @@ enum RoutingDestination: String {
     case memoList = "MemoListViewController"
     case memoRecorder = "MemoRecorderViewController"
     case memoDetail = "MemoDetailViewController"
-    case parent = "ParentViewController"
 }
 
 
@@ -51,31 +50,36 @@ final class AppRouter {
 extension AppRouter: StoreSubscriber {
     func newState(state: RoutingState) {
         let shouldAnimate = navigationController.topViewController != nil
-
+        
         switch state.destination {
-
-//        case .root:
-//            navigationController.popToRootViewController(animated: shouldAnimate)
-
-//        case .memoList:
-//            pushViewController(identifier: MemoListViewController.identifier, animated: shouldAnimate)
-//            let vc = instantiateViewController(identifier: MemoListViewController.identifier) as! MemoListViewController
-//            let nav = UINavigationController(rootViewController: vc)
-//            nav.modalPresentationStyle = .popover
-//            nav.preferredContentSize = CGSize(width: 200, height: 200)
-//            let popover = nav.popoverPresentationController
-//            popover?.delegate = self
-//            popover?.permittedArrowDirections = .any
-//            popover?.sourceView = self.view
-//            popover?.sourceRect = CGRect(x: 100, y: 100, width: 100, height: 100)
-//
-//            present(nav, animated: true, completion: completionHandler)
-
-        case .parent:
-            navigationController.popViewController(animated: shouldAnimate)
+        case .root:
             
+            navigationController.dismiss(animated: true, completion: nil)
+            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
+            
+        case .memoList:
+            presentAsPopover(identifier: MemoListViewController.identifier, completion: nil)
+        
+        case .memoRecorder:
+            presentAsPopover(identifier: MemoRecorderViewController.identifier, completion: nil)
+        
         default:
             pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
+        }
+    }
+    
+    func presentAsPopover(identifier: String, completion: (() -> Void)?) {
+        let vc = instantiateViewController(identifier: identifier)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .popover
+        nav.preferredContentSize = CGSize(width: 200, height: 200)
+        let popover = nav.popoverPresentationController
+        popover?.permittedArrowDirections = .any
+        popover?.sourceView = navigationController.navigationItem.titleView
+        popover?.sourceRect = CGRect(x: 100, y: 100, width: 100, height: 100)
+        
+        navigationController.present(nav, animated: true) {
+            completion?()
         }
     }
 }

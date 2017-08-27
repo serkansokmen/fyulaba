@@ -53,7 +53,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     }
     
     @objc func handleBack(_ sender: UIBarButtonItem) {
-        store.dispatch(RoutingAction(destination: .parent))
+        store.dispatch(RoutingAction(destination: .root))
     }
     
     @IBAction func handlePlay(_ sender: UIButton) {
