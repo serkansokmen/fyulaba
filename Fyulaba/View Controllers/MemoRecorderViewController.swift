@@ -143,7 +143,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = ""
         }
         
-        transcriptionTextView.text = state.transcriptionResult
+        transcriptionTextView.text = "\(state.sentiment.emoji) \n \(state.transcriptionResult)"
         updatePlotView(state)
     }
     
