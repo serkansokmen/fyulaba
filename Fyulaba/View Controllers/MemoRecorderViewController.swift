@@ -27,8 +27,11 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBOutlet weak var transcriptionTextView: UITextView!
     @IBOutlet weak var tagListView: TagListView!
     
+    private var memoItem: MemoItem?
+    
     private var gradientColor: UIColor!
     private var gradientStrokeColor: UIColor!
+    private var gradientPlotColor: UIColor!
     private var gradientActiveColor: UIColor!
     
     override func viewDidLoad() {
@@ -38,22 +41,25 @@ class MemoRecorderViewController: UIViewController, Routable {
         }
         gradientColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWhite])
         gradientStrokeColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatWhite, .white])
-        gradientActiveColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWatermelon])
-        transcriptionTextView.text = ""
-        plotView.plotType = .buffer
-        plotView.color = .white
+        gradientPlotColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatSkyBlue, .flatPurple])
+        
+        plotView.color = gradientPlotColor
         plotView.shouldFill = true
         plotView.shouldMirror = true
         plotView.layer.borderWidth = 2.0
         plotView.layer.borderColor = gradientStrokeColor.cgColor
         plotView.layer.cornerRadius = 20.0
+        plotView.layer.backgroundColor = gradientColor.cgColor
+        plotView.backgroundColor = gradientColor
         
+        transcriptionTextView.text = ""
         tagListView.delegate = self
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.handleSave))
         navigationController?.hidesNavigationBarHairline = true
         
 //        store.dispatch(SetAutoTranscribeEnabled(isEnabled: true))
@@ -70,6 +76,11 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // handle keyboard
+    }
+    
+    @IBAction func handleSave(_ sender: UIBarButtonItem) {
+        guard let item = self.memoItem else { return }
+        persistMemoItem(item)
     }
     
     @IBAction func handleRecord(_ sender: UIButton) {
@@ -106,7 +117,9 @@ class MemoRecorderViewController: UIViewController, Routable {
 extension MemoRecorderViewController: StoreSubscriber {
     func newState(state: MemoRecorderState) {
         
-        guard let fileURL = state.memo.fileURL else { return }
+        memoItem = state.memo
+        
+        guard let fileURL = memoItem?.fileURL else { return }
         guard let file = try? AKAudioFile(forReading: fileURL) else { return }
         
         switch state.recordingState {
@@ -163,6 +176,9 @@ extension MemoRecorderViewController: StoreSubscriber {
             activityIndicator.startAnimating()
         } else {
             activityIndicator.stopAnimating()
+            if state.transcriptionResult != memoItem?.text {
+                memoItem?.text = state.transcriptionResult
+            }
         }
         
         tagListView.removeAllTags()
@@ -195,12 +211,11 @@ extension MemoRecorderViewController: StoreSubscriber {
         
         switch state.recordingState {
         case .recording:
-            plotView.layer.backgroundColor = gradientActiveColor.cgColor
-            plotView.backgroundColor = gradientActiveColor
+            plotView.plotType = .buffer
+        case .playing:
+            plotView.plotType = .rolling
         default:
-            let gradient = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWhite])
-            plotView.layer.backgroundColor = gradient.cgColor
-            plotView.backgroundColor = gradient
+            break
         }
     }
 }

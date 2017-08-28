@@ -85,6 +85,7 @@
 		E6BCADD51F537F7600E4E750 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
 		E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
 		E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
+		E6C3EE201F54597800E83358 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
 		E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		E6D850901F4E30A60086858D /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E6D850941F4E31380086858D /* MemoRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderViewController.swift; sourceTree = "<group>"; };
@@ -128,18 +129,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E6876DDA1F52B37200221D04 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				E68988411F4DEFF80095465F /* States */,
-				E68988531F4E02210095465F /* Reducers */,
-				E68988521F4E021C0095465F /* Actions */,
-				E68988581F4E033A0095465F /* Services */,
-				E68988491F4DFEDF0095465F /* Models */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
 		E689881D1F4DE8410095465F = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +152,11 @@
 			children = (
 				E68988291F4DE8410095465F /* AppDelegate.swift */,
 				E6D850981F4E35760086858D /* AppRouter.swift */,
-				E6876DDA1F52B37200221D04 /* App */,
+				E68988411F4DEFF80095465F /* States */,
+				E68988531F4E02210095465F /* Reducers */,
+				E68988521F4E021C0095465F /* Actions */,
+				E68988581F4E033A0095465F /* Services */,
+				E68988491F4DFEDF0095465F /* Models */,
 				E6D3027C1F4E19E700F9A405 /* Extensions */,
 				E689885F1F4E0F9A0095465F /* View Controllers */,
 				E6D302811F4E1CE000F9A405 /* Views */,
@@ -453,6 +446,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E689882E1F4DE8410095465F /* Base */,
+				E6C3EE201F54597800E83358 /* tr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -464,6 +458,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -521,6 +516,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -10,7 +10,13 @@ import Foundation
 import Disk
 import AudioKit
 
-struct MemoManager: PersistanceManager  {
+final class MemoManager: PersistanceManager  {
+    
+    static let shared: MemoManager = {
+        let instance = MemoManager()
+        // setup code
+        return instance
+    }()
 
     func getItems(query: String?, completionHandler completion: @escaping ItemsCompletion<MemoItem>) throws {
         let items = try Disk.retrieve("recordings.json", from: .documents, as: [MemoItem].self)

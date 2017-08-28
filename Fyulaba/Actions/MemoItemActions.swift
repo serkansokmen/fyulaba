@@ -36,6 +36,14 @@ func fetchMemoItem(_ uuid: String) {
     }
 }
 
+func persistMemoItem(_ item: MemoItem) {
+    try? MemoManager.shared.addItem(item: item) { items in
+        DispatchQueue.main.async {
+            store.dispatch(SetMemoItems(items: items))
+        }
+    }
+}
+
 struct SetMemoItems: Action {
     let items: [MemoItem]
 }

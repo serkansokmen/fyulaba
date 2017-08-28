@@ -28,7 +28,7 @@ import AudioKit
 struct MemoItem: Codable, Equatable {
     
     let uuid: String
-    let text: String
+    var text: String
     let createdAt: Date
     var sentiment: String?
     var fileName: String?
