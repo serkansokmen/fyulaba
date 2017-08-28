@@ -8,6 +8,12 @@
 
 import ReSwift
 
+enum X: String {
+    case zero = "zero value"
+    case one = "some one"
+    case two = "in two"
+}
+
 enum RoutingDestination: String {
     case root = "RootViewController"
     case memoList = "MemoListViewController"

@@ -8,19 +8,19 @@
 
 import Foundation
 
-typealias ItemsCompletion<T> = (([T]) -> Void)
-typealias ItemCompletion<T> = ((T) -> Void)
+typealias ItemsCompletion<T> = (([T]) -> Void)?
+typealias ItemCompletion<T> = ((T?) -> Void)?
 
 protocol PersistanceManager {
     associatedtype T
 
-    func getItems(query: String?, completionHandler completion: @escaping ItemsCompletion<T>) throws
+    func getItems(query: String?, completion completionHandler: ItemsCompletion<T>) throws
 
-    func getItem(uuid: String, completionHandler completion: @escaping ItemCompletion<T?>) throws
+    func getItem(uuid: String, completion completionHandler: ItemCompletion<T>) throws
 
-    func addItem(item: T, completionHandler completion: @escaping ItemsCompletion<T>) throws
+    func addItem(item: T, completion completionHandler: ItemsCompletion<T>) throws
 
-    func updateItem(item: T, completionHandler completion: @escaping ItemsCompletion<T>) throws
+    func updateItem(item: T, completion completionHandler: ItemsCompletion<T>) throws
 
-    func deleteItem(item: T, completionHandler completion: @escaping ItemsCompletion<T>) throws
+    func deleteItem(item: T, completion completionHandler: ItemsCompletion<T>) throws
 }

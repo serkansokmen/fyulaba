@@ -37,15 +37,9 @@ final class TableDataSource<V, T> : NSObject, UITableViewDataSource where V: UIT
         let model = models[indexPath.row]
         return configureCell(currentCell, model)
     }
-
-    // Override to support editing the table view.
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            tableView.insertRows(at: [indexPath], with: .automatic)
-        }
+    
+    func item(at indexPath: IndexPath) -> T {
+        return self.models[indexPath.row]
     }
 }
 

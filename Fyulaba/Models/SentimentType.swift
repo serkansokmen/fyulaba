@@ -9,7 +9,7 @@
 import UIKit
 
 
-enum SentimentType: String {
+enum SentimentType: String, Codable {
 
     case neutral = "😐"
     case positive = "😃"
@@ -30,3 +30,4 @@ enum SentimentType: String {
         }
     }
 }
+

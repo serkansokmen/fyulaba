@@ -71,6 +71,15 @@ func transcribeAudioFile(_ file: AKAudioFile) {
     }
 }
 
+func persistMemoItemAndDismiss(_ item: MemoItem) {
+    try? MemoManager.shared.addItem(item: item) { items in
+        DispatchQueue.main.async {
+            store.dispatch(SetMemoItems(items: items))
+            store.dispatch(RoutingAction(destination: .root))
+        }
+    }
+}
+
 struct SetMemoRecorderReady: Action {
     let workingFile: AKAudioFile?
 }

@@ -30,7 +30,7 @@ struct MemoItem: Codable, Equatable {
     let uuid: String
     var text: String
     let createdAt: Date
-    var sentiment: String?
+    var sentiment: SentimentType?
     var fileName: String?
     var fileExt: String?
     var fileURL: URL?
@@ -46,10 +46,7 @@ struct MemoItem: Codable, Equatable {
     }
 
     var title: String {
-        guard let sentiment = self.sentiment else {
-            return self.text
-        }
-        return "\(sentiment) \(self.text)"
+        return self.text
     }
 
     var subtitle: String {
@@ -66,9 +63,7 @@ struct MemoItem: Codable, Equatable {
     }
     
     var fileNamePlusExtension: String? {
-        guard let fileName = self.fileName else { return nil }
-        guard let fileExt = self.fileExt else { return nil }
-        return "\(fileName).\(fileExt)"
+        return fileURL?.lastPathComponent
     }
     
     public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {

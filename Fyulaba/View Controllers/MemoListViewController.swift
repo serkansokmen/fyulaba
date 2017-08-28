@@ -13,13 +13,14 @@ import DZNEmptyDataSet
 
 class MemoListViewController: UITableViewController, Routable {
 
-    var tableDataSource: TableDataSource<MemoListCell, MemoItem>?
+    private var items = [MemoItem]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         clearsSelectionOnViewWillAppear = true
         tableView.emptyDataSetSource = self
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleCancel))
         navigationItem.rightBarButtonItem = editButtonItem
         navigationController?.hidesNavigationBarHairline = true
@@ -39,26 +40,47 @@ class MemoListViewController: UITableViewController, Routable {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        store.dispatch(SelectedRow())
-//        tableDataSource
-//        _ = tableDataSource.map { items in
-//            let memoItems = items.map<> { cell, item in
-//                let item = items[indexPath.row]
-//                print(item)
-//            }
-////            let item = store.dispatch(RoutingAction(destination: .memoDetail))
+//            let item = store.dispatch(RoutingAction(destination: .memoDetail))
 //        }
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListCell.identifier) as? MemoListCell
+        
+        guard let currentCell = cell else {
+            fatalError("Identifier or class not registered with this table view")
+        }
+        
+        let model = items[indexPath.row]
+        currentCell.textLabel?.text = model.title
+        currentCell.detailTextLabel?.text = model.subtitle
+        currentCell.textLabel?.textAlignment = .center
+        
+        return currentCell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let item = items[indexPath.row]
+            deleteMemoItem(item)
+        } else if editingStyle == .insert {
+            //
+        }
     }
 }
 
 extension MemoListViewController: StoreSubscriber {
     func newState(state: MemoItemsState) {
-        tableDataSource = TableDataSource(cellIdentifier: MemoListCell.identifier,
-                                          models: state.items) { cell, model in
-            cell.textLabel?.text = model.title
-            cell.textLabel?.textAlignment = .center
-            return cell
-        }
-        tableView.dataSource = tableDataSource
+        items = state.items
+        
         tableView.reloadData()
         tableView.reloadEmptyDataSet()
         

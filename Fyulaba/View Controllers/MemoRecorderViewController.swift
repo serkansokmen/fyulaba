@@ -81,7 +81,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
         guard let item = self.memoItem else { return }
-        persistMemoItem(item)
+        persistMemoItemAndDismiss(item)
     }
     
     @IBAction func handleRecord(_ sender: UIButton) {
@@ -123,6 +123,8 @@ extension MemoRecorderViewController: StoreSubscriber {
     func newState(state: MemoRecorderState) {
         
         memoItem = state.memo
+        memoItem?.text = state.transcriptionResult
+        memoItem?.sentiment = state.sentiment
         
         guard let fileURL = memoItem?.fileURL else { return }
         guard let file = try? AKAudioFile(forReading: fileURL) else { return }
@@ -178,37 +180,17 @@ extension MemoRecorderViewController: StoreSubscriber {
         
         transcriptionTextView.text = state.transcriptionResult
         transcribeButton.isEnabled = !state.isTranscribing
-        infoLabel.text = state.sentiment.emoji
+        infoLabel.text = state.sentiment?.emoji
         
         if state.isTranscribing {
             activityIndicator.startAnimating()
         } else {
             activityIndicator.stopAnimating()
-            if state.transcriptionResult != memoItem?.text {
-                memoItem?.text = state.transcriptionResult
-            }
         }
         
         tagListView.removeAllTags()
         if state.features.count > 0 {
-            tagListView.addTagViews(state.features.map { mapping in
-                let tagView = TagView(title: mapping.key)
-                tagView.enableRemoveButton = false
-                tagView.cornerRadius = 5.0
-                tagView.paddingX = 10.0
-                tagView.paddingY = 8.0
-                tagView.borderColor = .white
-                tagView.borderWidth = 2.0
-                tagView.removeButtonIconSize = 12.0
-                tagView.removeIconLineColor = .flatPink
-                tagView.onTap = { tagView in
-                    self.handleTagTapped(tagView)
-                }
-//                tagView.titleLabel?.numberOfLines = 0
-                tagView.titleLabel?.font = UIFont.systemFont(ofSize: 11.0)
-                tagView.titleLabel?.adjustsFontSizeToFitWidth = true
-                return tagView
-            })
+            tagListView.addTags(state.features.map { $0.key })
         }
         updatePlotView(state)
     }

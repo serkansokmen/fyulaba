@@ -41,7 +41,7 @@ class MemoRecorder {
         AKSettings.bufferLength = .medium
         
         do {
-            try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
+            try AKSettings.setSession(category: .playAndRecord, with: .allowAirPlay)
         } catch {
             AKLog("Could not set session category.")
         }
