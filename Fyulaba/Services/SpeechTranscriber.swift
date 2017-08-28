@@ -10,8 +10,12 @@ import Foundation
 import Speech
 import AudioKit
 
+enum SpeechTranscriptionError: Error {
+    case error(String)
+}
+
 typealias SpeechTranscribeResultHandler = (String, SentimentType?, [String:Double]) -> Void
-typealias SpeechTranscribeErrorHandler = (Error?) -> Void
+typealias SpeechTranscribeErrorHandler = (SpeechTranscriptionError?) -> Void
 
 class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
 
@@ -41,7 +45,7 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
         self.speechRecognizer?.recognitionTask(with: request) { result, error in
             
             guard let result = result else {
-                print("There was an error transcribing that file")
+                errorHandler(.error("There was an error transcribing that file"))
                 return
             }
             
@@ -53,7 +57,7 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
             }
             
             if error != nil {
-                errorHandler(error)
+                errorHandler(.error(error!.localizedDescription))
             }
         }
     }
@@ -97,7 +101,7 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
 
-                errorHandler(error)
+                errorHandler(.error(error!.localizedDescription))
             }
         })
 

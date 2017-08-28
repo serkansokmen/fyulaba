@@ -61,6 +61,8 @@ extension MemoListViewController: StoreSubscriber {
         tableView.dataSource = tableDataSource
         tableView.reloadData()
         tableView.reloadEmptyDataSet()
+        
+        navigationItem.rightBarButtonItem?.isEnabled = state.items.count > 0
     }
 }
 

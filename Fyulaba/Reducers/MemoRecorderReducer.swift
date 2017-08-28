@@ -67,6 +67,7 @@ struct MemoRecorderReducer: Reducer {
         case let action as SetMemoRecorderError:
             state.recordingState = .error(action.error)
             state.audioNode = nil
+            state.isTranscribing = false
         
         case let action as SetTranscriptionResult:
             state.transcriptionResult = action.result ?? ""

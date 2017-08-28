@@ -52,8 +52,9 @@ class MemoRecorderViewController: UIViewController, Routable {
         plotView.layer.backgroundColor = gradientColor.cgColor
         plotView.backgroundColor = gradientColor
         
-        transcriptionTextView.text = ""
         tagListView.delegate = self
+        
+        transcriptionTextView.text = ""
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
@@ -112,6 +113,10 @@ class MemoRecorderViewController: UIViewController, Routable {
         guard let currentFile = MemoRecorder.shared.currentFile else { return }
         transcribeAudioFile(currentFile)
     }
+    
+    func handleTagTapped(_ tagView: TagView) {
+        tagListView.removeTagView(tagView)
+    }
 }
 
 extension MemoRecorderViewController: StoreSubscriber {
@@ -169,7 +174,10 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = ""
         }
         
+        navigationItem.rightBarButtonItem?.isEnabled = state.features.count > 0 && !state.isTranscribing
+        
         transcriptionTextView.text = state.transcriptionResult
+        transcribeButton.isEnabled = !state.isTranscribing
         infoLabel.text = state.sentiment.emoji
         
         if state.isTranscribing {
@@ -185,16 +193,20 @@ extension MemoRecorderViewController: StoreSubscriber {
         if state.features.count > 0 {
             tagListView.addTagViews(state.features.map { mapping in
                 let tagView = TagView(title: mapping.key)
-                tagView.enableRemoveButton = true
+                tagView.enableRemoveButton = false
                 tagView.cornerRadius = 5.0
                 tagView.paddingX = 10.0
                 tagView.paddingY = 8.0
                 tagView.borderColor = .white
                 tagView.borderWidth = 2.0
-                tagView.titleLabel?.numberOfLines = 0
-                tagView.titleLabel?.font = UIFont.systemFont(ofSize: 12.0, weight: .light)
+                tagView.removeButtonIconSize = 12.0
+                tagView.removeIconLineColor = .flatPink
+                tagView.onTap = { tagView in
+                    self.handleTagTapped(tagView)
+                }
+//                tagView.titleLabel?.numberOfLines = 0
+                tagView.titleLabel?.font = UIFont.systemFont(ofSize: 11.0)
                 tagView.titleLabel?.adjustsFontSizeToFitWidth = true
-                tagView.backgroundColor = UIColor(hue: CGFloat(mapping.value), saturation: 1.0, brightness: 1.0, alpha: 1.0)
                 return tagView
             })
         }
@@ -221,10 +233,10 @@ extension MemoRecorderViewController: StoreSubscriber {
 }
 
 extension MemoRecorderViewController: TagListViewDelegate {
-    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
         print("Tag pressed: \(title), \(sender)")
     }
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
         print("Tag pressed: \(title), \(sender)")
     }
 }
