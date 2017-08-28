@@ -24,7 +24,7 @@ class MemoRecorder {
     var variSpeed: AKVariSpeed?
     var mainMixer: AKMixer?
     var currentNode: AVAudioNode?
-    var isAutoTranscriptionEnabled: Bool = false
+    var currentFile: AKAudioFile?
     
     init() {
         self.recorder = nil
@@ -71,6 +71,7 @@ class MemoRecorder {
         if !AudioKit.engine.isRunning {
             AudioKit.start()
         }
+        currentFile = player?.audioFile
         completionHandler?(recorder?.audioFile)
     }
     
@@ -84,13 +85,12 @@ class MemoRecorder {
         if AKSettings.headPhonesPlugged {
             micBooster?.gain = 1
         }
-        currentNode = mic?.avAudioNode
         do {
             try self.recorder?.record()
         } catch let error {
             print(error.localizedDescription)
         }
-        updateTranscriptionState(isAutoTranscriptionEnabled)
+        currentNode = mic?.avAudioNode
     }
     
     func stopRecording(completion completionHandler: ((AKAudioFile) -> Void)?) {
@@ -119,7 +119,6 @@ class MemoRecorder {
                                                         }
             }
             currentNode = player?.avAudioNode
-            updateTranscriptionState(isAutoTranscriptionEnabled)
         }
     }
     
@@ -138,25 +137,6 @@ class MemoRecorder {
             try recorder?.reset()
         } catch let err {
             print(err.localizedDescription)
-        }
-    }
-    
-    private func updateTranscriptionState(_ isEnabled: Bool) {
-        if isEnabled {
-            SpeechTranscriber.shared.recognizeSpeechFromNode(currentNode, resultHandler: { (result, sentiment) in
-                DispatchQueue.main.async {
-                    store.dispatch(SetTranscriptionResult(result: result,
-                                                          sentiment: sentiment))
-                }
-            }, errorHandler: { error in
-                DispatchQueue.main.async {
-                    store.dispatch(ResetTranscriptionResult())
-                }
-            })
-        } else {
-            DispatchQueue.main.async {
-                store.dispatch(ResetTranscriptionResult())
-            }
         }
     }
 }

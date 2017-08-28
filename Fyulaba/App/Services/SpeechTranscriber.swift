@@ -33,6 +33,29 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
 
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
+    
+    func recognizeSpeechFromAudioFile(_ url: URL,
+                                      result resultHandler: @escaping SpeechTranscribeResultHandler,
+                                      error errorHandler: @escaping SpeechTranscribeErrorHandler) {
+        let request = SFSpeechURLRecognitionRequest(url: url)
+        SFSpeechRecognizer()?.recognitionTask(with: request) { result, error in
+            
+            guard let result = result else {
+                print("There was an error transcribing that file")
+                return
+            }
+            
+            if result.isFinal {
+                let resultString = result.bestTranscription.formattedString
+                let sentiment = ClassificationService.shared.predictSentiment(from: resultString)
+                resultHandler(resultString, sentiment)
+            }
+            
+            if error != nil {
+                errorHandler(error)
+            }
+        }
+    }
 
     func recognizeSpeechFromNode(_ inputNode: AVAudioNode?,
                                  resultHandler: @escaping SpeechTranscribeResultHandler,

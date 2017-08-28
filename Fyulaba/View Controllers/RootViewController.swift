@@ -29,9 +29,7 @@ class RootViewController: UIViewController, Routable {
         
         requestAuthorization(completion: {
             OperationQueue.main.addOperation {
-                setupWorkingAudioFile(self.workingMemo, completion: { workingFile in
-                    store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
-                })
+                setupWorkingAudioFile(self.workingMemo)
             }
         }, denied: { message in
             self.showAlert(message, type: .error)

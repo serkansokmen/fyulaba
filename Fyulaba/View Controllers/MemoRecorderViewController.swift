@@ -21,20 +21,34 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBOutlet weak var stopPlayingButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var transcribeToggleSwitch: UISwitch!
+    @IBOutlet weak var transcribeButton: UIButton!
     @IBOutlet weak var transcriptionTextView: UITextView!
+    
+    private var gradientColor: UIColor!
+    private var gradientStrokeColor: UIColor!
+    private var gradientActiveColor: UIColor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         store.subscribe(self) { state in
             state.memoRecorder
         }
+        gradientColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWhite])
+        gradientStrokeColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatWhite, .white])
+        gradientActiveColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWatermelon])
         transcriptionTextView.text = ""
         plotView.plotType = .buffer
+        plotView.color = .white
         plotView.shouldFill = true
         plotView.shouldMirror = true
+        plotView.layer.borderWidth = 2.0
+        plotView.layer.borderColor = gradientStrokeColor.cgColor
+        plotView.layer.cornerRadius = 20.0
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
+        navigationController?.hidesNavigationBarHairline = true
+        
+//        store.dispatch(SetAutoTranscribeEnabled(isEnabled: true))
     }
     
     deinit {
@@ -51,11 +65,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     }
     
     @IBAction func handleStopRecording(_ sender: UIButton) {
-        stopRecording { file in
-            DispatchQueue.main.async {
-                store.dispatch(SetMemoRecorderCompletedRecording(workingFile: file))
-            }
-        }
+        stopRecording()
     }
     
     @objc func handleBack(_ sender: UIBarButtonItem) {
@@ -73,9 +83,10 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBAction func handleReset(_ sender: UIButton) {
         store.dispatch(ResetMemoRecorder())
     }
-    
-    @IBAction func handleToggleSwitch(_ sender: UISwitch) {
-        store.dispatch(SetAutoTranscribeEnabled(isEnabled: sender.isOn))
+
+    @IBAction func handleTranscribeTapped(_ sender: UIButton) {
+        guard let currentFile = MemoRecorder.shared.currentFile else { return }
+        transcribeAudioFile(currentFile)
     }
 }
 
@@ -95,7 +106,6 @@ extension MemoRecorderViewController: StoreSubscriber {
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = hasDuration
             infoLabel.text = "Ready"
-            transcribeToggleSwitch.isEnabled = hasDuration
             
         case .recording:
             recordButton.isEnabled = false
@@ -122,9 +132,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = "Duration: \(file.duration)"
         
         case let .error(error):
-            infoLabel.text = error?.localizedDescription
-            infoLabel.isHidden = false
-            infoLabel.text = "Error!"
+            showAlert(error?.localizedDescription, type: .error)
             
         default:
             recordButton.isEnabled = true
@@ -149,11 +157,12 @@ extension MemoRecorderViewController: StoreSubscriber {
         
         switch state.recordingState {
         case .recording:
-            plotView.color = .flatWatermelon
-        case .playing, .paused:
-            plotView.color = .flatLime
+            plotView.layer.backgroundColor = gradientActiveColor.cgColor
+            plotView.backgroundColor = gradientActiveColor
         default:
-            plotView.color = .flatWhite
+            let gradient = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWhite])
+            plotView.layer.backgroundColor = gradient.cgColor
+            plotView.backgroundColor = gradient
         }
     }
 }

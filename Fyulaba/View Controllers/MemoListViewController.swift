@@ -18,12 +18,11 @@ class MemoListViewController: UITableViewController, Routable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.clearsSelectionOnViewWillAppear = true
-        self.tableView.emptyDataSetSource = self
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                                                target: self,
-                                                                action: #selector(self.handleCancel))
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        clearsSelectionOnViewWillAppear = true
+        tableView.emptyDataSetSource = self
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleCancel))
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationController?.hidesNavigationBarHairline = true
         store.subscribe(self) { state in
             state.memoItems
         }

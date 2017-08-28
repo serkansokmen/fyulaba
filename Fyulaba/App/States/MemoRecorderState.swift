@@ -23,7 +23,6 @@ struct MemoRecorderState: StateType {
     var memo: MemoItem
     var recordingState: MemoRecorderRecordingState
     var audioNode: AKNode?
-    var transcriptionResult: String?
-    var sentiment: SentimentType?
-    var isAutoTranscriptionEnabled: Bool?
+    var transcriptionResult: String
+    var sentiment: SentimentType
 }
