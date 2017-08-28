@@ -24,7 +24,9 @@ struct MemoRecorderReducer: Reducer {
                                                recordingState: .none,
                                                audioNode: nil,
                                                transcriptionResult: "",
-                                               sentiment: .neutral)
+                                               sentiment: .neutral,
+                                               features: [:],
+                                               isTranscribing: false)
         
         switch action {
             
@@ -61,8 +63,6 @@ struct MemoRecorderReducer: Reducer {
             MemoRecorder.shared.reset()
             state.recordingState = .none
             state.audioNode = nil
-            state.transcriptionResult = ""
-            state.sentiment = .neutral
             
         case let action as SetMemoRecorderError:
             state.recordingState = .error(action.error)
@@ -71,10 +71,24 @@ struct MemoRecorderReducer: Reducer {
         case let action as SetTranscriptionResult:
             state.transcriptionResult = action.result ?? ""
             state.sentiment = action.sentiment ?? .neutral
+            state.features = action.features
+            state.isTranscribing = false
             
         case _ as ResetTranscriptionResult:
             state.transcriptionResult = ""
             state.sentiment = .neutral
+            state.features = [:]
+            state.isTranscribing = false
+            
+        case _ as SetTranscriptionInProgress:
+            state.isTranscribing = true
+        
+        case _ as SetTranscriptionError:
+//            print(action.error?.localizedDescription)
+            state.transcriptionResult = ""
+            state.sentiment = .neutral
+            state.features = [:]
+            state.isTranscribing = false
             
         default:
             return state

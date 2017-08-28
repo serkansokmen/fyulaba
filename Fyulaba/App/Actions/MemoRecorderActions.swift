@@ -55,23 +55,25 @@ func stopRecording() {
 }
 
 func transcribeAudioFile(_ file: AKAudioFile) {
-    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(file.url, result: { result, sentiment in
+    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(file.url, result: { result, sentiment, features in
         DispatchQueue.main.async {
             store.dispatch(SetTranscriptionResult(result: result,
-                                                  sentiment: sentiment))
+                                                  sentiment: sentiment,
+                                                  features: features))
         }
     }, error: { error in
         DispatchQueue.main.async {
-            store.dispatch(ResetTranscriptionResult())
+            store.dispatch(SetTranscriptionError(error: error))
         }
     })
+    DispatchQueue.main.async {
+        store.dispatch(SetTranscriptionInProgress())
+    }
 }
 
 struct SetMemoRecorderReady: Action {
     let workingFile: AKAudioFile?
 }
-
-struct ResetTranscriptionResult: Action { }
 
 struct SetMemoRecorderStartRecording: Action { }
 struct SetMemoRecorderCompletedRecording: Action {
@@ -83,9 +85,16 @@ struct SetMemoRecorderError: Action {
     let error: Error?
 }
 struct ResetMemoRecorder: Action { }
+
+struct SetTranscriptionInProgress: Action { }
+struct SetTranscriptionError: Action {
+    let error: Error?
+}
 struct SetTranscriptionResult: Action {
     let result: String?
     let sentiment: SentimentType?
+    let features: [String:Double]
 }
+struct ResetTranscriptionResult: Action { }
 
 

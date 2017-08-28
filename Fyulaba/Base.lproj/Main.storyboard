@@ -66,7 +66,7 @@
                                 <rect key="frame" x="10" y="30" width="355" height="627"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0v0-Mp-7wZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="138"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="120"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyZ-fF-k9k" customClass="AKNodeOutputPlot" customModule="AudioKit">
                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="120"/>
@@ -76,7 +76,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration: 0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p55-as-m44">
-                                                <rect key="frame" x="0.0" y="120" width="355" height="18"/>
+                                                <rect key="frame" x="0.0" y="120" width="355" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -94,10 +94,10 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="KEa-sk-lW7">
-                                        <rect key="frame" x="0.0" y="146" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="128" width="355" height="21"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fq-Os-aUh">
-                                                <rect key="frame" x="0.0" y="0.0" width="167.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="167.5" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <state key="normal" title="Record"/>
                                                 <connections>
@@ -105,7 +105,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLs-K3-ZQm">
-                                                <rect key="frame" x="187.5" y="0.0" width="167.5" height="30"/>
+                                                <rect key="frame" x="187.5" y="0.0" width="167.5" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <state key="normal" title="Stop"/>
                                                 <connections>
@@ -115,10 +115,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="O7J-0C-Uge">
-                                        <rect key="frame" x="0.0" y="184" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="157" width="355" height="21"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBx-Bf-2x2">
-                                                <rect key="frame" x="0.0" y="0.0" width="167.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="167.5" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <state key="normal" title="Play"/>
                                                 <connections>
@@ -126,7 +126,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6UF-ZE-Ufa">
-                                                <rect key="frame" x="187.5" y="0.0" width="167.5" height="30"/>
+                                                <rect key="frame" x="187.5" y="0.0" width="167.5" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <state key="normal" title="Stop"/>
                                                 <connections>
@@ -136,30 +136,42 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssx-yr-Llv">
-                                        <rect key="frame" x="0.0" y="222" width="355" height="30"/>
+                                        <rect key="frame" x="0.0" y="186" width="355" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                         <state key="normal" title="Reset"/>
                                         <connections>
                                             <action selector="handleReset:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="2G2-hc-lhU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfF-4y-fUF">
-                                        <rect key="frame" x="0.0" y="260" width="355" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                        <state key="normal" title="Transcribe"/>
-                                        <connections>
-                                            <action selector="handleTranscribeTapped:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="v9p-S4-p3V"/>
-                                        </connections>
-                                    </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sXu-ni-q2j">
-                                        <rect key="frame" x="0.0" y="298" width="355" height="32"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2kK-f1-IE5">
+                                        <rect key="frame" x="0.0" y="215" width="355" height="45"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yaL-9U-s3m">
+                                                <rect key="frame" x="0.0" y="0.0" width="25" height="45"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="APU-eT-m9X"/>
+                                                    <constraint firstAttribute="height" constant="45" id="E3c-Wl-g6m"/>
+                                                </constraints>
+                                            </activityIndicatorView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VcV-Fq-Cbf">
+                                                <rect key="frame" x="35" y="7.5" width="320" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                <state key="normal" title="Transcribe"/>
+                                                <connections>
+                                                    <action selector="handleTranscribeTapped:" destination="Qdm-Ks-nAf" eventType="touchUpInside" id="jTO-PZ-KNq"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sXu-ni-q2j">
+                                        <rect key="frame" x="0.0" y="268" width="355" height="351"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSY-bn-03K" customClass="TagListView" customModule="TagListView">
-                                        <rect key="frame" x="0.0" y="338" width="355" height="289"/>
+                                        <rect key="frame" x="0.0" y="627" width="355" height="0.0"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
@@ -175,7 +187,7 @@
                                                 <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="selectedBorderColor">
-                                                <color key="value" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
                                                 <real key="value" value="8"/>
@@ -190,7 +202,7 @@
                                                 <real key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="removeIconLineColor">
-                                                <color key="value" red="0.38526773452758789" green="0.13679999113082886" blue="0.1175478994846344" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.91498154401779175" green="0.37833490967750549" blue="0.73496383428573608" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
@@ -207,6 +219,7 @@
                         <viewLayoutGuide key="safeArea" id="HQ0-Wg-eat"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="yaL-9U-s3m" id="y0k-IB-aHp"/>
                         <outlet property="infoLabel" destination="p55-as-m44" id="s9x-zR-h4U"/>
                         <outlet property="playButton" destination="EBx-Bf-2x2" id="3ue-uV-FFh"/>
                         <outlet property="plotView" destination="xyZ-fF-k9k" id="zIy-Ea-GzF"/>
@@ -215,7 +228,7 @@
                         <outlet property="stopPlayingButton" destination="6UF-ZE-Ufa" id="fOa-lx-zTv"/>
                         <outlet property="stopRecordingButton" destination="bLs-K3-ZQm" id="aq5-T8-1dO"/>
                         <outlet property="tagListView" destination="hSY-bn-03K" id="H7f-4q-a4X"/>
-                        <outlet property="transcribeButton" destination="dfF-4y-fUF" id="utj-fH-IBj"/>
+                        <outlet property="transcribeButton" destination="VcV-Fq-Cbf" id="3sp-gM-Okc"/>
                         <outlet property="transcriptionTextView" destination="sXu-ni-q2j" id="jl6-Cx-lqK"/>
                     </connections>
                 </viewController>
