@@ -29,6 +29,9 @@
 		E6A59C701F4E59FB00779ECE /* MemoRecorderReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */; };
 		E6A59C721F4E5AE400779ECE /* MemoRecorderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */; };
 		E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */; };
+		E6BCADD71F537F7600E4E750 /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCADD51F537F7600E4E750 /* ClassificationService.swift */; };
+		E6BCADD81F537F7600E4E750 /* SpeechTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */; };
+		E6BCADDA1F537F9D00E4E750 /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */; };
 		E6D3027E1F4E19EA00F9A405 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */; };
 		E6D850921F4E30A60086858D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850901F4E30A60086858D /* RootViewController.swift */; };
 		E6D850961F4E31380086858D /* MemoRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850941F4E31380086858D /* MemoRecorderViewController.swift */; };
@@ -81,6 +84,9 @@
 		E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderReducer.swift; sourceTree = "<group>"; };
 		E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderActions.swift; sourceTree = "<group>"; };
 		E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
+		E6BCADD51F537F7600E4E750 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
+		E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
+		E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		E6D850901F4E30A60086858D /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E6D850941F4E31380086858D /* MemoRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +173,7 @@
 				E68988301F4DE8410095465F /* Assets.xcassets */,
 				E689882D1F4DE8410095465F /* Main.storyboard */,
 				E68988321F4DE8410095465F /* LaunchScreen.storyboard */,
+				E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */,
 				E68988351F4DE8410095465F /* Info.plist */,
 			);
 			path = Fyulaba;
@@ -219,6 +226,8 @@
 				E68988591F4E03450095465F /* PersistanceManager.swift */,
 				E689885D1F4E0A280095465F /* MemoManager.swift */,
 				E6A587351F50AE2E00C6B0F5 /* MemoRecorder.swift */,
+				E6BCADD51F537F7600E4E750 /* ClassificationService.swift */,
+				E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -413,9 +422,11 @@
 			files = (
 				E68988551F4E02450095465F /* MemoItemActions.swift in Sources */,
 				E689885E1F4E0A280095465F /* MemoManager.swift in Sources */,
+				E6BCADDA1F537F9D00E4E750 /* SentimentPolarity.mlmodel in Sources */,
 				E6D850A01F4E3D9B0086858D /* MemoListViewController.swift in Sources */,
 				E689884F1F4DFF5F0095465F /* AppState.swift in Sources */,
 				E63B200E1F4E469C006839C3 /* MemoListCell.swift in Sources */,
+				E6BCADD81F537F7600E4E750 /* SpeechTranscriber.swift in Sources */,
 				E6D850A61F4E3EC40086858D /* CollectionDataSource.swift in Sources */,
 				E689885A1F4E03450095465F /* PersistanceManager.swift in Sources */,
 				E6D3027E1F4E19EA00F9A405 /* UIViewController+Extensions.swift in Sources */,
@@ -437,6 +448,7 @@
 				E6A587361F50AE2E00C6B0F5 /* MemoRecorder.swift in Sources */,
 				E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */,
 				E6D8509B1F4E35D20086858D /* RoutingState.swift in Sources */,
+				E6BCADD71F537F7600E4E750 /* ClassificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

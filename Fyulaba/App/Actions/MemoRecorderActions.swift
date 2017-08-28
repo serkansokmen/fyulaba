@@ -46,9 +46,16 @@ func stopRecording(completion completionHandler: ((AKAudioFile) -> Void)?) {
     MemoRecorder.shared.stopRecording(completion: completionHandler)
 }
 
+struct SetAutoTranscribeEnabled: Action {
+    let isEnabled: Bool
+}
+
 struct SetMemoRecorderReady: Action {
     let workingFile: AKAudioFile?
 }
+
+struct ResetTranscriptionResult: Action { }
+
 struct SetMemoRecorderStartRecording: Action { }
 struct SetMemoRecorderCompletedRecording: Action {
     let workingFile: AKAudioFile?
@@ -59,5 +66,9 @@ struct SetMemoRecorderError: Action {
     let error: Error?
 }
 struct ResetMemoRecorder: Action { }
+struct SetTranscriptionResult: Action {
+    let result: String?
+    let sentiment: SentimentType?
+}
 
 

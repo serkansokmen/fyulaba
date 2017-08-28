@@ -23,6 +23,8 @@ class MemoRecorder {
     var player: AKAudioPlayer?
     var variSpeed: AKVariSpeed?
     var mainMixer: AKMixer?
+    var currentNode: AVAudioNode?
+    var isAutoTranscriptionEnabled: Bool = false
     
     init() {
         self.recorder = nil
@@ -82,14 +84,13 @@ class MemoRecorder {
         if AKSettings.headPhonesPlugged {
             micBooster?.gain = 1
         }
-//        SpeechTranscriber.shared.recognizeSpeechFromNode(self.mic.avAudioNode,
-//                                                         resultHandler: self.transcribeResultHandler!,
-//                                                         errorHandler: self.transcribeErrorHandler!)
+        currentNode = mic?.avAudioNode
         do {
             try self.recorder?.record()
         } catch let error {
             print(error.localizedDescription)
         }
+        updateTranscriptionState(isAutoTranscriptionEnabled)
     }
     
     func stopRecording(completion completionHandler: ((AKAudioFile) -> Void)?) {
@@ -99,7 +100,6 @@ class MemoRecorder {
         } catch let err {
             print(err.localizedDescription)
         }
-        
         let recordedDuration = player != nil ? player!.audioFile.duration  : 0
         if recordedDuration > 0.0 {
             recorder?.stop()
@@ -118,6 +118,8 @@ class MemoRecorder {
                                                             }
                                                         }
             }
+            currentNode = player?.avAudioNode
+            updateTranscriptionState(isAutoTranscriptionEnabled)
         }
     }
     
@@ -130,11 +132,31 @@ class MemoRecorder {
     }
     
     func reset() {
+        currentNode = mic?.avAudioNode
         player?.stop()
         do {
             try recorder?.reset()
         } catch let err {
             print(err.localizedDescription)
+        }
+    }
+    
+    private func updateTranscriptionState(_ isEnabled: Bool) {
+        if isEnabled {
+            SpeechTranscriber.shared.recognizeSpeechFromNode(currentNode, resultHandler: { (result, sentiment) in
+                DispatchQueue.main.async {
+                    store.dispatch(SetTranscriptionResult(result: result,
+                                                          sentiment: sentiment))
+                }
+            }, errorHandler: { error in
+                DispatchQueue.main.async {
+                    store.dispatch(ResetTranscriptionResult())
+                }
+            })
+        } else {
+            DispatchQueue.main.async {
+                store.dispatch(ResetTranscriptionResult())
+            }
         }
     }
 }

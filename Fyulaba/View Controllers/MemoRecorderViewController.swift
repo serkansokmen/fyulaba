@@ -10,24 +10,30 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 import AudioKit
-import Cartography
 import ChameleonFramework
 
 class MemoRecorderViewController: UIViewController, Routable {
     
-    @IBOutlet weak var plotView: EZAudioPlot!
+    @IBOutlet weak var plotView: AKNodeOutputPlot!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopRecordingButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var stopPlayingButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var transcribeToggleSwitch: UISwitch!
+    @IBOutlet weak var transcriptionTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         store.subscribe(self) { state in
             state.memoRecorder
         }
+        transcriptionTextView.text = ""
+        plotView.plotType = .buffer
+        plotView.shouldFill = true
+        plotView.shouldMirror = true
+        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
     }
     
@@ -67,6 +73,10 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBAction func handleReset(_ sender: UIButton) {
         store.dispatch(ResetMemoRecorder())
     }
+    
+    @IBAction func handleToggleSwitch(_ sender: UISwitch) {
+        store.dispatch(SetAutoTranscribeEnabled(isEnabled: sender.isOn))
+    }
 }
 
 extension MemoRecorderViewController: StoreSubscriber {
@@ -74,8 +84,6 @@ extension MemoRecorderViewController: StoreSubscriber {
         
         guard let fileURL = state.memo.fileURL else { return }
         guard let file = try? AKAudioFile(forReading: fileURL) else { return }
-        
-        durationLabel.text = "Duration: \(file.duration)"
         
         switch state.recordingState {
         
@@ -86,7 +94,8 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = hasDuration
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = hasDuration
-            durationLabel.isHidden = false
+            infoLabel.text = "Ready"
+            transcribeToggleSwitch.isEnabled = hasDuration
             
         case .recording:
             recordButton.isEnabled = false
@@ -94,7 +103,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
-            durationLabel.isHidden = true
+            infoLabel.text = "Recording..."
             
         case .playing:
             recordButton.isEnabled = false
@@ -102,7 +111,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = true
             resetButton.isEnabled = false
-            durationLabel.isHidden = false
+            infoLabel.text = "Playing..."
             
         case .paused:
             recordButton.isEnabled = true
@@ -110,11 +119,12 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = true
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = true
-            durationLabel.isHidden = false
+            infoLabel.text = "Duration: \(file.duration)"
         
         case let .error(error):
-            durationLabel.text = error?.localizedDescription
-            durationLabel.isHidden = false
+            infoLabel.text = error?.localizedDescription
+            infoLabel.isHidden = false
+            infoLabel.text = "Error!"
             
         default:
             recordButton.isEnabled = true
@@ -122,34 +132,28 @@ extension MemoRecorderViewController: StoreSubscriber {
             playButton.isEnabled = false
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
-            durationLabel.isHidden = false
+            infoLabel.text = ""
         }
         
-//        self.updatePlotView(state)
+        transcriptionTextView.text = state.transcriptionResult
+        updatePlotView(state)
     }
     
     private func updatePlotView(_ state: MemoRecorderState) {
         
-        plotView.subviews.forEach { $0.removeFromSuperview() }
-        
-//        guard let audioNode = state.audioNode else { return }
-        let plot = AKNodeOutputPlot(state.audioNode, frame: plotView.bounds)
-        plot.plotType = .rolling
-        plot.shouldFill = true
-        plot.shouldMirror = true
+        if state.audioNode != nil {
+            plotView.node = state.audioNode
+        } else {
+            plotView.node = nil
+        }
         
         switch state.recordingState {
         case .recording:
-            plot.color = .flatRed
-        case .playing:
-            plot.color = .flatGreen
+            plotView.color = .flatWatermelon
+        case .playing, .paused:
+            plotView.color = .flatLime
         default:
-            plot.color = .flatGray
-        }
-        
-        plotView.addSubview(plot)
-        constrain(plot) {
-            $0.edges == $0.superview!.edges
+            plotView.color = .flatWhite
         }
     }
 }
