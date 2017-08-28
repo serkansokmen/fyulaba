@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		019FADC4DFE896E2BD1931E5 /* Pods_Fyulaba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */; };
-		E61F4EA81F5493BE00159796 /* AppBrandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F4EA71F5493BE00159796 /* AppBrandView.swift */; };
 		E63B200E1F4E469C006839C3 /* MemoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B200C1F4E469C006839C3 /* MemoListCell.swift */; };
 		E670A3331F4E481E005D364E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E689882D1F4DE8410095465F /* Main.storyboard */; };
 		E689882A1F4DE8410095465F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988291F4DE8410095465F /* AppDelegate.swift */; };
@@ -62,7 +61,6 @@
 		259D136405CFECB85690A83A /* Pods-Fyulaba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.release.xcconfig"; sourceTree = "<group>"; };
 		9E544B71808A9B54C2158997 /* Pods-Fyulaba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fyulaba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fyulaba/Pods-Fyulaba.debug.xcconfig"; sourceTree = "<group>"; };
 		D86625E081F7AB4BCF38F7C2 /* Pods_Fyulaba.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fyulaba.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E61F4EA71F5493BE00159796 /* AppBrandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBrandView.swift; sourceTree = "<group>"; };
 		E63B200C1F4E469C006839C3 /* MemoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCell.swift; sourceTree = "<group>"; };
 		E68988261F4DE8410095465F /* Fyulaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fyulaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E68988291F4DE8410095465F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				E63B200C1F4E469C006839C3 /* MemoListCell.swift */,
-				E61F4EA71F5493BE00159796 /* AppBrandView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -424,7 +421,6 @@
 				E689885C1F4E03B30095465F /* AppReducer.swift in Sources */,
 				E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */,
 				E6A59C721F4E5AE400779ECE /* MemoRecorderActions.swift in Sources */,
-				E61F4EA81F5493BE00159796 /* AppBrandView.swift in Sources */,
 				E6D8509D1F4E361F0086858D /* RoutingReducer.swift in Sources */,
 				E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */,
 				E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */,

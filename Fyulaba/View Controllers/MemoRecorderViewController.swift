@@ -36,9 +36,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        store.subscribe(self) { state in
-            state.memoRecorder
-        }
+        
         gradientColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWhite])
         gradientStrokeColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatWhite, .white])
         gradientPlotColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatSkyBlue, .flatPurple])
@@ -55,6 +53,8 @@ class MemoRecorderViewController: UIViewController, Routable {
         tagListView.delegate = self
         tagListView.alignment = .left
         tagListView.enableRemoveButton = true
+        tagListView.removeButtonIconSize = 8.0
+        tagListView.removeIconLineWidth = 2.0
         
         transcriptionTextView.text = ""
         
@@ -66,12 +66,16 @@ class MemoRecorderViewController: UIViewController, Routable {
         navigationController?.hidesNavigationBarHairline = true
     }
     
-    deinit {
-        store.unsubscribe(self)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self) { state in
+            state.memoRecorder
+        }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         store.dispatch(ResetMemoRecorder())
+        store.dispatch(ResetTranscriptionResult())
         super.viewWillDisappear(animated)
     }
     
@@ -170,8 +174,8 @@ extension MemoRecorderViewController: StoreSubscriber {
         
         navigationItem.rightBarButtonItem?.isEnabled = state.transcriptionResult.count > 0 || !state.isTranscribing
         
+        transcribeButton.isEnabled = !state.isTranscribing && state.memo.duration > 0.0
         transcriptionTextView.text = state.transcriptionResult
-        transcribeButton.isEnabled = !state.isTranscribing
         infoLabel.text = state.sentiment?.emoji
         
         if state.isTranscribing {

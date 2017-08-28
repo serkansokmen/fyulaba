@@ -66,6 +66,12 @@ struct MemoItem: Codable, Equatable {
         return fileURL?.lastPathComponent
     }
     
+    var duration: Double {
+        guard let url = self.fileURL else { return 0.0 }
+        let file = try? AKAudioFile(forReading: url)
+        return file?.duration ?? 0.0
+    }
+    
     public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {
         return lhs.uuid == rhs.uuid
     }
