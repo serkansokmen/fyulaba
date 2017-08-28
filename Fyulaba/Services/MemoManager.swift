@@ -54,8 +54,9 @@ final class MemoManager: PersistanceManager  {
         let newItems = items
             .filter { $0.uuid != item.uuid }
         try Disk.save(newItems, to: .documents, as: "recordings.json")
-        if let fileURL = item.fileURL {
-            try Disk.remove(fileURL.lastPathComponent, from: .documents)
+        if let filePath = item.fileNamePlusExtension,
+            Disk.exists(filePath, in: .documents) {
+            try Disk.remove(filePath, from: .documents)
         }
         completionHandler?(newItems)
     }

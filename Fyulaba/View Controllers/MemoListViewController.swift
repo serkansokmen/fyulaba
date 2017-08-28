@@ -24,13 +24,19 @@ class MemoListViewController: UITableViewController, Routable {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleCancel))
         navigationItem.rightBarButtonItem = editButtonItem
         navigationController?.hidesNavigationBarHairline = true
-        store.subscribe(self) { state in
-            state.memoItems
-        }
+        
         fetchMemoItems(query: nil)
     }
     
-    deinit {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self) { state in
+            state.memoItems
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
 

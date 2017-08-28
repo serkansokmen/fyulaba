@@ -53,6 +53,8 @@ class MemoRecorderViewController: UIViewController, Routable {
         plotView.backgroundColor = gradientColor
         
         tagListView.delegate = self
+        tagListView.alignment = .left
+        tagListView.enableRemoveButton = true
         
         transcriptionTextView.text = ""
         
@@ -62,8 +64,6 @@ class MemoRecorderViewController: UIViewController, Routable {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.handleSave))
         navigationController?.hidesNavigationBarHairline = true
-        
-//        store.dispatch(SetAutoTranscribeEnabled(isEnabled: true))
     }
     
     deinit {
@@ -73,10 +73,6 @@ class MemoRecorderViewController: UIViewController, Routable {
     override func viewWillDisappear(_ animated: Bool) {
         store.dispatch(ResetMemoRecorder())
         super.viewWillDisappear(animated)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // handle keyboard
     }
     
     @IBAction func handleSave(_ sender: UIBarButtonItem) {
@@ -112,10 +108,6 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBAction func handleTranscribeTapped(_ sender: UIButton) {
         guard let currentFile = MemoRecorder.shared.currentFile else { return }
         transcribeAudioFile(currentFile)
-    }
-    
-    func handleTagTapped(_ tagView: TagView) {
-        tagListView.removeTagView(tagView)
     }
 }
 
@@ -176,7 +168,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = ""
         }
         
-        navigationItem.rightBarButtonItem?.isEnabled = state.features.count > 0 && !state.isTranscribing
+        navigationItem.rightBarButtonItem?.isEnabled = state.transcriptionResult.count > 0 || !state.isTranscribing
         
         transcriptionTextView.text = state.transcriptionResult
         transcribeButton.isEnabled = !state.isTranscribing
@@ -220,5 +212,6 @@ extension MemoRecorderViewController: TagListViewDelegate {
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
         print("Tag pressed: \(title), \(sender)")
+        store.dispatch(RemoveFeatureTag(title: title))
     }
 }

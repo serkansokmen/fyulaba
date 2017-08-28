@@ -90,6 +90,9 @@ struct MemoRecorderReducer: Reducer {
             state.sentiment = nil
             state.features = [:]
             state.isTranscribing = false
+        
+        case let action as RemoveFeatureTag:
+            state.features = state.features.filter { $0.key != action.title }
             
         default:
             return state

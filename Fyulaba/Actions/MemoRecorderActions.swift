@@ -106,4 +106,6 @@ struct SetTranscriptionResult: Action {
 }
 struct ResetTranscriptionResult: Action { }
 
-
+struct RemoveFeatureTag: Action {
+    let title: String
+}
