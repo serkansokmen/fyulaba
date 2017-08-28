@@ -11,6 +11,7 @@ import ReSwift
 import ReSwiftRouter
 import AudioKit
 import ChameleonFramework
+import TagListView
 
 class MemoRecorderViewController: UIViewController, Routable {
     
@@ -22,7 +23,9 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var transcribeButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var transcriptionTextView: UITextView!
+    @IBOutlet weak var tagListView: TagListView!
     
     private var gradientColor: UIColor!
     private var gradientStrokeColor: UIColor!
@@ -45,6 +48,11 @@ class MemoRecorderViewController: UIViewController, Routable {
         plotView.layer.borderColor = gradientStrokeColor.cgColor
         plotView.layer.cornerRadius = 20.0
         
+        tagListView.delegate = self
+        
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.stopAnimating()
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
         navigationController?.hidesNavigationBarHairline = true
         
@@ -58,6 +66,10 @@ class MemoRecorderViewController: UIViewController, Routable {
     override func viewWillDisappear(_ animated: Bool) {
         store.dispatch(ResetMemoRecorder())
         super.viewWillDisappear(animated)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // handle keyboard
     }
     
     @IBAction func handleRecord(_ sender: UIButton) {
@@ -82,6 +94,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     @IBAction func handleReset(_ sender: UIButton) {
         store.dispatch(ResetMemoRecorder())
+        store.dispatch(ResetTranscriptionResult())
     }
 
     @IBAction func handleTranscribeTapped(_ sender: UIButton) {
@@ -143,7 +156,32 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = ""
         }
         
-        transcriptionTextView.text = "\(state.sentiment.emoji) \n \(state.transcriptionResult)"
+        transcriptionTextView.text = state.transcriptionResult
+        infoLabel.text = state.sentiment.emoji
+        
+        if state.isTranscribing {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+        
+        tagListView.removeAllTags()
+        if state.features.count > 0 {
+            tagListView.addTagViews(state.features.map { mapping in
+                let tagView = TagView(title: mapping.key)
+                tagView.enableRemoveButton = true
+                tagView.cornerRadius = 5.0
+                tagView.paddingX = 10.0
+                tagView.paddingY = 8.0
+                tagView.borderColor = .white
+                tagView.borderWidth = 2.0
+                tagView.titleLabel?.numberOfLines = 0
+                tagView.titleLabel?.font = UIFont.systemFont(ofSize: 12.0, weight: .light)
+                tagView.titleLabel?.adjustsFontSizeToFitWidth = true
+                tagView.backgroundColor = UIColor(hue: CGFloat(mapping.value), saturation: 1.0, brightness: 1.0, alpha: 1.0)
+                return tagView
+            })
+        }
         updatePlotView(state)
     }
     
@@ -164,5 +202,14 @@ extension MemoRecorderViewController: StoreSubscriber {
             plotView.layer.backgroundColor = gradient.cgColor
             plotView.backgroundColor = gradient
         }
+    }
+}
+
+extension MemoRecorderViewController: TagListViewDelegate {
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        print("Tag pressed: \(title), \(sender)")
+    }
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        print("Tag pressed: \(title), \(sender)")
     }
 }

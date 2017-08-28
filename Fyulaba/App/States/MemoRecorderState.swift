@@ -25,4 +25,6 @@ struct MemoRecorderState: StateType {
     var audioNode: AKNode?
     var transcriptionResult: String
     var sentiment: SentimentType
+    var features: [String:Double]
+    var isTranscribing: Bool
 }

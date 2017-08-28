@@ -10,7 +10,7 @@ import Foundation
 import Speech
 import AudioKit
 
-typealias SpeechTranscribeResultHandler = (String, SentimentType?) -> Void
+typealias SpeechTranscribeResultHandler = (String, SentimentType?, [String:Double]) -> Void
 typealias SpeechTranscribeErrorHandler = (Error?) -> Void
 
 class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
@@ -38,7 +38,7 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
                                       result resultHandler: @escaping SpeechTranscribeResultHandler,
                                       error errorHandler: @escaping SpeechTranscribeErrorHandler) {
         let request = SFSpeechURLRecognitionRequest(url: url)
-        SFSpeechRecognizer()?.recognitionTask(with: request) { result, error in
+        self.speechRecognizer?.recognitionTask(with: request) { result, error in
             
             guard let result = result else {
                 print("There was an error transcribing that file")
@@ -48,7 +48,8 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
             if result.isFinal {
                 let resultString = result.bestTranscription.formattedString
                 let sentiment = ClassificationService.shared.predictSentiment(from: resultString)
-                resultHandler(resultString, sentiment)
+                let features = ClassificationService.shared.features(from: resultString)
+                resultHandler(resultString, sentiment, features)
             }
             
             if error != nil {
@@ -85,7 +86,8 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
                 isFinal = result.isFinal
                 let resultString = result.bestTranscription.formattedString
                 let sentiment = ClassificationService.shared.predictSentiment(from: resultString)
-                resultHandler(resultString, sentiment)
+                let features = ClassificationService.shared.features(from: resultString)
+                resultHandler(resultString, sentiment, features)
             }
 
             // 6

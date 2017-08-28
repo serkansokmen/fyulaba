@@ -56,8 +56,8 @@ final class ClassificationService {
         }
     }
 
-    func features(from text: String) -> [String: Double] {
-        var wordCounts = [String: Double]()
+    func features(from text: String) -> [String:Double] {
+        var wordCounts = [String:Double]()
 
         tagger.string = text
         let range = NSRange(location: 0, length: text.utf16.count)
