@@ -38,7 +38,7 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
                                       result resultHandler: @escaping SpeechTranscribeResultHandler,
                                       error errorHandler: @escaping SpeechTranscribeErrorHandler) {
         let request = SFSpeechURLRecognitionRequest(url: url)
-        SFSpeechRecognizer()?.recognitionTask(with: request) { result, error in
+        self.speechRecognizer?.recognitionTask(with: request) { result, error in
             
             guard let result = result else {
                 print("There was an error transcribing that file")

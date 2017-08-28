@@ -11,6 +11,7 @@ import ReSwift
 import ReSwiftRouter
 import AudioKit
 import ChameleonFramework
+import TagListView
 
 class MemoRecorderViewController: UIViewController, Routable {
     
@@ -23,6 +24,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var transcribeButton: UIButton!
     @IBOutlet weak var transcriptionTextView: UITextView!
+    @IBOutlet weak var tagListView: TagListView!
     
     private var gradientColor: UIColor!
     private var gradientStrokeColor: UIColor!
@@ -144,6 +146,11 @@ extension MemoRecorderViewController: StoreSubscriber {
         }
         
         transcriptionTextView.text = "\(state.sentiment.emoji) \n \(state.transcriptionResult)"
+        
+        if state.transcriptionResult.count > 0 {
+            tagListView.removeAllTags()
+            tagListView.addTags([state.transcriptionResult])
+        }
         updatePlotView(state)
     }
     

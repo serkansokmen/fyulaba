@@ -25,7 +25,6 @@ import AudioKit
 //    }
 //}
 
-
 struct MemoItem: Codable, Equatable {
     
     let uuid: String
