@@ -10,6 +10,7 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 //import ReSwiftRecorder
+import ChameleonFramework
 
 let store = Store<AppState>(reducer: AppReducer(), state: nil)
 let api = MemoManager()
@@ -26,7 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         window.makeKeyAndVisible()
         appRouter = AppRouter(window: window)
-
+        
+        Chameleon.setGlobalThemeUsingPrimaryColor(.flatWhiteDark, withSecondaryColor: .flatWhite, andContentStyle: .dark)
+        
         return true
     }
 

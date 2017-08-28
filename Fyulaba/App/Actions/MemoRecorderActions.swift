@@ -32,23 +32,47 @@ func requestAuthorization(completion completionHandler: (() -> Void)?, denied de
     }
 }
 
-func setupWorkingAudioFile(_ memo: MemoItem?, completion completionHandler: ((AKAudioFile?) -> Void)?) {
+func setupWorkingAudioFile(_ memo: MemoItem?) {
     var file: AKAudioFile?
     if let workingFileURL = memo?.fileURL {
         file = try? AKAudioFile(readFileName: workingFileURL.absoluteString)
     } else {
         file = try? AKAudioFile()
     }
-    MemoRecorder.shared.setup(with: file, completion: completionHandler)
+    MemoRecorder.shared.setup(with: file) { workingFile in
+        DispatchQueue.main.async {
+            store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
+        }
+    }
 }
 
-func stopRecording(completion completionHandler: ((AKAudioFile) -> Void)?) {
-    MemoRecorder.shared.stopRecording(completion: completionHandler)
+func stopRecording() {
+    MemoRecorder.shared.stopRecording { file in
+        DispatchQueue.main.async {
+            store.dispatch(SetMemoRecorderCompletedRecording(workingFile: file))
+        }
+    }
+}
+
+func transcribeAudioFile(_ file: AKAudioFile) {
+    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(file.url, result: { result, sentiment in
+        DispatchQueue.main.async {
+            store.dispatch(SetTranscriptionResult(result: result,
+                                                  sentiment: sentiment))
+        }
+    }, error: { error in
+        DispatchQueue.main.async {
+            store.dispatch(ResetTranscriptionResult())
+        }
+    })
 }
 
 struct SetMemoRecorderReady: Action {
     let workingFile: AKAudioFile?
 }
+
+struct ResetTranscriptionResult: Action { }
+
 struct SetMemoRecorderStartRecording: Action { }
 struct SetMemoRecorderCompletedRecording: Action {
     let workingFile: AKAudioFile?
@@ -59,5 +83,9 @@ struct SetMemoRecorderError: Action {
     let error: Error?
 }
 struct ResetMemoRecorder: Action { }
+struct SetTranscriptionResult: Action {
+    let result: String?
+    let sentiment: SentimentType?
+}
 
 
