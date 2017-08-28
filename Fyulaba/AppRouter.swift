@@ -8,12 +8,6 @@
 
 import ReSwift
 
-enum X: String {
-    case zero = "zero value"
-    case one = "some one"
-    case two = "in two"
-}
-
 enum RoutingDestination: String {
     case root = "RootViewController"
     case memoList = "MemoListViewController"
@@ -55,12 +49,12 @@ final class AppRouter {
 
 extension AppRouter: StoreSubscriber {
     func newState(state: RoutingState) {
+        
         let shouldAnimate = navigationController.topViewController != nil
         
         switch state.destination {
         case .root:
-            
-            navigationController.dismiss(animated: true, completion: nil)
+            navigationController.dismiss(animated: shouldAnimate, completion: nil)
             pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
             
         case .memoList:
@@ -69,8 +63,13 @@ extension AppRouter: StoreSubscriber {
         case .memoRecorder:
             presentAsPopover(identifier: MemoRecorderViewController.identifier, completion: nil)
         
-        default:
-            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
+        case .memoDetail:
+            navigationController.dismiss(animated: shouldAnimate, completion: {
+                self.pushViewController(identifier: MemoDetailViewController.identifier, animated: shouldAnimate)
+            })
+        
+//        default:
+//            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
         }
     }
     

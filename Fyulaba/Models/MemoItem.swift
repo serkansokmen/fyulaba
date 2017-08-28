@@ -10,7 +10,7 @@ import Foundation
 import SwiftDate
 import CoreML
 import AudioKit
-
+import Disk
 
 //extension NSRange {
 //    func range(for str: String) -> Range<String.Index>? {
@@ -68,6 +68,7 @@ struct MemoItem: Codable, Equatable {
     
     var duration: Double {
         guard let url = self.fileURL else { return 0.0 }
+//        guard Disk.exists(url.lastPathComponent, in: .documents) else { return 0.0 }
         let file = try? AKAudioFile(forReading: url)
         return file?.duration ?? 0.0
     }

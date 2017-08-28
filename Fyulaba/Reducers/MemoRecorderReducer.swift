@@ -14,13 +14,7 @@ struct MemoRecorderReducer: Reducer {
     
     func handleAction(action: Action, state: MemoRecorderState?) -> MemoRecorderState {
         
-        var state = state ?? MemoRecorderState(memo: MemoItem(uuid: UUID().uuidString,
-                                                              text: "",
-                                                              createdAt: Date(),
-                                                              sentiment: nil,
-                                                              fileName: nil,
-                                                              fileExt: nil,
-                                                              fileURL: nil),
+        var state = state ?? MemoRecorderState(memo: nil,
                                                recordingState: .none,
                                                audioNode: nil,
                                                transcriptionResult: "",
@@ -32,9 +26,7 @@ struct MemoRecorderReducer: Reducer {
             
         case let action as SetMemoRecorderReady:
             state.recordingState = .ready
-            state.memo.fileName = action.workingFile?.fileName
-            state.memo.fileExt = action.workingFile?.fileExt
-            state.memo.fileURL = action.workingFile?.url
+            state.memo = action.item ?? state.memo
             state.audioNode = MemoRecorder.shared.mic
             
         case let action as SelectMemoItem:
@@ -48,6 +40,7 @@ struct MemoRecorderReducer: Reducer {
         case _ as SetMemoRecorderCompletedRecording:
             state.audioNode = nil
             state.recordingState = .paused
+            state.audioNode = MemoRecorder.shared.mic
         
         case _ as SetMemoRecorderStartPlaying:
             MemoRecorder.shared.startPlaying()
@@ -57,16 +50,16 @@ struct MemoRecorderReducer: Reducer {
         case _ as SetMemoRecorderStopPlaying:
             MemoRecorder.shared.stopPlaying()
             state.recordingState = .paused
-            state.audioNode = nil
+            state.audioNode = MemoRecorder.shared.mic
         
         case _ as ResetMemoRecorder:
             MemoRecorder.shared.reset()
-            state.recordingState = .none
-            state.audioNode = nil
+            state.recordingState = .ready
+            state.audioNode = MemoRecorder.shared.mic
             
         case let action as SetMemoRecorderError:
             state.recordingState = .error(action.error)
-            state.audioNode = nil
+            state.audioNode = MemoRecorder.shared.mic
             state.isTranscribing = false
         
         case let action as SetTranscriptionResult:
@@ -85,7 +78,6 @@ struct MemoRecorderReducer: Reducer {
             state.isTranscribing = true
         
         case _ as SetTranscriptionError:
-//            print(action.error?.localizedDescription)
             state.transcriptionResult = ""
             state.sentiment = nil
             state.features = [:]
@@ -93,6 +85,13 @@ struct MemoRecorderReducer: Reducer {
         
         case let action as RemoveFeatureTag:
             state.features = state.features.filter { $0.key != action.title }
+        
+        case _ as StartAudioEngine:
+            MemoRecorder.shared.startAudioEngine()
+        
+        case _ as StopAudioEngine:
+            MemoRecorder.shared.stopAudioEngine()
+            
             
         default:
             return state

@@ -14,18 +14,24 @@ class MemoDetailViewController: UIViewController, Routable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         store.subscribe(self) { state in
             state.memoItems
         }
     }
+    
+    deinit {
+        store.unsubscribe(self)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        store.unsubscribe(self)
+        
     }
 }
 

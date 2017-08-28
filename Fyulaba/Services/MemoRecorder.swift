@@ -36,12 +36,14 @@ class MemoRecorder {
         self.mainMixer = nil
     }
     
-    func setup(with audioFile: AKAudioFile?, completion completionHandler: ((AKAudioFile?) -> Void)?) {
+    func createMemo(completion completionHandler: ((MemoItem?) -> Void)?) {
         
         AKSettings.bufferLength = .medium
         
+        let audioFile = try? AKAudioFile()
+        
         do {
-            try AKSettings.setSession(category: .playAndRecord, with: .allowAirPlay)
+            try AKSettings.setSession(category: .playAndRecord, with: .allowBluetoothA2DP)
         } catch {
             AKLog("Could not set session category.")
         }
@@ -68,17 +70,21 @@ class MemoRecorder {
         variSpeed?.rate = 1.0
         mainMixer = AKMixer(variSpeed, micBooster)
         AudioKit.output = mainMixer
-        if !AudioKit.engine.isRunning {
-            AudioKit.start()
-        }
+        startAudioEngine()
         currentFile = player?.audioFile
-        completionHandler?(recorder?.audioFile)
+        
+        let newMemo = MemoItem(uuid: UUID().uuidString,
+                               text: "",
+                               createdAt: Date(),
+                               sentiment: nil,
+                               fileName: currentFile?.fileName,
+                               fileExt: currentFile?.fileExt,
+                               fileURL: currentFile?.url)
+        completionHandler?(newMemo)
     }
     
     deinit {
-        if AudioKit.engine.isRunning {
-            AudioKit.stop()
-        }
+        stopAudioEngine()
     }
     
     func startRecording() throws {
@@ -137,6 +143,18 @@ class MemoRecorder {
             try recorder?.reset()
         } catch let err {
             print(err.localizedDescription)
+        }
+    }
+    
+    func startAudioEngine() {
+        if !AudioKit.engine.isRunning {
+            AudioKit.start()
+        }
+    }
+    
+    func stopAudioEngine() {
+        if AudioKit.engine.isRunning {
+            AudioKit.stop()
         }
     }
 }

@@ -32,16 +32,10 @@ func requestAuthorization(completion completionHandler: (() -> Void)?, denied de
     }
 }
 
-func setupWorkingAudioFile(_ memo: MemoItem?) {
-    var file: AKAudioFile?
-    if let workingFileURL = memo?.fileURL {
-        file = try? AKAudioFile(readFileName: workingFileURL.absoluteString)
-    } else {
-        file = try? AKAudioFile()
-    }
-    MemoRecorder.shared.setup(with: file) { workingFile in
+func setupWorkingMemo() {
+    MemoRecorder.shared.createMemo() { memo in
         DispatchQueue.main.async {
-            store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
+            store.dispatch(SetMemoRecorderReady(item: memo))
         }
     }
 }
@@ -81,7 +75,7 @@ func persistMemoItemAndDismiss(_ item: MemoItem) {
 }
 
 struct SetMemoRecorderReady: Action {
-    let workingFile: AKAudioFile?
+    let item: MemoItem?
 }
 
 struct SetMemoRecorderStartRecording: Action { }
@@ -105,7 +99,8 @@ struct SetTranscriptionResult: Action {
     let features: [String:Double]
 }
 struct ResetTranscriptionResult: Action { }
-
 struct RemoveFeatureTag: Action {
     let title: String
 }
+struct StartAudioEngine: Action { }
+struct StopAudioEngine: Action { }
