@@ -2,22 +2,33 @@
 //  AppDelegate.swift
 //  Fyulaba
 //
-//  Created by Serkan Sokmen on 17/08/2017.
+//  Created by Serkan Sokmen on 23/08/2017.
 //  Copyright © 2017 Serkan Sokmen. All rights reserved.
 //
 
 import UIKit
-import Whisper
+import ReSwift
+import ReSwiftRouter
+//import ReSwiftRecorder
+import ChameleonFramework
+
+let store = Store<AppState>(reducer: AppReducer(), state: nil)
+let api = MemoManager()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var appRouter: AppRouter?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        Whisper.Config.modifyInset = false
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+        window.makeKeyAndVisible()
+        appRouter = AppRouter(window: window)
+        
+        Chameleon.setGlobalThemeUsingPrimaryColor(.flatWhiteDark, withSecondaryColor: .flatWhite, andContentStyle: .dark)
         
         return true
     }
@@ -44,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return true
-    }
 
 }
 

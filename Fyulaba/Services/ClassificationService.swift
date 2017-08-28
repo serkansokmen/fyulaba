@@ -9,6 +9,13 @@
 import CoreML
 
 final class ClassificationService {
+
+    static let shared: ClassificationService = {
+        let instance = ClassificationService()
+        // setup code
+        return instance
+    }()
+
     private enum Error: Swift.Error {
         case featuresMissing
     }
@@ -26,7 +33,7 @@ final class ClassificationService {
     }
 
     // MARK: - Prediction
-    func predictSentiment(from text: String) -> Sentiment {
+    func predictSentiment(from text: String) -> SentimentType {
         do {
             let inputFeatures = features(from: text)
             // Make prediction only with 2 or more words
@@ -48,12 +55,9 @@ final class ClassificationService {
             return .neutral
         }
     }
-}
 
-// MARK: - Features
-extension ClassificationService {
-    func features(from text: String) -> [String: Double] {
-        var wordCounts = [String: Double]()
+    func features(from text: String) -> [String:Double] {
+        var wordCounts = [String:Double]()
 
         tagger.string = text
         let range = NSRange(location: 0, length: text.utf16.count)

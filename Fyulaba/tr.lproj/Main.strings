@@ -1,0 +1,36 @@
+
+/* Class = "UIButton"; normalTitle = "Record"; ObjectID = "1Fq-Os-aUh"; */
+"1Fq-Os-aUh.normalTitle" = "Kaydet";
+
+/* Class = "UIButton"; normalTitle = "Stop"; ObjectID = "6UF-ZE-Ufa"; */
+"6UF-ZE-Ufa.normalTitle" = "Dur";
+
+/* Class = "UIButton"; normalTitle = "Play"; ObjectID = "EBx-Bf-2x2"; */
+"EBx-Bf-2x2.normalTitle" = "Oynat";
+
+/* Class = "UILabel"; text = "investigate your patterns"; ObjectID = "Lyl-DO-ral"; */
+"Lyl-DO-ral.text" = "tekrarlarınızı analiz edin";
+
+/* Class = "UIButton"; normalTitle = "Reset"; ObjectID = "Ssx-yr-Llv"; */
+"Ssx-yr-Llv.normalTitle" = "Sıfırla";
+
+/* Class = "UIButton"; normalTitle = "Transcribe"; ObjectID = "VcV-Fq-Cbf"; */
+"VcV-Fq-Cbf.normalTitle" = "Çevir";
+
+/* Class = "UIButton"; normalTitle = "Stop"; ObjectID = "bLs-K3-ZQm"; */
+"bLs-K3-ZQm.normalTitle" = "Dur";
+
+/* Class = "UILabel"; text = "fyulaba"; ObjectID = "fBB-ru-evd"; */
+"fBB-ru-evd.text" = "fyulaba";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "jf6-JX-xrM"; */
+"jf6-JX-xrM.text" = "Başlık";
+
+/* Class = "UILabel"; text = "Duration: 0.0"; ObjectID = "p55-as-m44"; */
+"p55-as-m44.text" = "Süre: 0.0";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "r4r-Qb-kJI"; */
+"r4r-Qb-kJI.text" = "Alt başlık";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "sXu-ni-q2j"; */
+"sXu-ni-q2j.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
