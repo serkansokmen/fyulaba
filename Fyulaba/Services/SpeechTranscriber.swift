@@ -14,27 +14,27 @@ enum SpeechTranscriptionError: Error {
     case error(String)
 }
 
-typealias SpeechTranscribeResultHandler = (String, SentimentType?, [String:Double]) -> Void
+typealias SpeechTranscribeResultHandler = (String, SentimentType?, [TranscriptionFeature]) -> Void
 typealias SpeechTranscribeErrorHandler = (SpeechTranscriptionError?) -> Void
 
 class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
 
     let speechRecognizer: SFSpeechRecognizer?
-
+    
     static let shared: SpeechTranscriber = {
-        let instance = SpeechTranscriber(with: Locale(identifier: Locale.preferredLanguages.first ?? "en"))
-
+        let instance = SpeechTranscriber()
         // setup code
         return instance
     }()
-
-    init(with locale: Locale) {
-        self.speechRecognizer = SFSpeechRecognizer(locale: locale)
+    
+    override init() {
+        self.speechRecognizer = SFSpeechRecognizer(locale: Locale.autoupdatingCurrent)
         super.init()
         
         self.speechRecognizer?.delegate = self
     }
-
+    
+    private var locale: Locale = Locale.autoupdatingCurrent
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     
@@ -42,7 +42,7 @@ class SpeechTranscriber: NSObject, SFSpeechRecognizerDelegate {
                                       result resultHandler: @escaping SpeechTranscribeResultHandler,
                                       error errorHandler: @escaping SpeechTranscribeErrorHandler) {
         let request = SFSpeechURLRecognitionRequest(url: url)
-        self.speechRecognizer?.recognitionTask(with: request) { result, error in
+        speechRecognizer?.recognitionTask(with: request) { result, error in
             
             guard let result = result else {
                 errorHandler(.error("There was an error transcribing that file"))

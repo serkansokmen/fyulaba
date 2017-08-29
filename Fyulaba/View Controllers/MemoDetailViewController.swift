@@ -9,28 +9,51 @@
 import UIKit
 import ReSwift
 import ReSwiftRouter
+import TagListView
 
 class MemoDetailViewController: UIViewController, Routable {
 
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var stopButton: UIButton!
+    
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var tagListView: TagListView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         store.subscribe(self) { state in
             state.memoItems
         }
     }
+    
+    deinit {
+        store.unsubscribe(self)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        store.unsubscribe(self)
+        
     }
 }
 
 extension MemoDetailViewController: StoreSubscriber {
+    
     func newState(state: MemoItemsState) {
-//        print(state)
+        
+        guard let item = state.selectedItem else { return }
+        print(item)
+        
+        textView.text = item.text
+        durationLabel.text = "Duration: \(item.file.duration)"
+        
+        tagListView.removeAllTags()
+        item.features.forEach { tagListView.addTag($0.key) }
     }
 }

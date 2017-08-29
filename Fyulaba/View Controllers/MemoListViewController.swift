@@ -45,9 +45,9 @@ class MemoListViewController: UITableViewController, Routable {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        store.dispatch(SelectedRow())
-//            let item = store.dispatch(RoutingAction(destination: .memoDetail))
-//        }
+        let item = items[indexPath.row]
+        store.dispatch(SelectMemoItem(item: item))
+        store.dispatch(RoutingAction(destination: .memoDetail))
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -8,6 +8,11 @@
 
 import CoreML
 
+struct TranscriptionFeature: Codable {
+    let key: String
+    let value: Double
+}
+
 final class ClassificationService {
 
     static let shared: ClassificationService = {
@@ -16,21 +21,21 @@ final class ClassificationService {
         return instance
     }()
 
+    private var locale: Locale = Locale.autoupdatingCurrent
+    
     private enum Error: Swift.Error {
         case featuresMissing
+    }
+    
+    init() {
     }
 
     private let model = SentimentPolarity()
     private let options: NSLinguisticTagger.Options = [.omitWhitespace, .omitPunctuation, .omitOther]
-    private let languageCode: String
     private lazy var tagger: NSLinguisticTagger = .init(
-        tagSchemes: NSLinguisticTagger.availableTagSchemes(forLanguage: languageCode),
+        tagSchemes: NSLinguisticTagger.availableTagSchemes(forLanguage: locale.identifier),
         options: Int(self.options.rawValue)
     )
-
-    init() {
-        self.languageCode = Locale.preferredLanguages.first ?? "en"
-    }
 
     // MARK: - Prediction
     func predictSentiment(from text: String) -> SentimentType {
@@ -40,8 +45,12 @@ final class ClassificationService {
             guard inputFeatures.count > 1 else {
                 throw Error.featuresMissing
             }
-
-            let output = try model.prediction(input: inputFeatures)
+            
+            var dict: [String:Double] = [:]
+            inputFeatures.forEach { feature in
+                dict[feature.key] = feature.value
+            }
+            let output = try model.prediction(input: dict)
 
             switch output.classLabel {
             case "Pos":
@@ -56,7 +65,7 @@ final class ClassificationService {
         }
     }
 
-    func features(from text: String) -> [String:Double] {
+    func features(from text: String) -> [TranscriptionFeature] {
         var wordCounts = [String:Double]()
 
         tagger.string = text
@@ -77,6 +86,8 @@ final class ClassificationService {
             }
         }
 
-        return wordCounts
+        return wordCounts.map { key, value in
+            return TranscriptionFeature(key: key, value: value)
+        }
     }
 }
