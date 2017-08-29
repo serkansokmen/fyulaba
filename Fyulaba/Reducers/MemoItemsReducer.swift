@@ -24,7 +24,7 @@ struct MemoItemsReducer: Reducer {
         
         case let action as AddMemoItem:
             return MemoItemsState(items: state.items + [action.newItem], selectedItem: action.newItem)
-
+        
         default:
             return state
             

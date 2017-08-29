@@ -8,19 +8,33 @@
 
 import ReSwift
 import AudioKit
-
+import Disk
 
 struct MemoRecorderReducer: Reducer {
     
-    private let initialState = MemoRecorderState(with: MemoItem())
-    
     func handleAction(action: Action, state: MemoRecorderState?) -> MemoRecorderState {
         
-        var state = state ?? initialState
+        var state = state ?? MemoRecorderState(with: MemoItem())
         
         switch action {
             
         case let action as SetupAudio:
+            
+            if state.memo != nil {
+                state.player?.stop()
+                do {
+                    try state.recorder?.reset()
+                } catch let err {
+                    print(err.localizedDescription)
+                }
+                state.recordingState = .ready
+                if let fileName = state.memo?.file.fileNamePlusExtension,
+                    Disk.exists(fileName, in: .documents) {
+                    try? Disk.remove(fileName, from: .documents)
+                }
+                state.memo = nil
+            }
+            
             AKSettings.bufferLength = .medium
             
             do {
@@ -31,13 +45,15 @@ struct MemoRecorderReducer: Reducer {
             }
             AKSettings.defaultToSpeaker = true
             
+            state.memo = action.memo ?? MemoItem()
             state.mic = AKMicrophone()
             state.micMixer = AKMixer(state.mic)
             state.micBooster = AKBooster(state.micMixer)
             state.micBooster?.gain = 0
             
-            state.recorder = try? AKNodeRecorder(node: state.micMixer, file: action.memo.file)
-            state.player = try? AKAudioPlayer(file: action.memo.file)
+            state.recorder = try? AKNodeRecorder(node: state.micMixer,
+                                                 file: state.memo!.file)
+            state.player = try? AKAudioPlayer(file: state.memo!.file)
             
             state.recorder?.durationToRecord = 60.0
             state.player?.looping = true
@@ -47,18 +63,8 @@ struct MemoRecorderReducer: Reducer {
             AudioKit.output = state.mainMixer
             AudioKit.start()
             
-            let memo = MemoItem()
-            DispatchQueue.main.async {
-                store.dispatch(SetMemoRecorderReady(item: memo))
-            }
-            
-        case let action as SetMemoRecorderReady:
             state.recordingState = .ready
-            state.memo = action.item ?? state.memo
         
-        case let action as SelectMemoItem:
-            state.memo = action.item ?? state.memo
-            
         case _ as StartRecording:
             if AKSettings.headPhonesPlugged {
                 state.micBooster?.gain = 1
@@ -116,14 +122,26 @@ struct MemoRecorderReducer: Reducer {
             state.recordingState = .error(action.error)
             state.isTranscribing = false
         
+        case _ as TranscribeMemoItem:
+            guard let memo = state.memo else { return state }
+            SpeechTranscriber.shared.recognizeSpeechFromAudioFile(memo.file.url, result: { result, sentiment, features in
+                DispatchQueue.main.async {
+                    store.dispatch(SetTranscriptionResult(result: result,
+                                                          sentiment: sentiment,
+                                                          features: features))
+                }
+            }, error: { error in
+                DispatchQueue.main.async {
+                    store.dispatch(SetTranscriptionError(error: error))
+                }
+            })
+            state.isTranscribing = true
+            
         case let action as SetTranscriptionResult:
             state.memo?.text = action.result ?? ""
             state.memo?.sentiment = action.sentiment
             state.memo?.features = action.features
             state.isTranscribing = false
-            
-        case _ as SetTranscriptionInProgress:
-            state.isTranscribing = true
         
         case _ as SetTranscriptionError:
             state.memo?.text = ""
@@ -135,17 +153,14 @@ struct MemoRecorderReducer: Reducer {
             let filteredItems = state.memo?.features.filter { $0.key != action.title }
             state.memo?.features = filteredItems ?? []
         
-        case _ as ResetMemoRecorder:
-            state.player?.stop()
-            do {
-                try state.recorder?.reset()
-            } catch let err {
-                print(err.localizedDescription)
+        case _ as SaveAndDismissRecording:
+            guard let memo = state.memo else { return state }
+            try? MemoManager.shared.addItem(item: memo) { items in
+                DispatchQueue.main.async {
+                    store.dispatch(SetMemoItems(items: items))
+                    store.dispatch(RoutingAction(destination: .root))
+                }
             }
-            state = initialState
-            state.memo = MemoItem()
-            state.recordingState = .ready
-            state.currentNode = state.mic
         
         default:
             return state

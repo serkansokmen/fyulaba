@@ -34,39 +34,8 @@ func requestAuthorization(completion completionHandler: (() -> Void)?, denied de
 }
 
 struct SetupAudio: Action {
-    let memo: MemoItem
+    let memo: MemoItem?
 }
-
-func transcribe(item: MemoItem) {
-    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(item.file.url, result: { result, sentiment, features in
-        DispatchQueue.main.async {
-            store.dispatch(SetTranscriptionResult(result: result,
-                                                  sentiment: sentiment,
-                                                  features: features))
-        }
-    }, error: { error in
-        DispatchQueue.main.async {
-            store.dispatch(SetTranscriptionError(error: error))
-        }
-    })
-    DispatchQueue.main.async {
-        store.dispatch(SetTranscriptionInProgress())
-    }
-}
-
-func persistMemoItemAndDismiss(_ item: MemoItem) {
-    try? MemoManager.shared.addItem(item: item) { items in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoItems(items: items))
-            store.dispatch(RoutingAction(destination: .root))
-        }
-    }
-}
-
-struct SetMemoRecorderReady: Action {
-    let item: MemoItem?
-}
-
 struct StartRecording: Action { }
 struct PauseRecording: Action { }
 struct ExportedRecording: Action {
@@ -77,9 +46,7 @@ struct StopPlaying: Action { }
 struct SetMemoRecorderError: Action {
     let error: Error?
 }
-struct ResetMemoRecorder: Action { }
-
-struct SetTranscriptionInProgress: Action { }
+struct TranscribeMemoItem: Action { }
 struct SetTranscriptionError: Action {
     let error: Error?
 }
@@ -91,4 +58,5 @@ struct SetTranscriptionResult: Action {
 struct RemoveFeatureTag: Action {
     let title: String
 }
+struct SaveAndDismissRecording: Action { }
 

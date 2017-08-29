@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
         appRouter = AppRouter(window: window)
         
-        Chameleon.setGlobalThemeUsingPrimaryColor(.flatWhiteDark, withSecondaryColor: .flatWhite, andContentStyle: .dark)
+        Chameleon.setGlobalThemeUsingPrimaryColor(.flatWhiteDark, withSecondaryColor: .flatBlack, andContentStyle: .light)
         
         return true
     }
