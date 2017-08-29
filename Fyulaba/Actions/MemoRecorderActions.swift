@@ -9,6 +9,7 @@
 import ReSwift
 import Speech
 import AudioKit
+import Disk
 
 func requestAuthorization(completion completionHandler: (() -> Void)?, denied deniedHandler: ((String)->Void)?) {
     
@@ -32,24 +33,12 @@ func requestAuthorization(completion completionHandler: (() -> Void)?, denied de
     }
 }
 
-func setupWorkingMemo() {
-    MemoRecorder.shared.createMemo() { memo in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoRecorderReady(item: memo))
-        }
-    }
+struct SetupAudio: Action {
+    let memo: MemoItem
 }
 
-func stopRecording() {
-    MemoRecorder.shared.stopRecording { file in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoRecorderCompletedRecording(workingFile: file))
-        }
-    }
-}
-
-func transcribeAudioFile(_ file: AKAudioFile) {
-    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(file.url, result: { result, sentiment, features in
+func transcribe(item: MemoItem) {
+    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(item.file.url, result: { result, sentiment, features in
         DispatchQueue.main.async {
             store.dispatch(SetTranscriptionResult(result: result,
                                                   sentiment: sentiment,
@@ -78,12 +67,13 @@ struct SetMemoRecorderReady: Action {
     let item: MemoItem?
 }
 
-struct SetMemoRecorderStartRecording: Action { }
-struct SetMemoRecorderCompletedRecording: Action {
-    let workingFile: AKAudioFile?
+struct StartRecording: Action { }
+struct PauseRecording: Action { }
+struct ExportedRecording: Action {
+    let exportedFile: AKAudioFile
 }
-struct SetMemoRecorderStartPlaying: Action { }
-struct SetMemoRecorderStopPlaying: Action { }
+struct StartPlaying: Action { }
+struct StopPlaying: Action { }
 struct SetMemoRecorderError: Action {
     let error: Error?
 }
@@ -96,11 +86,9 @@ struct SetTranscriptionError: Action {
 struct SetTranscriptionResult: Action {
     let result: String?
     let sentiment: SentimentType?
-    let features: [String:Double]
+    let features: [TranscriptionFeature]
 }
-struct ResetTranscriptionResult: Action { }
 struct RemoveFeatureTag: Action {
     let title: String
 }
-struct StartAudioEngine: Action { }
-struct StopAudioEngine: Action { }
+

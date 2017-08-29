@@ -13,6 +13,8 @@ typealias ItemCompletion<T> = ((T?) -> Void)?
 
 protocol PersistanceManager {
     associatedtype T
+    
+    var fileName: String { get }
 
     func getItems(query: String?, completion completionHandler: ItemsCompletion<T>) throws
 
