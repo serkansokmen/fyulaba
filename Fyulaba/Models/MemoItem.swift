@@ -10,39 +10,60 @@ import Foundation
 import SwiftDate
 import CoreML
 import AudioKit
-
-
-//extension NSRange {
-//    func range(for str: String) -> Range<String.Index>? {
-//        guard location != NSNotFound else { return nil }
-//
-//        guard let fromUTFIndex = str.utf16.index(str.utf16.startIndex, offsetBy: location, limitedBy: str.utf16.endIndex) else { return nil }
-//        guard let toUTFIndex = str.utf16.index(fromUTFIndex, offsetBy: length, limitedBy: str.utf16.endIndex) else { return nil }
-//        guard let fromIndex = String.Index(fromUTFIndex, within: str) else { return nil }
-//        guard let toIndex = String.Index(toUTFIndex, within: str) else { return nil }
-//
-//        return fromIndex ..< toIndex
-//    }
-//}
+import Disk
 
 struct MemoItem: Codable, Equatable {
     
     let uuid: String
-    var text: String
     let createdAt: Date
+    
+    var text: String = ""
     var sentiment: SentimentType?
-    var fileName: String?
-    var fileExt: String?
-    var fileURL: URL?
+    var features = [TranscriptionFeature]()
 
+    var file: AKAudioFile
+    var fileURL: URL?
+    
     private enum CodingKeys: String, CodingKey {
         case uuid
-        case text
         case createdAt = "created_at"
+        case text
         case sentiment
-        case fileName = "file_name"
-        case fileExt = "file_extension"
+        case features
         case fileURL = "file_url"
+    }
+    
+    init() {
+        self.uuid = UUID().uuidString
+        self.file = MemoItem.createWorkingFile()
+        self.createdAt = DateInRegion().absoluteDate
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.uuid = try container.decode(String.self, forKey: CodingKeys.uuid)
+        self.createdAt = try container.decode(Date.self, forKey: CodingKeys.createdAt)
+        self.text = try container.decode(String.self, forKey: CodingKeys.text)
+        self.sentiment = try container.decode(SentimentType.self, forKey: CodingKeys.sentiment)
+        self.features = try container.decode([TranscriptionFeature].self, forKey: CodingKeys.features)
+        
+        self.fileURL = try container.decode(URL.self, forKey: CodingKeys.fileURL)
+        guard let file = try? AKAudioFile(readFileName: self.fileURL!.absoluteString) else {
+            self.file = MemoItem.createWorkingFile()
+            return
+        }
+        self.file = file
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(uuid, forKey: .uuid)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(text, forKey: .text)
+        try container.encode(sentiment, forKey: .sentiment)
+        try container.encode(features, forKey: .features)
+        try container.encode(self.file.url, forKey: .fileURL)
     }
 
     var title: String {
@@ -62,18 +83,24 @@ struct MemoItem: Codable, Equatable {
         }
     }
     
-    var fileNamePlusExtension: String? {
-        return fileURL?.lastPathComponent
-    }
-    
-    var duration: Double {
-        guard let url = self.fileURL else { return 0.0 }
-        let file = try? AKAudioFile(forReading: url)
-        return file?.duration ?? 0.0
-    }
-    
     public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {
         return lhs.uuid == rhs.uuid
+    }
+    
+    static func createWorkingFile() -> AKAudioFile {
+        guard let tempFile = try? AKAudioFile() else {
+            fatalError("could not setup audio file")
+        }
+        do {
+            try Disk.move(tempFile.fileNamePlusExtension, in: .temporary, to: .documents)
+        } catch let err {
+            fatalError(err.localizedDescription)
+        }
+        
+        guard let file = try? AKAudioFile(readFileName: tempFile.fileNamePlusExtension, baseDir: .documents) else {
+            fatalError("could not setup audio file")
+        }
+        return file
     }
 
 }

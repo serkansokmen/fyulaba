@@ -9,6 +9,7 @@
 import ReSwift
 import Speech
 import AudioKit
+import Disk
 
 func requestAuthorization(completion completionHandler: (() -> Void)?, denied deniedHandler: ((String)->Void)?) {
     
@@ -32,80 +33,30 @@ func requestAuthorization(completion completionHandler: (() -> Void)?, denied de
     }
 }
 
-func setupWorkingAudioFile(_ memo: MemoItem?) {
-    var file: AKAudioFile?
-    if let workingFileURL = memo?.fileURL {
-        file = try? AKAudioFile(readFileName: workingFileURL.absoluteString)
-    } else {
-        file = try? AKAudioFile()
-    }
-    MemoRecorder.shared.setup(with: file) { workingFile in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoRecorderReady(workingFile: workingFile))
-        }
-    }
+struct SetupAudio: Action {
+    let memo: MemoItem?
 }
-
-func stopRecording() {
-    MemoRecorder.shared.stopRecording { file in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoRecorderCompletedRecording(workingFile: file))
-        }
-    }
+struct StartRecording: Action { }
+struct PauseRecording: Action { }
+struct ExportedRecording: Action {
+    let exportedFile: AKAudioFile
 }
-
-func transcribeAudioFile(_ file: AKAudioFile) {
-    SpeechTranscriber.shared.recognizeSpeechFromAudioFile(file.url, result: { result, sentiment, features in
-        DispatchQueue.main.async {
-            store.dispatch(SetTranscriptionResult(result: result,
-                                                  sentiment: sentiment,
-                                                  features: features))
-        }
-    }, error: { error in
-        DispatchQueue.main.async {
-            store.dispatch(SetTranscriptionError(error: error))
-        }
-    })
-    DispatchQueue.main.async {
-        store.dispatch(SetTranscriptionInProgress())
-    }
-}
-
-func persistMemoItemAndDismiss(_ item: MemoItem) {
-    try? MemoManager.shared.addItem(item: item) { items in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoItems(items: items))
-            store.dispatch(RoutingAction(destination: .root))
-        }
-    }
-}
-
-struct SetMemoRecorderReady: Action {
-    let workingFile: AKAudioFile?
-}
-
-struct SetMemoRecorderStartRecording: Action { }
-struct SetMemoRecorderCompletedRecording: Action {
-    let workingFile: AKAudioFile?
-}
-struct SetMemoRecorderStartPlaying: Action { }
-struct SetMemoRecorderStopPlaying: Action { }
+struct StartPlaying: Action { }
+struct StopPlaying: Action { }
 struct SetMemoRecorderError: Action {
     let error: Error?
 }
-struct ResetMemoRecorder: Action { }
-
-struct SetTranscriptionInProgress: Action { }
+struct TranscribeMemoItem: Action { }
 struct SetTranscriptionError: Action {
     let error: Error?
 }
 struct SetTranscriptionResult: Action {
     let result: String?
     let sentiment: SentimentType?
-    let features: [String:Double]
+    let features: [TranscriptionFeature]
 }
-struct ResetTranscriptionResult: Action { }
-
 struct RemoveFeatureTag: Action {
     let title: String
 }
+struct SaveAndDismissRecording: Action { }
+

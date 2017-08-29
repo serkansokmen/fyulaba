@@ -13,8 +13,6 @@ import AudioKit
 
 class RootViewController: UIViewController, Routable {
     
-    private var workingMemo: MemoItem?
-
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -26,14 +24,6 @@ class RootViewController: UIViewController, Routable {
                                                                 target: self,
                                                                 action: #selector(self.createMemoTapped(_:)))
         store.subscribe(self)
-        
-        requestAuthorization(completion: {
-            OperationQueue.main.addOperation {
-                setupWorkingAudioFile(self.workingMemo)
-            }
-        }, denied: { message in
-            self.showAlert(message, type: .error)
-        })
     }
     
     deinit {
@@ -53,7 +43,7 @@ class RootViewController: UIViewController, Routable {
 extension RootViewController: StoreSubscriber {
     
     func newState(state: AppState) {
-        self.workingMemo = state.memoRecorder.memo
+        print(state)
     }
 }
 

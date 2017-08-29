@@ -18,12 +18,11 @@
 		E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689884B1F4DFEDF0095465F /* SentimentType.swift */; };
 		E689884F1F4DFF5F0095465F /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689884E1F4DFF5F0095465F /* AppState.swift */; };
 		E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988501F4DFF970095465F /* MemoItemsState.swift */; };
-		E68988551F4E02450095465F /* MemoItemActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988541F4E02450095465F /* MemoItemActions.swift */; };
+		E68988551F4E02450095465F /* MemoItemsActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988541F4E02450095465F /* MemoItemsActions.swift */; };
 		E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988561F4E02FE0095465F /* MemoItemsReducer.swift */; };
 		E689885A1F4E03450095465F /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68988591F4E03450095465F /* PersistanceManager.swift */; };
 		E689885C1F4E03B30095465F /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885B1F4E03B30095465F /* AppReducer.swift */; };
 		E689885E1F4E0A280095465F /* MemoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689885D1F4E0A280095465F /* MemoManager.swift */; };
-		E6A587361F50AE2E00C6B0F5 /* MemoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A587351F50AE2E00C6B0F5 /* MemoRecorder.swift */; };
 		E6A59C6C1F4E578600779ECE /* MemoRecorderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6B1F4E578600779ECE /* MemoRecorderState.swift */; };
 		E6A59C701F4E59FB00779ECE /* MemoRecorderReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */; };
 		E6A59C721F4E5AE400779ECE /* MemoRecorderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */; };
@@ -72,12 +71,11 @@
 		E689884B1F4DFEDF0095465F /* SentimentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentimentType.swift; sourceTree = "<group>"; };
 		E689884E1F4DFF5F0095465F /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E68988501F4DFF970095465F /* MemoItemsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemsState.swift; sourceTree = "<group>"; };
-		E68988541F4E02450095465F /* MemoItemActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemActions.swift; sourceTree = "<group>"; };
+		E68988541F4E02450095465F /* MemoItemsActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemsActions.swift; sourceTree = "<group>"; };
 		E68988561F4E02FE0095465F /* MemoItemsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemsReducer.swift; sourceTree = "<group>"; };
 		E68988591F4E03450095465F /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		E689885B1F4E03B30095465F /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E689885D1F4E0A280095465F /* MemoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoManager.swift; sourceTree = "<group>"; };
-		E6A587351F50AE2E00C6B0F5 /* MemoRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorder.swift; sourceTree = "<group>"; };
 		E6A59C6B1F4E578600779ECE /* MemoRecorderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderState.swift; sourceTree = "<group>"; };
 		E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderReducer.swift; sourceTree = "<group>"; };
 		E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderActions.swift; sourceTree = "<group>"; };
@@ -86,6 +84,7 @@
 		E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
 		E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		E6C3EE201F54597800E83358 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		E6D240A31F55FE8400E7D715 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		E6D850901F4E30A60086858D /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E6D850941F4E31380086858D /* MemoRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderViewController.swift; sourceTree = "<group>"; };
@@ -193,7 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				E6D850A71F4E41220086858D /* RoutingActions.swift */,
-				E68988541F4E02450095465F /* MemoItemActions.swift */,
+				E68988541F4E02450095465F /* MemoItemsActions.swift */,
 				E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */,
 			);
 			path = Actions;
@@ -215,7 +214,6 @@
 			children = (
 				E68988591F4E03450095465F /* PersistanceManager.swift */,
 				E689885D1F4E0A280095465F /* MemoManager.swift */,
-				E6A587351F50AE2E00C6B0F5 /* MemoRecorder.swift */,
 				E6BCADD51F537F7600E4E750 /* ClassificationService.swift */,
 				E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */,
 			);
@@ -407,7 +405,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E68988551F4E02450095465F /* MemoItemActions.swift in Sources */,
+				E68988551F4E02450095465F /* MemoItemsActions.swift in Sources */,
 				E689885E1F4E0A280095465F /* MemoManager.swift in Sources */,
 				E6BCADDA1F537F9D00E4E750 /* SentimentPolarity.mlmodel in Sources */,
 				E6D850A01F4E3D9B0086858D /* MemoListViewController.swift in Sources */,
@@ -432,7 +430,6 @@
 				E6D850961F4E31380086858D /* MemoRecorderViewController.swift in Sources */,
 				E6D850A81F4E41220086858D /* RoutingActions.swift in Sources */,
 				E6A59C701F4E59FB00779ECE /* MemoRecorderReducer.swift in Sources */,
-				E6A587361F50AE2E00C6B0F5 /* MemoRecorder.swift in Sources */,
 				E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */,
 				E6D8509B1F4E35D20086858D /* RoutingState.swift in Sources */,
 				E6BCADD71F537F7600E4E750 /* ClassificationService.swift in Sources */,
@@ -447,6 +444,7 @@
 			children = (
 				E689882E1F4DE8410095465F /* Base */,
 				E6C3EE201F54597800E83358 /* tr */,
+				E6D240A31F55FE8400E7D715 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

@@ -20,11 +20,19 @@ enum MemoRecorderRecordingState: StateType {
 }
 
 struct MemoRecorderState: StateType {
-    var memo: MemoItem
-    var recordingState: MemoRecorderRecordingState
-    var audioNode: AKNode?
-    var transcriptionResult: String
-    var sentiment: SentimentType?
-    var features: [String:Double]
-    var isTranscribing: Bool
+    var memo: MemoItem?
+    var recordingState: MemoRecorderRecordingState = .none
+    var isTranscribing: Bool = false
+    var recorder: AKNodeRecorder?
+    var mic: AKMicrophone?
+    var micBooster: AKBooster?
+    var micMixer: AKMixer?
+    var player: AKAudioPlayer?
+    var variSpeed: AKVariSpeed?
+    var mainMixer: AKMixer?
+    var currentNode: AKNode?
+    
+    init(with memo: MemoItem) {
+        self.memo = memo
+    }
 }
