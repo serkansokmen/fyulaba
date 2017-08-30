@@ -26,10 +26,13 @@
 		E6A59C6C1F4E578600779ECE /* MemoRecorderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6B1F4E578600779ECE /* MemoRecorderState.swift */; };
 		E6A59C701F4E59FB00779ECE /* MemoRecorderReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */; };
 		E6A59C721F4E5AE400779ECE /* MemoRecorderActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */; };
-		E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */; };
+		E6A59C761F4E5E8200779ECE /* MemoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A59C751F4E5E8200779ECE /* MemoPlayerViewController.swift */; };
 		E6BCADD71F537F7600E4E750 /* ClassificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCADD51F537F7600E4E750 /* ClassificationService.swift */; };
 		E6BCADD81F537F7600E4E750 /* SpeechTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */; };
 		E6BCADDA1F537F9D00E4E750 /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */; };
+		E6D240A51F56E66C00E7D715 /* MemoPlayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D240A41F56E66C00E7D715 /* MemoPlayerState.swift */; };
+		E6D240A71F56EACA00E7D715 /* MemoPlayerReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D240A61F56EACA00E7D715 /* MemoPlayerReducer.swift */; };
+		E6D240A91F56EB6200E7D715 /* MemoPlayerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D240A81F56EB6200E7D715 /* MemoPlayerActions.swift */; };
 		E6D3027E1F4E19EA00F9A405 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */; };
 		E6D850921F4E30A60086858D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850901F4E30A60086858D /* RootViewController.swift */; };
 		E6D850961F4E31380086858D /* MemoRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D850941F4E31380086858D /* MemoRecorderViewController.swift */; };
@@ -79,12 +82,15 @@
 		E6A59C6B1F4E578600779ECE /* MemoRecorderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderState.swift; sourceTree = "<group>"; };
 		E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderReducer.swift; sourceTree = "<group>"; };
 		E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderActions.swift; sourceTree = "<group>"; };
-		E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoDetailViewController.swift; sourceTree = "<group>"; };
+		E6A59C751F4E5E8200779ECE /* MemoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoPlayerViewController.swift; sourceTree = "<group>"; };
 		E6BCADD51F537F7600E4E750 /* ClassificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassificationService.swift; sourceTree = "<group>"; };
 		E6BCADD61F537F7600E4E750 /* SpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechTranscriber.swift; sourceTree = "<group>"; };
 		E6BCADD91F537F9A00E4E750 /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		E6C3EE201F54597800E83358 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
 		E6D240A31F55FE8400E7D715 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		E6D240A41F56E66C00E7D715 /* MemoPlayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoPlayerState.swift; sourceTree = "<group>"; };
+		E6D240A61F56EACA00E7D715 /* MemoPlayerReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoPlayerReducer.swift; sourceTree = "<group>"; };
+		E6D240A81F56EB6200E7D715 /* MemoPlayerActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoPlayerActions.swift; sourceTree = "<group>"; };
 		E6D3027D1F4E19E700F9A405 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		E6D850901F4E30A60086858D /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E6D850941F4E31380086858D /* MemoRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRecorderViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +181,7 @@
 				E6D8509A1F4E35D20086858D /* RoutingState.swift */,
 				E68988501F4DFF970095465F /* MemoItemsState.swift */,
 				E6A59C6B1F4E578600779ECE /* MemoRecorderState.swift */,
+				E6D240A41F56E66C00E7D715 /* MemoPlayerState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -194,6 +201,7 @@
 				E6D850A71F4E41220086858D /* RoutingActions.swift */,
 				E68988541F4E02450095465F /* MemoItemsActions.swift */,
 				E6A59C711F4E5AE400779ECE /* MemoRecorderActions.swift */,
+				E6D240A81F56EB6200E7D715 /* MemoPlayerActions.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -205,6 +213,7 @@
 				E6D8509C1F4E361F0086858D /* RoutingReducer.swift */,
 				E68988561F4E02FE0095465F /* MemoItemsReducer.swift */,
 				E6A59C6F1F4E59FB00779ECE /* MemoRecorderReducer.swift */,
+				E6D240A61F56EACA00E7D715 /* MemoPlayerReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -226,7 +235,7 @@
 				E6D850901F4E30A60086858D /* RootViewController.swift */,
 				E6D8509E1F4E3D9B0086858D /* MemoListViewController.swift */,
 				E6D850941F4E31380086858D /* MemoRecorderViewController.swift */,
-				E6A59C751F4E5E8200779ECE /* MemoDetailViewController.swift */,
+				E6A59C751F4E5E8200779ECE /* MemoPlayerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -414,13 +423,15 @@
 				E6BCADD81F537F7600E4E750 /* SpeechTranscriber.swift in Sources */,
 				E6D850A61F4E3EC40086858D /* CollectionDataSource.swift in Sources */,
 				E689885A1F4E03450095465F /* PersistanceManager.swift in Sources */,
+				E6D240A51F56E66C00E7D715 /* MemoPlayerState.swift in Sources */,
 				E6D3027E1F4E19EA00F9A405 /* UIViewController+Extensions.swift in Sources */,
 				E6D850A41F4E3EB70086858D /* TableDataSource.swift in Sources */,
 				E689885C1F4E03B30095465F /* AppReducer.swift in Sources */,
-				E6A59C761F4E5E8200779ECE /* MemoDetailViewController.swift in Sources */,
+				E6A59C761F4E5E8200779ECE /* MemoPlayerViewController.swift in Sources */,
 				E6A59C721F4E5AE400779ECE /* MemoRecorderActions.swift in Sources */,
 				E6D8509D1F4E361F0086858D /* RoutingReducer.swift in Sources */,
 				E68988571F4E02FE0095465F /* MemoItemsReducer.swift in Sources */,
+				E6D240A91F56EB6200E7D715 /* MemoPlayerActions.swift in Sources */,
 				E68988511F4DFF970095465F /* MemoItemsState.swift in Sources */,
 				E689882A1F4DE8410095465F /* AppDelegate.swift in Sources */,
 				E6D850921F4E30A60086858D /* RootViewController.swift in Sources */,
@@ -429,6 +440,7 @@
 				E6A59C6C1F4E578600779ECE /* MemoRecorderState.swift in Sources */,
 				E6D850961F4E31380086858D /* MemoRecorderViewController.swift in Sources */,
 				E6D850A81F4E41220086858D /* RoutingActions.swift in Sources */,
+				E6D240A71F56EACA00E7D715 /* MemoPlayerReducer.swift in Sources */,
 				E6A59C701F4E59FB00779ECE /* MemoRecorderReducer.swift in Sources */,
 				E689884D1F4DFF0E0095465F /* SentimentType.swift in Sources */,
 				E6D8509B1F4E35D20086858D /* RoutingState.swift in Sources */,

@@ -12,7 +12,7 @@ enum RoutingDestination: String {
     case root = "RootViewController"
     case memoList = "MemoListViewController"
     case memoRecorder = "MemoRecorderViewController"
-    case memoDetail = "MemoDetailViewController"
+    case memoPlayer = "MemoPlayerViewController"
 }
 
 
@@ -63,9 +63,9 @@ extension AppRouter: StoreSubscriber {
         case .memoRecorder:
             presentAsPopover(identifier: MemoRecorderViewController.identifier, completion: nil)
         
-        case .memoDetail:
+        case .memoPlayer:
             navigationController.dismiss(animated: shouldAnimate, completion: {
-                self.pushViewController(identifier: MemoDetailViewController.identifier, animated: shouldAnimate)
+                self.pushViewController(identifier: MemoPlayerViewController.identifier, animated: shouldAnimate)
             })
         
 //        default:

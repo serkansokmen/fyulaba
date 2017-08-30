@@ -21,11 +21,7 @@ struct MemoItem: Codable, Equatable {
     var sentiment: SentimentType?
     var features = [TranscriptionFeature]()
 
-    var file: AKAudioFile {
-        didSet {
-            self.fileURL = self.file.url
-        }
-    }
+    var file: AKAudioFile
     var fileURL: URL?
     
     private enum CodingKeys: String, CodingKey {
@@ -58,6 +54,7 @@ struct MemoItem: Codable, Equatable {
             return
         }
         self.file = file
+        self.fileURL = file.url
     }
     
     func encode(to encoder: Encoder) throws {

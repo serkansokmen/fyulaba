@@ -8,41 +8,51 @@
 
 import ReSwift
 
-func fetchMemoItems(query: String?) {
-    do {
-        try api.getItems(query: query ?? "") { items in
-            DispatchQueue.main.async {
+
+func fetchMemoItems(query: String?) -> Store<AppState>.ActionCreator {
+    return { state, store in
+        do {
+            try api.getItems(query: query ?? "") { items in
                 store.dispatch(SetMemoItems(items: items))
             }
-        }
-    } catch let error {
-        DispatchQueue.main.async {
+        } catch let error {
             store.dispatch(ErrorMemoItems(error: error))
         }
+        return SetLoading()
     }
 }
 
-func fetchMemoItem(_ uuid: String) {
-    do {
-        try api.getItem(uuid: uuid) { item in
-            DispatchQueue.main.async {
+func fetchMemoItem(_ uuid: String) -> Store<AppState>.ActionCreator {
+    return { state, store in
+        do {
+            try api.getItem(uuid: uuid) { item in
+                guard let item = item else { return }
                 store.dispatch(SelectMemoItem(item: item))
+                store.dispatch(ResetRecording())
+                store.dispatch(SetupAudioPlayer(memo: item))
+                store.dispatch(RoutingAction(destination: .memoPlayer))
             }
-        }
-    } catch let error {
-        DispatchQueue.main.async {
+        } catch let error {
             store.dispatch(ErrorMemoItems(error: error))
         }
+        return SetLoading()
     }
 }
 
-func deleteMemoItem(_ item: MemoItem) {
-    try? MemoManager.shared.deleteItem(item: item) { items in
-        DispatchQueue.main.async {
-            store.dispatch(SetMemoItems(items: items))
+func deleteMemoItem(_ item: MemoItem) -> Store<AppState>.ActionCreator {
+    return { state, store in
+        do {
+            try MemoManager.shared.deleteItem(item: item) { items in
+                store.dispatch(SetMemoItems(items: items))
+            }
+        } catch let error {
+            store.dispatch(ErrorMemoItems(error: error))
         }
+        return SetLoading()
     }
 }
+
+struct SetLoading: Action { }
 
 struct SetMemoItems: Action {
     let items: [MemoItem]

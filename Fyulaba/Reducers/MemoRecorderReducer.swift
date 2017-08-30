@@ -17,10 +17,32 @@ struct MemoRecorderReducer: Reducer {
         var state = state ?? MemoRecorderState(with: MemoItem())
         
         switch action {
+        
+        case _ as RequestingAuthorization:
+            return state
+        
+        case _ as SetRequestError:
+            return state
+        
+        case _ as ResetRecording:
+            state.player?.stop()
+            do {
+                try state.recorder?.reset()
+            } catch let err {
+                print(err.localizedDescription)
+            }
+            state.recordingState = .ready
+//            if let fileName = state.memo?.file.fileNamePlusExtension,
+//                Disk.exists(fileName, in: .documents) {
+//                try? Disk.remove(fileName, from: .documents)
+//            }
+            state.memo = nil
+            AudioKit.stop()
             
-        case let action as SetupAudio:
+        case let action as SetupAudioRecorder:
             
-            if state.memo != nil {
+            if let recorder = state.recorder,
+                recorder.isRecording {
                 state.player?.stop()
                 do {
                     try state.recorder?.reset()

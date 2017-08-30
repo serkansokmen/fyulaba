@@ -25,7 +25,7 @@ class MemoListViewController: UITableViewController, Routable {
         navigationItem.rightBarButtonItem = editButtonItem
         navigationController?.hidesNavigationBarHairline = true
         
-        fetchMemoItems(query: nil)
+        store.dispatch(fetchMemoItems(query: nil))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,8 +46,8 @@ class MemoListViewController: UITableViewController, Routable {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
-        store.dispatch(SelectMemoItem(item: item))
-        store.dispatch(RoutingAction(destination: .memoDetail))
+        
+        store.dispatch(fetchMemoItem(item.uuid))
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -76,7 +76,7 @@ class MemoListViewController: UITableViewController, Routable {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let item = items[indexPath.row]
-            deleteMemoItem(item)
+            store.dispatch(deleteMemoItem(item))
         } else if editingStyle == .insert {
             //
         }

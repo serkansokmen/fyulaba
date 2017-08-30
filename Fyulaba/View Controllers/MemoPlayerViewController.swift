@@ -11,9 +11,10 @@ import ReSwift
 import ReSwiftRouter
 import TagListView
 
-class MemoDetailViewController: UIViewController, Routable {
+class MemoPlayerViewController: UIViewController, Routable {
 
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
     @IBOutlet weak var textView: UITextView!
@@ -24,7 +25,7 @@ class MemoDetailViewController: UIViewController, Routable {
         super.viewDidLoad()
         
         store.subscribe(self) { state in
-            state.memoItems
+            state.memoPlayer
         }
     }
     
@@ -41,13 +42,25 @@ class MemoDetailViewController: UIViewController, Routable {
         super.viewWillDisappear(animated)
         
     }
+    
+    @IBAction func handlePlayTapped(_ sender: UIButton) {
+        store.dispatch(StartPlaying())
+    }
+    
+    @IBAction func handlePauseTapped(_ sender: UIButton) {
+        store.dispatch(PausePlaying())
+    }
+    
+    @IBAction func handleStopTapped(_ sender: UIButton) {
+        store.dispatch(StopPlaying())
+    }
 }
 
-extension MemoDetailViewController: StoreSubscriber {
+extension MemoPlayerViewController: StoreSubscriber {
     
-    func newState(state: MemoItemsState) {
+    func newState(state: MemoPlayerState) {
         
-        guard let item = state.selectedItem else { return }
+        guard let item = state.memo else { return }
         print(item)
         
         textView.text = item.text

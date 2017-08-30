@@ -67,26 +67,19 @@ class MemoRecorderViewController: UIViewController, Routable {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.handleSave))
         navigationController?.hidesNavigationBarHairline = true
         
-        requestAuthorization(completion: {
-            OperationQueue.main.addOperation {
-                store.dispatch(SetupAudio(memo: MemoItem()))
-            }
-        }, denied: { message in
-            self.showAlert(message, type: .error)
-        })
+        store.dispatch(requestSpeechAuthorization())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        recordButton.isEnabled = false
         store.subscribe(self) { state in
             state.memoRecorder
         }
-//        store.dispatch(SetupAudio(memo: MemoItem()))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        store.dispatch(PauseRecording())
         store.unsubscribe(self)
     }
     
@@ -115,7 +108,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     }
     
     @IBAction func handleReset(_ sender: UIButton) {
-        store.dispatch(SetupAudio(memo: nil))
+        store.dispatch(SetupAudioRecorder(memo: nil))
     }
 
     @IBAction func handleTranscribeTapped(_ sender: UIButton) {
@@ -133,10 +126,12 @@ extension MemoRecorderViewController: StoreSubscriber {
         let duration = state.memo?.file.duration ?? 0.0
         fileDuration = duration
         
+        let hasDuration = fileDuration > 0.0
+        recordButton.isEnabled = false
+        
         switch state.recordingState {
         
         case .ready:
-            let hasDuration = fileDuration > 0.0
             recordButton.isEnabled = true
             stopRecordingButton.isEnabled = false
             playButton.isEnabled = hasDuration
@@ -194,7 +189,7 @@ extension MemoRecorderViewController: StoreSubscriber {
         
         tagListView.removeAllTags()
         if let memo = state.memo {
-            navigationItem.rightBarButtonItem?.isEnabled = memo.text.count > 0 && !state.isTranscribing
+            navigationItem.rightBarButtonItem?.isEnabled = hasDuration && !state.isTranscribing
             if memo.features.count > 0 {
                 tagListView.addTags(memo.features.map { $0.key })
             }

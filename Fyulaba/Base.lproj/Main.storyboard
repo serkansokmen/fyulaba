@@ -216,10 +216,10 @@
             </objects>
             <point key="canvasLocation" x="1510" y="-376"/>
         </scene>
-        <!--Memo Detail View Controller-->
+        <!--Memo Player View Controller-->
         <scene sceneID="DaR-Fs-ed3">
             <objects>
-                <viewController storyboardIdentifier="MemoDetailViewController" id="all-7k-n0q" customClass="MemoDetailViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemoPlayerViewController" id="all-7k-n0q" customClass="MemoPlayerViewController" customModule="Fyulaba" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QG2-7R-VaM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -230,7 +230,7 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1h8-NT-qjg">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="162"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -246,14 +246,23 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGM-nb-2gc">
                                                 <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
                                                 <state key="normal" title="Play"/>
+                                                <connections>
+                                                    <action selector="handlePlayTapped:" destination="all-7k-n0q" eventType="touchUpInside" id="DNv-wU-PxR"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMO-Ez-v3N">
                                                 <rect key="frame" x="125" y="0.0" width="125" height="50"/>
                                                 <state key="normal" title="Pause"/>
+                                                <connections>
+                                                    <action selector="handlePauseTapped:" destination="all-7k-n0q" eventType="touchUpInside" id="u5h-5P-cVx"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1W-sZ-xFE">
                                                 <rect key="frame" x="250" y="0.0" width="125" height="50"/>
                                                 <state key="normal" title="Stop"/>
+                                                <connections>
+                                                    <action selector="handleStopTapped:" destination="all-7k-n0q" eventType="touchUpInside" id="fub-4T-edh"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -278,6 +287,9 @@
                     </view>
                     <connections>
                         <outlet property="durationLabel" destination="Uze-kF-scf" id="FMS-0U-RE2"/>
+                        <outlet property="pauseButton" destination="cMO-Ez-v3N" id="2HJ-9P-ScD"/>
+                        <outlet property="playButton" destination="kGM-nb-2gc" id="Voj-hk-v10"/>
+                        <outlet property="stopButton" destination="O1W-sZ-xFE" id="XFY-hm-IMq"/>
                         <outlet property="tagListView" destination="s1d-Th-JeM" id="Oab-Wy-U4I"/>
                         <outlet property="textView" destination="1h8-NT-qjg" id="6Yr-wN-c71"/>
                     </connections>

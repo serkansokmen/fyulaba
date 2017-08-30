@@ -16,7 +16,8 @@ struct AppReducer: Reducer {
             AppState(
                 routingState: RoutingReducer().handleAction(action: action, state: state?.routingState),
                 memoItems: MemoItemsReducer().handleAction(action: action, state: state?.memoItems),
-                memoRecorder: MemoRecorderReducer().handleAction(action: action, state: state?.memoRecorder)
+                memoRecorder: MemoRecorderReducer().handleAction(action: action, state: state?.memoRecorder),
+                memoPlayer: MemoPlayerReducer(with: state?.memoItems.selectedItem).handleAction(action: action, state: state?.memoPlayer)
             )
     }
 }

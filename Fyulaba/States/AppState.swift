@@ -14,4 +14,5 @@ struct AppState: StateType {
     var routingState: RoutingState
     let memoItems: MemoItemsState
     let memoRecorder: MemoRecorderState
+    let memoPlayer: MemoPlayerState
 }

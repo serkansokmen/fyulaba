@@ -11,38 +11,59 @@ import Speech
 import AudioKit
 import Disk
 
-func requestAuthorization(completion completionHandler: (() -> Void)?, denied deniedHandler: ((String)->Void)?) {
+func requestSpeechAuthorization() -> Store<AppState>.ActionCreator {
     
-    SFSpeechRecognizer.requestAuthorization { (authStatus) in
+    return { state, store in
         
-        switch authStatus {
+        SFSpeechRecognizer.requestAuthorization { (authStatus) in
+            var isAuthorized = false
+            var message = ""
+            switch authStatus {
+                
+            case .authorized:
+                isAuthorized = true
+                
+            case .denied:
+                isAuthorized = false
+                message = "User denied access to speech recognition"
+                
+            case .restricted:
+                isAuthorized = false
+                message = "Speech recognition restricted on this device"
+                
+            case .notDetermined:
+                isAuthorized = false
+                message = "Speech recognition not yet authorized"
+            }
             
-        case .authorized:
-            completionHandler?()
-            
-        case .denied:
-            deniedHandler?("User denied access to speech recognition")
-            
-        case .restricted:
-            deniedHandler?("Speech recognition restricted on this device")
-            
-        case .notDetermined:
-            deniedHandler?("Speech recognition not yet authorized")
+            if isAuthorized {
+                OperationQueue.main.addOperation {
+                    store.dispatch(SetupAudioRecorder(memo: MemoItem()))
+                }
+            } else {
+                OperationQueue.main.addOperation {
+                    store.dispatch(SetRequestError(message: message))
+                }
+            }
         }
+        return ResetRecording()
         
     }
 }
 
-struct SetupAudio: Action {
+struct SetupAudioRecorder: Action {
     let memo: MemoItem?
+}
+struct RequestingAuthorization: Action { }
+struct SetRequestError: Action {
+    let message: String?
 }
 struct StartRecording: Action { }
 struct PauseRecording: Action { }
+struct ResetRecording: Action { }
 struct ExportedRecording: Action {
     let exportedFile: AKAudioFile
 }
-struct StartPlaying: Action { }
-struct StopPlaying: Action { }
 struct SetMemoRecorderError: Action {
     let error: Error?
 }
