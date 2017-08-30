@@ -21,7 +21,11 @@ struct MemoItem: Codable, Equatable {
     var sentiment: SentimentType?
     var features = [TranscriptionFeature]()
 
-    var file: AKAudioFile
+    var file: AKAudioFile {
+        didSet {
+            self.fileURL = self.file.url
+        }
+    }
     var fileURL: URL?
     
     private enum CodingKeys: String, CodingKey {
@@ -48,8 +52,8 @@ struct MemoItem: Codable, Equatable {
         self.sentiment = try container.decode(SentimentType.self, forKey: CodingKeys.sentiment)
         self.features = try container.decode([TranscriptionFeature].self, forKey: CodingKeys.features)
         
-        self.fileURL = try container.decode(URL.self, forKey: CodingKeys.fileURL)
-        guard let file = try? AKAudioFile(readFileName: self.fileURL!.absoluteString) else {
+        let url = try container.decode(URL.self, forKey: CodingKeys.fileURL)
+        guard let file = try? AKAudioFile(readFileName: url.lastPathComponent, baseDir: .documents) else {
             self.file = MemoItem.createWorkingFile()
             return
         }
