@@ -8,7 +8,6 @@
 
 import ReSwift
 
-
 func fetchMemoItems(query: String?) -> Store<AppState>.ActionCreator {
     return { state, store in
         do {

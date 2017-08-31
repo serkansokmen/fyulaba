@@ -41,7 +41,6 @@ class MemoListViewController: UITableViewController, Routable {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
-        
         store.dispatch(fetchMemoItem(item.uuid))
     }
     

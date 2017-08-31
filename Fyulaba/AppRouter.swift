@@ -15,7 +15,6 @@ enum RoutingDestination: String {
     case memoPlayer = "MemoPlayerViewController"
 }
 
-
 final class AppRouter {
     let navigationController: UINavigationController
 
