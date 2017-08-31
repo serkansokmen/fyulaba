@@ -21,6 +21,10 @@ class MemoPlayerViewController: UIViewController, Routable {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var tagListView: TagListView!
     
+    @IBOutlet weak var speedRateSlider: UISlider!
+    @IBOutlet weak var speedPitchSlider: UISlider!
+    @IBOutlet weak var speedOverlapSlider: UISlider!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,20 +44,33 @@ class MemoPlayerViewController: UIViewController, Routable {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        store.dispatch(SelectMemoItem(item: nil))
     }
     
     @IBAction func handlePlayTapped(_ sender: UIButton) {
-        store.dispatch(StartPlaying())
+        store.dispatch(SetPlayerPlaying())
     }
     
     @IBAction func handlePauseTapped(_ sender: UIButton) {
-        store.dispatch(PausePlaying())
+        store.dispatch(SetPlayerPaused())
     }
     
     @IBAction func handleStopTapped(_ sender: UIButton) {
-        store.dispatch(StopPlaying())
+        store.dispatch(SetPlayerStopped())
     }
+    
+    @IBAction func handleSpeedRate(_ sender: UISlider) {
+        store.dispatch(SetSpeedRate(value: Double(sender.value)))
+    }
+    
+    @IBAction func handleSpeedPitch(_ sender: UISlider) {
+        store.dispatch(SetSpeedPitch(value: Double(sender.value)))
+    }
+    
+    @IBAction func handleSpeedOverlap(_ sender: UISlider) {
+        store.dispatch(SetSpeedOverlap(value: Double(sender.value)))
+    }
+    
 }
 
 extension MemoPlayerViewController: StoreSubscriber {

@@ -270,9 +270,36 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1d-Th-JeM" customClass="TagListView" customModule="TagListView">
-                                        <rect key="frame" x="0.0" y="232.5" width="375" height="414.5"/>
+                                        <rect key="frame" x="0.0" y="232.5" width="375" height="264.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.20000000000000001" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="b6u-Jp-z0n">
+                                        <rect key="frame" x="-2" y="497" width="379" height="51"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="bvb-XJ-loX"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="handleSpeedRate:" destination="all-7k-n0q" eventType="valueChanged" id="EJq-Cy-Pwh"/>
+                                        </connections>
+                                    </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-400" minValue="-1000" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Dd9-Wi-BL1">
+                                        <rect key="frame" x="-2" y="547" width="379" height="51"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="E8v-Zd-3oo"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="handleSpeedPitch:" destination="all-7k-n0q" eventType="valueChanged" id="H5w-jx-dHs"/>
+                                        </connections>
+                                    </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="8" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="t9b-tO-PRV">
+                                        <rect key="frame" x="-2" y="597" width="379" height="51"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="BSJ-Yl-hBl"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="handleSpeedOverlap:" destination="all-7k-n0q" eventType="valueChanged" id="IAS-sd-8za"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -289,6 +316,9 @@
                         <outlet property="durationLabel" destination="Uze-kF-scf" id="FMS-0U-RE2"/>
                         <outlet property="pauseButton" destination="cMO-Ez-v3N" id="2HJ-9P-ScD"/>
                         <outlet property="playButton" destination="kGM-nb-2gc" id="Voj-hk-v10"/>
+                        <outlet property="speedOverlapSlider" destination="t9b-tO-PRV" id="p8l-Wt-LC7"/>
+                        <outlet property="speedPitchSlider" destination="Dd9-Wi-BL1" id="iMR-uU-5WY"/>
+                        <outlet property="speedRateSlider" destination="b6u-Jp-z0n" id="J2n-yK-t0y"/>
                         <outlet property="stopButton" destination="O1W-sZ-xFE" id="XFY-hm-IMq"/>
                         <outlet property="tagListView" destination="s1d-Th-JeM" id="Oab-Wy-U4I"/>
                         <outlet property="textView" destination="1h8-NT-qjg" id="6Yr-wN-c71"/>

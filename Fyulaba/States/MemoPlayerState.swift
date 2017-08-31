@@ -13,6 +13,7 @@ struct MemoPlayerState: StateType {
     
     var memo: MemoItem?
     var player: AKAudioPlayer?
+    var timePitch: AKTimePitch?
     var mainMixer: AKMixer?
     
     init() {

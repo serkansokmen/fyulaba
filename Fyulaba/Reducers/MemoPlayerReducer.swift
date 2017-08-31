@@ -38,21 +38,34 @@ struct MemoPlayerReducer: Reducer {
             state.memo = action.memo
             state.player = try? AKAudioPlayer(file: state.memo!.file)
             state.player?.looping = true
-//            state.variSpeed = AKVariSpeed(state.player)
-//            state.variSpeed?.rate = 1.0
-            state.mainMixer = AKMixer(state.player)
+            
+            let timePitch = AKTimePitch(state.player)
+            timePitch.rate = 2.0
+            timePitch.pitch = -400.0
+            timePitch.overlap = 8.0
+            state.timePitch = timePitch
+            
+            state.mainMixer = AKMixer(state.timePitch)
             AudioKit.output = state.mainMixer
             AudioKit.start()
-            state.memo = action.memo
         
-        case _ as StartPlaying:
+        case _ as SetPlayerPlaying:
             state.player?.start()
         
-        case _ as PausePlaying:
+        case _ as SetPlayerPaused:
             state.player?.pause()
         
-        case _ as StopPlaying:
+        case _ as SetPlayerStopped:
             state.player?.stop()
+        
+        case let action as SetSpeedRate:
+            state.timePitch?.rate = action.value
+        
+        case let action as SetSpeedPitch:
+            state.timePitch?.pitch = action.value
+        
+        case let action as SetSpeedOverlap:
+            state.timePitch?.overlap = action.value
             
         default:
             return state

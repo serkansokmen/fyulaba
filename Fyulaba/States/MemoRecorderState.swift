@@ -28,7 +28,6 @@ struct MemoRecorderState: StateType {
     var micBooster: AKBooster?
     var micMixer: AKMixer?
     var player: AKAudioPlayer?
-    var variSpeed: AKVariSpeed?
     var mainMixer: AKMixer?
     var currentNode: AKNode?
     

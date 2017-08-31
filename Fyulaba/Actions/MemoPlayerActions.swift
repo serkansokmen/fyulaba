@@ -14,10 +14,18 @@ import Disk
 struct SetupAudioPlayer: Action {
     let memo: MemoItem
 }
-struct StartPlaying: Action { }
-struct PausePlaying: Action { }
-struct StopPlaying: Action { }
+struct SetPlayerPlaying: Action { }
+struct SetPlayerPaused: Action { }
+struct SetPlayerStopped: Action { }
 struct SetMemoPlayerError: Action {
     let error: Error?
 }
-
+struct SetSpeedRate: Action {
+    let value: Double
+}
+struct SetSpeedPitch: Action {
+    let value: Double
+}
+struct SetSpeedOverlap: Action {
+    let value: Double
+}

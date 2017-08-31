@@ -21,7 +21,6 @@ class MemoListViewController: UITableViewController, Routable {
         clearsSelectionOnViewWillAppear = true
         tableView.emptyDataSetSource = self
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleCancel))
         navigationItem.rightBarButtonItem = editButtonItem
         navigationController?.hidesNavigationBarHairline = true
         
@@ -38,10 +37,6 @@ class MemoListViewController: UITableViewController, Routable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
-    }
-
-    @objc func handleCancel(_ sender: UIBarButtonItem) {
-        store.dispatch(RoutingAction(destination: .root))
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

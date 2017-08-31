@@ -10,5 +10,6 @@ import Foundation
 import ReSwift
 
 struct RoutingAction: Action {
+    static let identifier = "ROUTING_ACTION"
     let destination: RoutingDestination
 }

@@ -47,7 +47,6 @@ func requestSpeechAuthorization() -> Store<AppState>.ActionCreator {
             }
         }
         return ResetRecording()
-        
     }
 }
 
@@ -58,9 +57,13 @@ struct RequestingAuthorization: Action { }
 struct SetRequestError: Action {
     let message: String?
 }
+
 struct StartRecording: Action { }
 struct PauseRecording: Action { }
 struct ResetRecording: Action { }
+struct SetRecorderPlaying: Action { }
+struct SetRecorderStopped: Action { }
+
 struct ExportedRecording: Action {
     let exportedFile: AKAudioFile
 }

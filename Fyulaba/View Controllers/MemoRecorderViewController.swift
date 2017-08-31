@@ -79,7 +79,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        store.dispatch(PauseRecording())
+        store.dispatch(ResetRecording())
         store.unsubscribe(self)
     }
     
@@ -100,11 +100,11 @@ class MemoRecorderViewController: UIViewController, Routable {
     }
     
     @IBAction func handlePlay(_ sender: UIButton) {
-        store.dispatch(StartPlaying())
+        store.dispatch(SetRecorderPlaying())
     }
     
     @IBAction func handleStopPlaying(_ sender: UIButton) {
-        store.dispatch(StopPlaying())
+        store.dispatch(SetRecorderStopped())
     }
     
     @IBAction func handleReset(_ sender: UIButton) {
@@ -140,6 +140,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = "Ready"
             plotView.node = state.player
             plotView.clear()
+            navigationController?.isNavigationBarHidden = false
             
         case .recording:
             recordButton.isEnabled = false
@@ -150,6 +151,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = "Recording..."
             plotView.node = state.mic
             plotView.plotType = .buffer
+            navigationController?.isNavigationBarHidden = true
             
         case .playing:
             recordButton.isEnabled = false
@@ -161,6 +163,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             plotView.node = state.player
             plotView.redraw()
             plotView.plotType = .rolling
+            navigationController?.isNavigationBarHidden = false
             
         case .paused:
             recordButton.isEnabled = true
@@ -171,6 +174,7 @@ extension MemoRecorderViewController: StoreSubscriber {
             infoLabel.text = "Duration: \(fileDuration)"
             plotView.plotType = .rolling
             plotView.node = state.player
+            navigationController?.isNavigationBarHidden = false
         
         case let .error(error):
             showAlert(error?.localizedDescription, type: .error)
@@ -183,9 +187,11 @@ extension MemoRecorderViewController: StoreSubscriber {
             resetButton.isEnabled = false
             infoLabel.text = ""
             plotView.node = nil
+            navigationController?.isNavigationBarHidden = false
         }
         
-        transcribeButton.isEnabled = !state.isTranscribing && fileDuration > 0.0
+        transcribeButton.isEnabled = !state.isTranscribing
+//            && fileDuration > 0.0
         
         tagListView.removeAllTags()
         if let memo = state.memo {

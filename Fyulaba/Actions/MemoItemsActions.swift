@@ -27,10 +27,12 @@ func fetchMemoItem(_ uuid: String) -> Store<AppState>.ActionCreator {
         do {
             try api.getItem(uuid: uuid) { item in
                 guard let item = item else { return }
-                store.dispatch(SelectMemoItem(item: item))
-                store.dispatch(ResetRecording())
-                store.dispatch(SetupAudioPlayer(memo: item))
-                store.dispatch(RoutingAction(destination: .memoPlayer))
+                DispatchQueue.main.async {
+                    store.dispatch(SelectMemoItem(item: item))
+                    store.dispatch(ResetRecording())
+                    store.dispatch(SetupAudioPlayer(memo: item))
+                    store.dispatch(RoutingAction(destination: .memoPlayer))
+                }
             }
         } catch let error {
             store.dispatch(ErrorMemoItems(error: error))

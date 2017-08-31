@@ -9,10 +9,15 @@
 import UIKit
 import ReSwift
 import ReSwiftRouter
-//import ReSwiftRecorder
+import ReSwiftRecorder
 import ChameleonFramework
 
-let store = Store<AppState>(reducer: AppReducer(), state: nil)
+let store = RecordingMainStore<AppState>(
+    reducer: AppReducer(),
+    state: nil,
+    typeMaps: [],
+    recording: "state-recording.json"
+)
 let api = MemoManager()
 
 @UIApplicationMain

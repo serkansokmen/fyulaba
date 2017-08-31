@@ -36,7 +36,15 @@ struct MemoRecorderReducer: Reducer {
 //                Disk.exists(fileName, in: .documents) {
 //                try? Disk.remove(fileName, from: .documents)
 //            }
+            state.recordingState = .none
             state.memo = nil
+            state.recorder = nil
+            state.player = nil
+            state.mic = nil
+            state.micBooster = nil
+            state.micMixer = nil
+            state.mainMixer = nil
+            
             AudioKit.stop()
             
         case let action as SetupAudioRecorder:
@@ -50,10 +58,6 @@ struct MemoRecorderReducer: Reducer {
                     print(err.localizedDescription)
                 }
                 state.recordingState = .ready
-                if let fileName = state.memo?.file.fileNamePlusExtension,
-                    Disk.exists(fileName, in: .documents) {
-                    try? Disk.remove(fileName, from: .documents)
-                }
                 state.memo = nil
             }
             
@@ -79,9 +83,7 @@ struct MemoRecorderReducer: Reducer {
             
             state.recorder?.durationToRecord = 60.0
             state.player?.looping = true
-            state.variSpeed = AKVariSpeed(state.player)
-            state.variSpeed?.rate = 1.0
-            state.mainMixer = AKMixer(state.variSpeed, state.micBooster)
+            state.mainMixer = AKMixer(state.player, state.micBooster)
             AudioKit.output = state.mainMixer
             AudioKit.start()
             
@@ -110,8 +112,7 @@ struct MemoRecorderReducer: Reducer {
             if recordedDuration > 0.0 {
                 state.recorder?.stop()
                 
-                guard let file = state.memo?.file else { return state }
-                state.player?.audioFile.exportAsynchronously(name: file.fileName,
+                state.player?.audioFile.exportAsynchronously(name: UUID().uuidString,
                                                              baseDir: .documents,
                                                              exportFormat: .m4a) { file, exportError in
                                                                 if let error = exportError {
@@ -129,14 +130,18 @@ struct MemoRecorderReducer: Reducer {
             }
         
         case let action as ExportedRecording:
+//            if let fileName = state.memo?.file.fileNamePlusExtension,
+//                Disk.exists(fileName, in: .documents) {
+//                try? Disk.remove(fileName, from: .documents)
+//            }
             state.memo?.file = action.exportedFile
             state.recordingState = .paused
         
-        case _ as StartPlaying:
+        case _ as SetRecorderPlaying:
             state.player?.play()
             state.recordingState = .playing
         
-        case _ as StopPlaying:
+        case _ as SetRecorderStopped:
             state.player?.stop()
             state.recordingState = .paused
         

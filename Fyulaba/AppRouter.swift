@@ -57,19 +57,19 @@ extension AppRouter: StoreSubscriber {
             navigationController.dismiss(animated: shouldAnimate, completion: nil)
             pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
             
-        case .memoList:
-            presentAsPopover(identifier: MemoListViewController.identifier, completion: nil)
+//        case .memoList:
+//            presentAsPopover(identifier: MemoListViewController.identifier, completion: nil)
         
         case .memoRecorder:
             presentAsPopover(identifier: MemoRecorderViewController.identifier, completion: nil)
         
-        case .memoPlayer:
-            navigationController.dismiss(animated: shouldAnimate, completion: {
-                self.pushViewController(identifier: MemoPlayerViewController.identifier, animated: shouldAnimate)
-            })
+//        case .memoPlayer:
+//            navigationController.dismiss(animated: shouldAnimate, completion: {
+//                self.pushViewController(identifier: MemoPlayerViewController.identifier, animated: shouldAnimate)
+//            })
         
-//        default:
-//            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
+        default:
+            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
         }
     }
     
