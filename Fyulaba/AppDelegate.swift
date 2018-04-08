@@ -9,8 +9,6 @@
 import UIKit
 import ReSwift
 import ReSwiftRouter
-import ReSwiftRecorder
-import ChameleonFramework
 
 let store = Store<AppState>(
     reducer: AppReducer(),
@@ -30,8 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         window.makeKeyAndVisible()
         appRouter = AppRouter(window: window)
-        
-        Chameleon.setGlobalThemeUsingPrimaryColor(.flatWhiteDark, withSecondaryColor: .flatBlack, andContentStyle: .light)
         
         return true
     }

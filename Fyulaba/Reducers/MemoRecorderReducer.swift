@@ -45,7 +45,11 @@ struct MemoRecorderReducer: Reducer {
             state.micMixer = nil
             state.mainMixer = nil
             
-            AudioKit.stop()
+            do {
+                try AudioKit.stop()
+            } catch let err {
+                print(err.localizedDescription)
+            }
             
         case let action as SetupAudioRecorder:
             
@@ -85,9 +89,13 @@ struct MemoRecorderReducer: Reducer {
             state.player?.looping = true
             state.mainMixer = AKMixer(state.player, state.micBooster)
             AudioKit.output = state.mainMixer
-            AudioKit.start()
+            do {
+                try AudioKit.start()
+                state.recordingState = .ready
+            } catch let err {
+                state.recordingState = .error(err)
+            }
             
-            state.recordingState = .ready
         
         case _ as StartRecording:
             if AKSettings.headPhonesPlugged {

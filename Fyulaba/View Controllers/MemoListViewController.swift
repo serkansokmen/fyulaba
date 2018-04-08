@@ -22,7 +22,6 @@ class MemoListViewController: UITableViewController, Routable {
         tableView.emptyDataSetSource = self
         
         navigationItem.rightBarButtonItem = editButtonItem
-        navigationController?.hidesNavigationBarHairline = true
         
         store.dispatch(fetchMemoItems(query: nil))
     }

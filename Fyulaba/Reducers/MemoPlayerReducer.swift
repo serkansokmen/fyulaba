@@ -47,7 +47,12 @@ struct MemoPlayerReducer: Reducer {
             
             state.mainMixer = AKMixer(state.timePitch)
             AudioKit.output = state.mainMixer
-            AudioKit.start()
+            
+            do {
+                try AudioKit.start()
+            } catch let err {
+                print(err.localizedDescription)
+            }
         
         case _ as SetPlayerPlaying:
             state.player?.start()

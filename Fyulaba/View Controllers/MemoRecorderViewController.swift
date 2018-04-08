@@ -10,7 +10,7 @@ import UIKit
 import ReSwift
 import ReSwiftRouter
 import AudioKit
-import ChameleonFramework
+import AudioKitUI
 import TagListView
 import SwiftDate
 
@@ -38,10 +38,6 @@ class MemoRecorderViewController: UIViewController, Routable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gradientColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.white, .flatWhite])
-        gradientStrokeColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatWhite, .white])
-        gradientPlotColor = GradientColor(.topToBottom, frame: plotView.bounds, colors: [.flatSkyBlue, .flatPurple])
-        
         plotView.color = gradientPlotColor
         plotView.shouldFill = true
         plotView.shouldMirror = true
@@ -65,7 +61,6 @@ class MemoRecorderViewController: UIViewController, Routable {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.handleBack))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.handleSave))
-        navigationController?.hidesNavigationBarHairline = true
         
         store.dispatch(requestSpeechAuthorization())
     }

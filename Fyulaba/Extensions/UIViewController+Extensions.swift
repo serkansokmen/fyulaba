@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ChameleonFramework
 
 extension UIViewController {
 
@@ -19,11 +18,11 @@ extension UIViewController {
         var color: UIColor {
             switch self {
             case .error:
-                return .flatRed
+                return .red
             case .warning:
-                return .flatOrange
+                return .orange
             case .success:
-                return .flatGreen
+                return .green
             }
         }
     }
