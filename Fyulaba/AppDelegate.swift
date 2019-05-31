@@ -11,7 +11,7 @@ import ReSwift
 import ReSwiftRouter
 
 let store = Store<AppState>(
-    reducer: AppReducer(),
+    reducer: appReducer,
     state: nil
 )
 let api = MemoManager()

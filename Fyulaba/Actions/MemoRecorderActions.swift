@@ -58,6 +58,9 @@ struct SetRequestError: Action {
     let message: String?
 }
 
+struct SetupNewMemoItem: Action {
+    let uuid: String
+}
 struct StartRecording: Action { }
 struct PauseRecording: Action { }
 struct ResetRecording: Action { }

@@ -36,7 +36,7 @@ struct MemoItem: Codable, Equatable {
     init() {
         self.uuid = UUID().uuidString
         self.file = MemoItem.createWorkingFile()
-        self.createdAt = DateInRegion().absoluteDate
+        self.createdAt = DateInRegion().date
     }
     
     init(from decoder: Decoder) throws {
@@ -72,16 +72,17 @@ struct MemoItem: Codable, Equatable {
     }
 
     var subtitle: String {
-        let dateInRegion: DateInRegion = DateInRegion(absoluteDate: self.createdAt)
-        do {
-            let (colloquial, relevantTime) = try dateInRegion.colloquialSinceNow()
-            if let relevantTime = relevantTime {
-                return "\(colloquial), \(relevantTime)"
-            }
-            return "\(colloquial)"
-        } catch {
-            return ""
-        }
+        return DateInRegion(self.createdAt).toString(DateToStringStyles.standard)
+//        let dateInRegion: DateInRegion =
+//        do {
+//            let (colloquial, relevantTime) = try dateInRegion.convertTo()
+//            if let relevantTime = relevantTime {
+//                return "\(colloquial), \(relevantTime)"
+//            }
+//            return "\(colloquial)"
+//        } catch {
+//            return ""
+//        }
     }
     
     public static func ==(lhs: MemoItem, rhs: MemoItem) -> Bool {

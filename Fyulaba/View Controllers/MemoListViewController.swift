@@ -11,7 +11,7 @@ import ReSwift
 import ReSwiftRouter
 import DZNEmptyDataSet
 
-class MemoListViewController: UITableViewController, Routable {
+class MemoListViewController: UITableViewController, Routable, StoreSubscriber {
 
     private var items = [MemoItem]()
 
@@ -28,8 +28,8 @@ class MemoListViewController: UITableViewController, Routable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self) { state in
-            state.memoItems
+        store.subscribe(self) { subscriber in
+            subscriber.select { state in state.memoItems }
         }
     }
     
@@ -37,7 +37,16 @@ class MemoListViewController: UITableViewController, Routable {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
-
+    
+    func newState(state: MemoItemsState) {
+        items = state.items
+        
+        tableView.reloadData()
+        tableView.reloadEmptyDataSet()
+        
+        navigationItem.rightBarButtonItem?.isEnabled = state.items.count > 0
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         store.dispatch(fetchMemoItem(item.uuid))
@@ -73,17 +82,6 @@ class MemoListViewController: UITableViewController, Routable {
         } else if editingStyle == .insert {
             //
         }
-    }
-}
-
-extension MemoListViewController: StoreSubscriber {
-    func newState(state: MemoItemsState) {
-        items = state.items
-        
-        tableView.reloadData()
-        tableView.reloadEmptyDataSet()
-        
-        navigationItem.rightBarButtonItem?.isEnabled = state.items.count > 0
     }
 }
 

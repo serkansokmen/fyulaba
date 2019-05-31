@@ -9,15 +9,12 @@
 import ReSwift
 import ReSwiftRouter
 
-struct AppReducer: Reducer<AppState> {
-
-    func handleAction(action: Action, state: AppState?) -> AppState {
-        return
-            AppState(
-                routingState: RoutingReducer().handleAction(action: action, state: state?.routingState),
-                memoItems: MemoItemsReducer().handleAction(action: action, state: state?.memoItems),
-                memoRecorder: MemoRecorderReducer().handleAction(action: action, state: state?.memoRecorder),
-                memoPlayer: MemoPlayerReducer(with: state?.memoItems.selectedItem).handleAction(action: action, state: state?.memoPlayer)
-            )
-    }
+func appReducer(action: Action, state: AppState?) -> AppState {
+    return
+        AppState(
+            routingState: routingReducer(action: action, state: state?.routingState),
+            memoItems: memoItemsReducer(action: action, state: state?.memoItems),
+            memoRecorder: memoRecorderReducer(action: action, state: state?.memoRecorder),
+            memoPlayer: memoPlayerReducer(action: action, state: state?.memoPlayer)
+    )
 }
