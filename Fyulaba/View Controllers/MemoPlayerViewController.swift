@@ -11,7 +11,7 @@ import ReSwift
 import ReSwiftRouter
 import TagListView
 
-class MemoPlayerViewController: UIViewController, Routable {
+class MemoPlayerViewController: UIViewController, Routable, StoreSubscriber {
 
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
@@ -28,9 +28,21 @@ class MemoPlayerViewController: UIViewController, Routable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        store.subscribe(self) { state in
-            state.memoPlayer
+        store.subscribe(self) { subscription in
+            subscription.select { state in state.memoPlayer }
         }
+    }
+    
+    func newState(state: MemoPlayerState) {
+        
+        guard let item = state.memo else { return }
+        print(item)
+        
+        textView.text = item.text
+        durationLabel.text = "Duration: \(item.file.duration)"
+        
+        tagListView.removeAllTags()
+        item.features.forEach { tagListView.addTag($0.key) }
     }
     
     deinit {
@@ -71,19 +83,4 @@ class MemoPlayerViewController: UIViewController, Routable {
         store.dispatch(SetSpeedOverlap(value: Double(sender.value)))
     }
     
-}
-
-extension MemoPlayerViewController: StoreSubscriber {
-    
-    func newState(state: MemoPlayerState) {
-        
-        guard let item = state.memo else { return }
-        print(item)
-        
-        textView.text = item.text
-        durationLabel.text = "Duration: \(item.file.duration)"
-        
-        tagListView.removeAllTags()
-        item.features.forEach { tagListView.addTag($0.key) }
-    }
 }

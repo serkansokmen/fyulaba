@@ -15,15 +15,40 @@ enum RoutingDestination: String {
     case memoPlayer = "MemoPlayerViewController"
 }
 
-final class AppRouter {
+final class AppRouter: StoreSubscriber {
     let navigationController: UINavigationController
 
     init(window: UIWindow) {
         navigationController = UINavigationController()
         window.rootViewController = navigationController
-
-        store.subscribe(self) { state in
-            state.routingState
+        
+        store.subscribe(self) { subscription in
+            subscription.select { state in state.routingState }
+        }
+    }
+    
+    func newState(state: RoutingState) {
+        
+        let shouldAnimate = navigationController.topViewController != nil
+        
+        switch state.destination {
+        case .root:
+            navigationController.dismiss(animated: shouldAnimate, completion: nil)
+            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
+            
+            //        case .memoList:
+            //            presentAsPopover(identifier: MemoListViewController.identifier, completion: nil)
+            
+        case .memoRecorder:
+            presentAsPopover(identifier: MemoRecorderViewController.identifier, completion: nil)
+            
+            //        case .memoPlayer:
+            //            navigationController.dismiss(animated: shouldAnimate, completion: {
+            //                self.pushViewController(identifier: MemoPlayerViewController.identifier, animated: shouldAnimate)
+            //            })
+            
+        default:
+            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
         }
     }
 
@@ -46,32 +71,7 @@ final class AppRouter {
 }
 
 
-extension AppRouter: StoreSubscriber {
-    func newState(state: RoutingState) {
-        
-        let shouldAnimate = navigationController.topViewController != nil
-        
-        switch state.destination {
-        case .root:
-            navigationController.dismiss(animated: shouldAnimate, completion: nil)
-            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
-            
-//        case .memoList:
-//            presentAsPopover(identifier: MemoListViewController.identifier, completion: nil)
-        
-        case .memoRecorder:
-            presentAsPopover(identifier: MemoRecorderViewController.identifier, completion: nil)
-        
-//        case .memoPlayer:
-//            navigationController.dismiss(animated: shouldAnimate, completion: {
-//                self.pushViewController(identifier: MemoPlayerViewController.identifier, animated: shouldAnimate)
-//            })
-        
-        default:
-            pushViewController(identifier: state.destination.rawValue, animated: shouldAnimate)
-        }
-    }
-    
+extension AppRouter {
     func presentAsPopover(identifier: String, completion: (() -> Void)?) {
         let vc = instantiateViewController(identifier: identifier)
         let nav = UINavigationController(rootViewController: vc)

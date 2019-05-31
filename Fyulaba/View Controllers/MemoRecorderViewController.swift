@@ -16,7 +16,7 @@ import SwiftDate
 
 class MemoRecorderViewController: UIViewController, Routable {
     
-    @IBOutlet weak var plotView: AKNodeOutputPlot!
+//    @IBOutlet weak var plotView: AKNodeOutputPlot!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopRecordingButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -26,7 +26,7 @@ class MemoRecorderViewController: UIViewController, Routable {
     @IBOutlet weak var transcribeButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var transcriptionTextView: UITextView!
-    @IBOutlet weak var tagListView: TagListView!
+//    @IBOutlet weak var tagListView: TagListView!
     
     private var memoItem: MemoItem?
     
@@ -38,21 +38,21 @@ class MemoRecorderViewController: UIViewController, Routable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        plotView.color = gradientPlotColor
-        plotView.shouldFill = true
-        plotView.shouldMirror = true
-        plotView.layer.borderWidth = 2.0
-        plotView.layer.borderColor = gradientStrokeColor.cgColor
-        plotView.layer.cornerRadius = 0.0
-        plotView.layer.backgroundColor = gradientColor.cgColor
-        plotView.backgroundColor = gradientColor
-        plotView.plotType = .rolling
+//        plotView.color = gradientPlotColor
+//        plotView.shouldFill = true
+//        plotView.shouldMirror = true
+//        plotView.layer.borderWidth = 2.0
+//        plotView.layer.borderColor = gradientStrokeColor.cgColor
+//        plotView.layer.cornerRadius = 0.0
+//        plotView.layer.backgroundColor = gradientColor.cgColor
+//        plotView.backgroundColor = gradientColor
+//        plotView.plotType = .rolling
         
-        tagListView.delegate = self
-        tagListView.alignment = .left
-        tagListView.enableRemoveButton = true
-        tagListView.removeButtonIconSize = 8.0
-        tagListView.removeIconLineWidth = 2.0
+//        tagListView.delegate = self
+//        tagListView.alignment = .left
+//        tagListView.enableRemoveButton = true
+//        tagListView.removeButtonIconSize = 8.0
+//        tagListView.removeIconLineWidth = 2.0
         
         transcriptionTextView.text = ""
         
@@ -67,8 +67,8 @@ class MemoRecorderViewController: UIViewController, Routable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self) { state in
-            state.memoRecorder
+        store.subscribe(self) { subscription in
+            subscription.select { state in state.memoRecorder }
         }
     }
     
@@ -117,7 +117,7 @@ extension MemoRecorderViewController: StoreSubscriber {
         memoItem = state.memo
         
         var fileDuration = 0.0
-        try? state.player?.reloadFile()
+        ((try? state.player?.reloadFile()) as ()??)
         let duration = state.memo?.file.duration ?? 0.0
         fileDuration = duration
         
@@ -133,8 +133,8 @@ extension MemoRecorderViewController: StoreSubscriber {
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = hasDuration
             infoLabel.text = "Ready"
-            plotView.node = state.player
-            plotView.clear()
+//            plotView.node = state.player
+//            plotView.clear()
             navigationController?.isNavigationBarHidden = false
             
         case .recording:
@@ -144,8 +144,8 @@ extension MemoRecorderViewController: StoreSubscriber {
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
             infoLabel.text = "Recording..."
-            plotView.node = state.mic
-            plotView.plotType = .buffer
+//            plotView.node = state.mic
+//            plotView.plotType = .buffer
             navigationController?.isNavigationBarHidden = true
             
         case .playing:
@@ -155,9 +155,9 @@ extension MemoRecorderViewController: StoreSubscriber {
             stopPlayingButton.isEnabled = true
             resetButton.isEnabled = false
             infoLabel.text = "Playing..."
-            plotView.node = state.player
-            plotView.redraw()
-            plotView.plotType = .rolling
+//            plotView.node = state.player
+//            plotView.redraw()
+//            plotView.plotType = .rolling
             navigationController?.isNavigationBarHidden = false
             
         case .paused:
@@ -167,8 +167,8 @@ extension MemoRecorderViewController: StoreSubscriber {
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = true
             infoLabel.text = "Duration: \(fileDuration)"
-            plotView.plotType = .rolling
-            plotView.node = state.player
+//            plotView.plotType = .rolling
+//            plotView.node = state.player
             navigationController?.isNavigationBarHidden = false
         
         case let .error(error):
@@ -181,18 +181,18 @@ extension MemoRecorderViewController: StoreSubscriber {
             stopPlayingButton.isEnabled = false
             resetButton.isEnabled = false
             infoLabel.text = ""
-            plotView.node = nil
+//            plotView.node = nil
             navigationController?.isNavigationBarHidden = false
         }
         
         transcribeButton.isEnabled = !state.isTranscribing
 //            && fileDuration > 0.0
         
-        tagListView.removeAllTags()
+//        tagListView.removeAllTags()
         if let memo = state.memo {
             navigationItem.rightBarButtonItem?.isEnabled = hasDuration && !state.isTranscribing
             if memo.features.count > 0 {
-                tagListView.addTags(memo.features.map { $0.key })
+//                tagListView.addTags(memo.features.map { $0.key })
             }
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
@@ -208,12 +208,12 @@ extension MemoRecorderViewController: StoreSubscriber {
     }
 }
 
-extension MemoRecorderViewController: TagListViewDelegate {
-    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
-        print("Tag pressed: \(title), \(sender)")
-    }
-    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
-        print("Tag pressed: \(title), \(sender)")
-        store.dispatch(RemoveFeatureTag(title: title))
-    }
-}
+//extension MemoRecorderViewController: TagListViewDelegate {
+//    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
+//        print("Tag pressed: \(title), \(sender)")
+//    }
+//    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) -> Void {
+//        print("Tag pressed: \(title), \(sender)")
+//        store.dispatch(RemoveFeatureTag(title: title))
+//    }
+//}

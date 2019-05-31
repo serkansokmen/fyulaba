@@ -11,7 +11,7 @@ import ReSwift
 import ReSwiftRouter
 import DZNEmptyDataSet
 
-class MemoListViewController: UITableViewController, Routable {
+class MemoListViewController: UITableViewController, Routable, StoreSubscriber {
 
     private var items = [MemoItem]()
 
@@ -28,8 +28,8 @@ class MemoListViewController: UITableViewController, Routable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        store.subscribe(self) { state in
-            state.memoItems
+        store.subscribe(self) { subscriber in
+            subscriber.select { state in state.memoItems }
         }
     }
     
@@ -37,7 +37,16 @@ class MemoListViewController: UITableViewController, Routable {
         super.viewWillDisappear(animated)
         store.unsubscribe(self)
     }
-
+    
+    func newState(state: MemoItemsState) {
+        items = state.items
+        
+        tableView.reloadData()
+        tableView.reloadEmptyDataSet()
+        
+        navigationItem.rightBarButtonItem?.isEnabled = state.items.count > 0
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         store.dispatch(fetchMemoItem(item.uuid))
@@ -66,7 +75,7 @@ class MemoListViewController: UITableViewController, Routable {
         return currentCell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let item = items[indexPath.row]
             store.dispatch(deleteMemoItem(item))
@@ -76,25 +85,14 @@ class MemoListViewController: UITableViewController, Routable {
     }
 }
 
-extension MemoListViewController: StoreSubscriber {
-    func newState(state: MemoItemsState) {
-        items = state.items
-        
-        tableView.reloadData()
-        tableView.reloadEmptyDataSet()
-        
-        navigationItem.rightBarButtonItem?.isEnabled = state.items.count > 0
-    }
-}
-
 extension MemoListViewController: DZNEmptyDataSetSource {
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let attributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)]
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]
         return NSAttributedString(string: "You don't seem to have any recordings", attributes: attributes)
     }
 
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
         return NSAttributedString(string: "Go ahead and save speak and save some words.", attributes: attributes)
     }
 }

@@ -49,7 +49,7 @@ final class MemoManager: PersistanceManager  {
                 print(err.localizedDescription)
             }
         }
-        if let existingIndex = items.index(of: item) {
+        if let existingIndex = items.firstIndex(of: item) {
 //        if let existingIndex = items.index(where: { $0.uuid == item.uuid }) {
             items[existingIndex] = item
         } else {
